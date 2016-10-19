@@ -19,7 +19,7 @@ public class Cards {
 	int luxuryTax;
 	
 	int verticalFirstGrid[][]= {{0,0,0,0,0,0,0,0,0,0},{60,2,10,30,90,160,250,30,50,50},{0,0,0,0,0,0,0,0,0,0},
-			              {60,2,10,30,90,160,250,30,50,50},{200,0,0,0,0,0,0,0,0,0},
+			              {60,4,20,60,180,320,450,30,50,50},{200,0,0,0,0,0,0,0,0,0},
 			              {200,25,0,50,100,200,100,0,0,0,0},{100,6,30,90,270,400,550,50,50,50},
 			              {0,0,0,0,0,0,0,0,0,0},{100,6,30,90,270,400,550,50,50,50},
 			              {120,8,40,100,300,450,600,60,50,50},{0,0,0,0,0,0,0,0,0,0}};
@@ -45,9 +45,10 @@ public class Cards {
 	
 	
 	
-	public Cards()
+	public Cards( int i, int j)
 	{
 		//Constructor
+		setCards(i,j);
 	}
 	public int[] setCards(int i,int j){
 		if (j==0){
@@ -89,23 +90,26 @@ public class Cards {
 				this.mortgageValue = value[6];	
 				return value;
 			}
-			if (i==4)
+			if (i==6)
 			{
 				incomeTax = 200;
 				int[] value ={incomeTax};
 				return value;
 			}
 		}
+		
+		
 		if (j==10)
 		{
 			//vertical second grid
 			if ((i==1)|(i==3)|(i==4)|(i==6)|(i==7)|(i==9))
 			{
+				int temp = 10-i;
 				int value[]={cost, rentInitial, rentFirstHouse, rentSecondHouse, rentThirdHouse, rentFourthHouse,
 					     rentHotel, mortgageValue, houseCost,hotelCost};
 					for (int k=0; k<10; k++)
 						{
-							value[k] = verticalFirstGrid[10-i][k];
+							value[k] = verticalSecondGrid[temp][k];
 						}
 					this.cost = value[0];
 					this.rentInitial = value[1];
@@ -121,7 +125,6 @@ public class Cards {
 			}
 			if(i==5)
 			{
-				int temp = 10-1;
 				int value[] = {cost,rentInitial,0,rent2RROwned,rent3RROwned, rent4RROwned, mortgageValue};
 				for (int k =0 ;k<7;k++)
 				{
@@ -144,16 +147,110 @@ public class Cards {
 			}
 			
 		}
-		//if (i==0){
+		
+		
+		if (i==0)
+		{
 			//horizontal above grid
-		//}
-		//if (i ==10){
+			if ((j==1)|(j==3)|(j==4)|(j==6)|(j==8)|(j==9))
+			{
+				int value[]={cost, rentInitial, rentFirstHouse, rentSecondHouse, rentThirdHouse, rentFourthHouse,
+					     rentHotel, mortgageValue, houseCost,hotelCost};
+					for (int k=0; k<10; k++)
+						{
+							value[k] = horizontalAboveGrid[10-j][k];
+						}
+					this.cost = value[0];
+					this.rentInitial = value[1];
+					this.rentFirstHouse = value[2];
+					this.rentSecondHouse = value[3];
+					this.rentThirdHouse = value[4];
+					this.rentFourthHouse= value[5];
+					this.rentHotel = value[6];
+					this.mortgageValue = value[7];
+					this.houseCost = value[8];
+					this.hotelCost = value[9];
+					return value;
+			}
+			if (j==2)
+			{
+				this.cost =150;
+				this.rentFirstUtility = 20;
+				this.rentSecondUtility = 100;
+				this.mortgageValue = 75;
+			}
+			if (j==5)
+			{
+				int value[] = {cost,rentInitial,0,rent2RROwned,rent3RROwned, rent4RROwned, mortgageValue};
+				for (int k =0 ;k<7;k++)
+				{
+					value[k]= verticalFirstGrid[10-j][k];	
+				}
+				this.cost = value[0];
+				this.rentInitial = value[1];
+				this.rent2RROwned = value[3];
+				this.rent3RROwned = value[4];
+				this.rent4RROwned = value[5];
+				this.mortgageValue = value[6];				
+				return value;
+			}
+			
+		}
+		
+		
+		if (i ==10)
+		{
 			//horizontal below grid
-		//}
-		//System.out.println(information[1][1]);
+			
+			if ((j==1)|(j==2)|(j==4)|(j==7)|(j==9))
+			{
+				int value[]={cost, rentInitial, rentFirstHouse, rentSecondHouse, rentThirdHouse, rentFourthHouse,
+					     rentHotel, mortgageValue, houseCost,hotelCost};
+					for (int k=0; k<10; k++)
+						{
+							value[k] = horizontalBelowGrid[10-j][k];
+						}
+					this.cost = value[0];
+					this.rentInitial = value[1];
+					this.rentFirstHouse = value[2];
+					this.rentSecondHouse = value[3];
+					this.rentThirdHouse = value[4];
+					this.rentFourthHouse= value[5];
+					this.rentHotel = value[6];
+					this.mortgageValue = value[7];
+					this.houseCost = value[8];
+					this.hotelCost = value[9];
+					return value;
+			}
+			if (j==5)
+			{
+				int value[] = {cost,rentInitial,0,rent2RROwned,rent3RROwned, rent4RROwned, mortgageValue};
+				for (int k =0 ;k<7;k++)
+				{
+					value[k]= horizontalBelowGrid[10-j][k];	
+				}
+				this.cost = value[0];
+				this.rentInitial = value[1];
+				this.rent2RROwned = value[3];
+				this.rent3RROwned = value[4];
+				this.rent4RROwned = value[5];
+				this.mortgageValue = value[6];				
+				return value;
+			}
+			if (j==8)
+			{
+				this.luxuryTax =200;
+				int[] value = {this.luxuryTax};
+				return value;
+			}
+
+		}
 		int[] value={0,0};
 		return value;
 	}
+	
+	
+	
 	public void getCardsValue(int i, int j){
 		int[] information = setCards(i,j);
 			
