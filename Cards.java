@@ -104,7 +104,7 @@ public class Cards {
 			//vertical second grid
 			if ((i==1)|(i==3)|(i==4)|(i==6)|(i==7)|(i==9))
 			{
-				int temp = 10-i;
+				int temp = i;
 				int value[]={cost, rentInitial, rentFirstHouse, rentSecondHouse, rentThirdHouse, rentFourthHouse,
 					     rentHotel, mortgageValue, houseCost,hotelCost};
 					for (int k=0; k<10; k++)
@@ -158,7 +158,7 @@ public class Cards {
 					     rentHotel, mortgageValue, houseCost,hotelCost};
 					for (int k=0; k<10; k++)
 						{
-							value[k] = horizontalAboveGrid[10-j][k];
+							value[k] = horizontalAboveGrid[j][k];
 						}
 					this.cost = value[0];
 					this.rentInitial = value[1];
@@ -202,7 +202,7 @@ public class Cards {
 		{
 			//horizontal below grid
 			
-			if ((j==1)|(j==2)|(j==4)|(j==7)|(j==9))
+			if ((j==1)|(j==3)|(j==6)|(j==8)|(j==9))
 			{
 				int value[]={cost, rentInitial, rentFirstHouse, rentSecondHouse, rentThirdHouse, rentFourthHouse,
 					     rentHotel, mortgageValue, houseCost,hotelCost};
@@ -237,7 +237,7 @@ public class Cards {
 				this.mortgageValue = value[6];				
 				return value;
 			}
-			if (j==8)
+			if (j==2)
 			{
 				this.luxuryTax =200;
 				int[] value = {this.luxuryTax};
