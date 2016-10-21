@@ -4,31 +4,76 @@ import java.util.Set;
 public class Mortgage {
 	
 	
-	Set<Cards> mortgageSet = new HashSet<Cards>();
+	private Set<Properties> mortgageProperties = new HashSet<Properties>();
+	private Set<Utilities> mortgageUtilities = new HashSet<Utilities>();
+	private Set<RailRoad> mortgageRailRoad = new HashSet<RailRoad>();
 	
 	public Mortgage() {
-		// TODO Auto-generated constructor stub
+	
 	}
 
-	public int mortgageProperty(int i, int j)
+	public void mortgageProperty(Properties p)
 	{
-		Cards cs = new Cards(i,j);
-		return cs.mortgageValue;
+		// code for mortgaging property
+		mortgageProperties.add(p);
 		
 	}
 	
-	public void addPropertyMortgage(Cards c)
+	public void mortgageUtilities(Utilities u)
 	{
-		mortgageSet.add(c);
-	}
-	
-	public void unMortgageProperty()
-	{
+		// code for mortgaging utilities
+		mortgageUtilities.add(u);
 		
 	}
 	
-	public void removePropertyMortgage(Cards c)
+	public void mortgageRailRoad(RailRoad r)
 	{
-		mortgageSet.remove(c);
+		// code for mortgaging railroad
+		mortgageRailRoad.add(r);
+		
 	}
+	
+
+	public void unMortgageProperty(Properties p)
+	{
+		// code for unmortgaging property
+		mortgageProperties.remove(p);
+	}
+	
+
+	public void unMortgageUtilities(Utilities u)
+	{
+		// code for unmortgaging utilities
+		mortgageUtilities.remove(u);
+		
+	}
+	
+	public void unMortgageRailRoad(RailRoad r)
+	{
+		// code for unmortgaging railroad
+		mortgageRailRoad.remove(r);
+		
+	}
+	
+	/**
+	 * @return the mortgageProperties
+	 */
+	public Set<Properties> getMortgageProperties() {
+		return this.mortgageProperties;
+	}
+
+	/**
+	 * @return the mortgageUtilities
+	 */
+	public Set<Utilities> getMortgageUtilities() {
+		return this.mortgageUtilities;
+	}
+
+	/**
+	 * @return the mortgageRailRoad
+	 */
+	public Set<RailRoad> getMortgageRailRoad() {
+		return this.mortgageRailRoad;
+	}
+
 }
