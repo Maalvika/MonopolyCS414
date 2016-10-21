@@ -84,6 +84,7 @@ public class Bank {
 				
 	}
 	
+	// Collect Income Tax from player
 	public void collectIncomeTax(Player p)
 	{
 		if (p.cash>200)
@@ -100,6 +101,7 @@ public class Bank {
 		
 	}
 	
+	// collect luxury tax from the player
 	public void collectLuxuryTax(Player p)
 	{
 		if (p.cash>100)
@@ -116,16 +118,83 @@ public class Bank {
 	}
 	
 	
-	public void giveLoan(Player p, Cards c)
+	// give loan to the player by mortgaging property
+	public void giveLoanProperty(Player p, Properties prop)
 	{
-		int moneyLended = Mortgage.mortgageProperty(Cards c)
+	
 	}
 	
-	public void sellProperty(Player p, Cards c)
+	// give loan to the player by mortgaging utilities
+	public void giveLoanUtility(Player p, Utilities u)
 	{
 		
 	}
 	
+	// give loan to the player by mortgaging railroad
+	public void giveLoanRailRoad( Player p, RailRoad r)
+	{
+		
+	}
+
+	// sell the property owned by a player
+	public void sellProperty(Player p, Properties prop)
+	{
+		
+	}
+	
+	// sell the utilities owned by player
+	public void sellUtilities (Player p, Utilities U)
+	{
+		
+	}
+	
+	// sell the railroad owned by a player to bank
+	public void sellRailRoad(Player p, RailRoad r)
+	{
+		
+	}
+	
+	// add $200 cash to player wallet when he passes the Go on board
+	public void addGoCash(Player p)
+	{
+		
+	}
+	
+
+	/**
+	 * @return the bankUtilitySet
+	 */
+	public Set<Utilities> getBankUtilitySet() {
+		return this.bankUtilitySet;
+	}
+
+	/**
+	 * @return the bankPropertiesSet
+	 */
+	public Set<Properties> getBankPropertiesSet() {
+		return this.bankPropertiesSet;
+	}
+
+	/**
+	 * @return the bankRailRoad
+	 */
+	public Set<RailRoad> getBankRailRoad() {
+		return this.bankRailRoad;
+	}
+
+	/**
+	 * @return the cashReceived
+	 */
+	public int getCashReceived() {
+		return this.cashReceived;
+	}
+
+	/**
+	 * @return the cashGranted
+	 */
+	public int getCashGranted() {
+		return this.cashGranted;
+	}
 	
 
 }
