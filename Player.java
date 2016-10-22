@@ -77,8 +77,19 @@ public class Player {
 		}
 	}
 
-	public void payRent(int rent){
+	public void payRent(int rent)public void payRent(Square s){
 		// pay rent to another player
+		// by getting the rent from square.property 
+		// subtracting the rent from player's balance
+		// adding the rent in owner's balance
+		
+		if(s instanceof Property){
+			int rent = s.getRent();
+			balance =  balance - rent;
+			Player receiver = ((Property) s).getOwner();
+			receiver.balance = receiver.balance + rent;
+			
+		}
 
 	}
 	
