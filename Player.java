@@ -4,28 +4,47 @@ import java.util.Scanner;
 
 public class Player {
 	
-	private String name;
-    Token token;
-    int location = 0;
-    int balance;
-    HashSet<Property> ownedProperty;
+    private String name;
+    private int location;
+    private int balance;
+    private HashSet<Property> ownedProperty;
    
     
-    public Player(String n, Token t, int l){
-    	name = n;
-    	token = t;
-    	location = l;
+    public Player(){
+    	name = "";
+    	location = 0;
     	balance = 1500;
-    	
+	
+    }
+    
+    public Player(String n, int l){
+    	name = n;
+    	location = l;
     }
     
     public String getName(){
+   
     	return name;
+    }
+    
+    public void setName(String name) {
+        this.name = name;
     }
 	
 	public int getLocation(){
+	// returns current location of the player
 		return location;
 	}
+	
+	public void setBalance(int b){
+		this.balance = b;
+	}
+	
+	public void moveForward(int diceValue){
+		// would move the player dicevalue squares forward on the board
+		location = (location + diceValue) % 40;
+	}
+
 	
 	public int getBalance(){
 		return balance;
@@ -58,9 +77,9 @@ public class Player {
 		}
 	}
     
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
-
+    public void payRent(int rent){
+   
+    }
+    
 }
+
