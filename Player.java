@@ -7,7 +7,7 @@ public class Player {
 	private String name;
 	private int location;
 	private int balance;
-	private HashSet<Property> ownedProperty;
+	private HashSet<Properties> ownedProperty;
 
 
 	public Player(){
@@ -51,9 +51,9 @@ public class Player {
 	}
 
 
-	public boolean askToBuy(Property p){
-		if(!p.isOwned()== true){	
-			if(balance > p.getPrice()){
+	public boolean askToBuy(Properties p){
+			if(p.owner == null){
+			if(balance > p.getCost()){
 				System.out.println("You can buy this! Do you want to? yes/no");
 				Scanner scanner = new Scanner(System.in);
 				String response = scanner.next();
@@ -68,41 +68,30 @@ public class Player {
 	}
 
 
-	public void buy(Property p){
+	public void buy(Properties p){
+		// buy property from bank
+		
 		if(askToBuy(p) == true){
-			balance =  balance - p.getPrice();
-			//	p.setOwner(name);
+			balance =  balance - p.getCost();
 			ownedProperty.add(p);
-
 		}
+
 	}
 
-	public void payRent(int rent)public void payRent(Square s){
+	public void payRent(Properties p){
 		// pay rent to another player
 		// by getting the rent from square.property 
 		// subtracting the rent from player's balance
 		// adding the rent in owner's balance
-		
-		if(s instanceof Property){
-			int rent = s.getRent();
-			balance =  balance - rent;
-			Player receiver = ((Property) s).getOwner();
-			receiver.balance = receiver.balance + rent;
 			
-		}
-
+			int rent = p.getRentInitial();
+			balance =  balance - rent;
+			Player receiver = p.getOwner();
+			receiver.balance = receiver.balance + rent;
 	}
 	
-	public void payTax(){
-		
-		//		if(s instanceof Tax){
-//			if(s.Tax.name.equals("Luxury Tax ")){
-//				balance = balance - 100;
-//			}
-//			else if (s.Tax.name.equals("Income Tax")){
-//				balance = balance -200;
-//			}
-//		}
+	public void payTax(int location){
+
 		if(location == 4){
 			// income tax
 			balance = balance - 200;
@@ -113,22 +102,16 @@ public class Player {
 		}
 			
 	}
-		
-	}
-
-	public void CollectRent(Player p){
+	
+	public void sellProperty(Properties p){
 
 	}
 
-	public void sellProperty(Property p){
-
-	}
-
-	public void buyHouse(Property p){
+	public void buyHouse(Properties p){
 
 	}
 	
-	public void buyHotel(Property p){
+	public void buyHotel(Properties p){
 		
 	}
 	
@@ -136,4 +119,5 @@ public class Player {
 
 
 }
+
 
