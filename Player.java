@@ -1,3 +1,5 @@
+package Monopoly;
+
 import java.util.HashSet;
 import java.util.Scanner;
 
@@ -7,7 +9,10 @@ public class Player {
 	private String name;
 	private int location;
 	private int balance;
+	private int housesOwned=0;
+	private int hotelsOwned=0;
 	private HashSet<Properties> ownedProperty;
+	
 
 
 	public Player(){
@@ -104,20 +109,41 @@ public class Player {
 	}
 	
 	public void sellProperty(Properties p){
-
+		if(ownedProperty.contains(p))
+		{
+			balance=balance-((1/2)*p.getCost());
+			ownedProperty.remove(p);
+		}
 	}
 
 	public void buyHouse(Properties p){
-
+		if(ownedProperty.contains(p))
+		{
+		if(balance > p.getHouseCost())
+		{
+			balance=balance-p.getHouseCost();
+			housesOwned++;
 	}
-	
+		}
+	}
 	public void buyHotel(Properties p){
+		if(ownedProperty.contains(p))
+		{
+			if(housesOwned>=4)
+			{
+		if(balance > p.getHotelCost())
+		{
+			balance=balance-p.getHotelCost();
+			hotelsOwned++;
+			housesOwned=0;
+	}
 		
+		}
+	}
 	}
 	
 	
 
 
 }
-
 
