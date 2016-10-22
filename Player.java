@@ -84,6 +84,25 @@ public class Player {
 	
 	public void payTax(){
 		
+		//		if(s instanceof Tax){
+//			if(s.Tax.name.equals("Luxury Tax ")){
+//				balance = balance - 100;
+//			}
+//			else if (s.Tax.name.equals("Income Tax")){
+//				balance = balance -200;
+//			}
+//		}
+		if(location == 4){
+			// income tax
+			balance = balance - 200;
+		}
+		if(location == 38){
+			// luxury tax
+			balance = balance - 100;
+		}
+			
+	}
+		
 	}
 
 	public void CollectRent(Player p){
