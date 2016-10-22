@@ -1,4 +1,3 @@
-
 public class Properties extends Squares {
 
 	
@@ -13,6 +12,7 @@ public class Properties extends Squares {
 	int houseCost;
 	int hotelCost;
 	String color;
+	Player owner;
 	public Properties(int i) {
 		super(i);
 		setProperties(i);
@@ -158,6 +158,22 @@ public class Properties extends Squares {
 				{
 					this.color = "Blue";
 				}
+	}
+
+	
+	
+	/**
+	 * @return the owner of properties
+	 */
+	public Player getOwner() {
+		return this.owner;
+	}
+
+	/**
+	 * @param sets the owner of property
+	 */
+	public void setOwner(Player owner) {
+		this.owner = owner;
 	}
 
 	/**
