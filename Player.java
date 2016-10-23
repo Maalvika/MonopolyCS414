@@ -1,5 +1,3 @@
-package Monopoly;
-
 import java.util.HashSet;
 import java.util.Scanner;
 
@@ -9,10 +7,11 @@ public class Player {
 	private String name;
 	private int location;
 	private int balance;
+	private HashSet<Properties> ownedProperty;
 	private int housesOwned=0;
 	private int hotelsOwned=0;
-	private HashSet<Properties> ownedProperty;
-	
+	private HashSet<Utilities> ownedUtilities;
+	private HashSet<RailRoad> ownedRailRoad;
 
 
 	public Player(){
@@ -28,11 +27,13 @@ public class Player {
 	}
 
 	public String getName(){
+		// to get player's name
 
 		return name;
 	}
 
 	public void setName(String name) {
+		// to set player's name
 		this.name = name;
 	}
 
@@ -50,22 +51,24 @@ public class Player {
 		location = (location + diceValue) % 40;
 	}
 
-
 	public int getBalance(){
 		return balance;
 	}
 
-
-	public boolean askToBuy(Properties p){
-			if(p.owner == null){
+	public boolean askToBuyProperty(Properties p, Bank b){
+		// ask to buy a property
+		if(b.getBankPropertiesSet().contains(p)){
 			if(balance > p.getCost()){
 				System.out.println("You can buy this! Do you want to? yes/no");
 				Scanner scanner = new Scanner(System.in);
 				String response = scanner.next();
 				if(response.equals("yes")){
+					scanner.close();
+
 					return true;
 				}
-				else return false;
+				scanner.close();
+				return false;
 			}
 			return false;
 		}
@@ -73,14 +76,73 @@ public class Player {
 	}
 
 
-	public void buy(Properties p){
+	public void buyProperty(Properties p, Bank b){
 		// buy property from bank
-		
-		if(askToBuy(p) == true){
+
+		if(askToBuyProperty(p,b) == true){
 			balance =  balance - p.getCost();
 			ownedProperty.add(p);
+			b.getBankPropertiesSet().remove(p);
 		}
+	}
 
+	public boolean askToBuyUtility(Utilities u, Bank b){
+		// ask to buy utility if the player has balance
+		if(b.getBankUtilitySet().contains(u)){
+			if(balance > u.getCost()){
+				System.out.println("You can buy this! Do you want to? yes/no");
+				Scanner scanner = new Scanner(System.in);
+				String response = scanner.next();
+				if(response.equals("yes")){
+					scanner.close();
+
+					return true;
+				}
+				scanner.close();
+				return false;
+			}
+			return false;
+		}
+		return false;
+	}
+
+	public void buyUtility( Utilities u, Bank b){
+		// buy utility from bank
+
+		if(askToBuyUtility(u,b) == true){
+			balance =  balance - u.getCost();
+			ownedUtilities.add(u);
+			b.getBankUtilitySet().remove(u);
+		}
+	}
+
+	public boolean askToBuyRailRoad(RailRoad r, Bank b){
+		// ask to buy a railroad if the player has balance
+		if(b.getBankRailRoad().contains(r)){
+			if(balance > r.getCost()){
+				System.out.println("You can buy this! Do you want to? yes/no");
+				Scanner scanner = new Scanner(System.in);
+				String response = scanner.next();
+				if(response.equals("yes")){
+					scanner.close();
+					return true;
+				}
+				scanner.close();
+				return false;
+			}
+			return false;
+		}
+		return false;
+	}
+
+	public void buyRailRoad( RailRoad r, Bank b){
+		// buy utility from bank
+
+		if(askToBuyRailRoad(r,b) == true){
+			balance =  balance - r.getCost();
+			ownedRailRoad.add(r);
+			b.getBankRailRoad().remove(r);
+		}
 	}
 
 	public void payRent(Properties p){
@@ -88,15 +150,22 @@ public class Player {
 		// by getting the rent from square.property 
 		// subtracting the rent from player's balance
 		// adding the rent in owner's balance
-			
-			int rent = p.getRentInitial();
-			balance =  balance - rent;
-			Player receiver = p.getOwner();
-			receiver.balance = receiver.balance + rent;
-	}
-	
-	public void payTax(int location){
 
+		int rent = p.getRentInitial();
+		balance =  balance - rent;
+		Player receiver = p.getOwner();
+		receiver.balance = receiver.balance + rent;
+	}
+
+	public void payTax(int location){
+		//		if(s instanceof Tax){
+		//			if(s.Tax.name.equals("Luxury Tax ")){
+		//				balance = balance - 100;
+		//			}
+		//			else if (s.Tax.name.equals("Income Tax")){
+		//				balance = balance -200;
+		//			}
+		//		}
 		if(location == 4){
 			// income tax
 			balance = balance - 200;
@@ -105,14 +174,15 @@ public class Player {
 			// luxury tax
 			balance = balance - 100;
 		}
-			
+
 	}
-	
+
 	public void sellProperty(Properties p){
-		
+
 		if(ownedProperty.contains(p))
 		{
 			balance=balance-((1/2)*p.getCost());
+			// why half?
 			ownedProperty.remove(p);
 		}
 	}
@@ -121,32 +191,28 @@ public class Player {
 		// buy house on owned property
 		if(ownedProperty.contains(p))
 		{
-		if(balance > p.getHouseCost())
-		{
-			balance=balance-p.getHouseCost();
-			housesOwned++;
-	}
+			if(balance > p.getHouseCost())
+			{
+				balance=balance-p.getHouseCost();
+				housesOwned++;
+			}
 		}
 	}
+
 	public void buyHotel(Properties p){
 		// buy hotel on owned property
 		if(ownedProperty.contains(p))
 		{
 			if(housesOwned>=4)
 			{
-		if(balance > p.getHotelCost())
-		{
-			balance=balance-p.getHotelCost();
-			hotelsOwned++;
-			housesOwned=0;
-	}
-		
+				if(balance > p.getHotelCost())
+				{
+					balance=balance-p.getHotelCost();
+					hotelsOwned++;
+					housesOwned=0;
+				}
+
+			}
 		}
 	}
-	}
-	
-	
-
-
 }
-
