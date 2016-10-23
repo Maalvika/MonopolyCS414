@@ -1,13 +1,17 @@
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 
 
 	public class Board {
 
 		public static String[] board;
-		//public static int loops = 0;
-		public static int position = 0;
-
 		
+		
+		HashMap <Squares, Player> map = new HashMap<Squares, Player>();
+		
+	    		
 		public Board(){
 			board = new String[40];
 			initializeBoard();
@@ -55,7 +59,14 @@ import java.util.Arrays;
 			board[37] = "Park Place";
 			board[38] = "Luxury Tax";
 			board[39] = "Boardwalk";
-				
 		
 		}
+		
+		public boolean landedOnGoToJail(Player p){
+			if(p.getLocation() == 30){
+				return true;
+			}
+			return false;
+		}
+		
 		
