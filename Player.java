@@ -55,6 +55,17 @@ public class Player {
 		return balance;
 	}
 
+	public void passGo(int diceValue){
+		// This is to add $200 every time a player lands on or crosses "GO".
+		for(int i = 0; i>40;i++ ){
+			if(getLocation() + diceValue >= 40){
+				int newBalance = getBalance() + 200;
+				setBalance(newBalance);
+			}
+		}
+	}
+
+
 	public boolean askToBuyProperty(Properties p, Bank b){
 		// ask to buy a property
 		if(b.getBankPropertiesSet().contains(p)){
