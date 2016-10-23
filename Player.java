@@ -109,6 +109,7 @@ public class Player {
 	}
 	
 	public void sellProperty(Properties p){
+		
 		if(ownedProperty.contains(p))
 		{
 			balance=balance-((1/2)*p.getCost());
@@ -117,6 +118,7 @@ public class Player {
 	}
 
 	public void buyHouse(Properties p){
+		// buy house on owned property
 		if(ownedProperty.contains(p))
 		{
 		if(balance > p.getHouseCost())
@@ -127,6 +129,7 @@ public class Player {
 		}
 	}
 	public void buyHotel(Properties p){
+		// buy hotel on owned property
 		if(ownedProperty.contains(p))
 		{
 			if(housesOwned>=4)
