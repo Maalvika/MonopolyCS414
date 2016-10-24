@@ -1,9 +1,7 @@
+
 import java.util.HashSet;
 import java.util.Set;
-
-public class Mortgage {
-	
-	
+public class Mortgage {	
 	private Set<Properties> mortgageProperties = new HashSet<Properties>();
 	private Set<Utilities> mortgageUtilities = new HashSet<Utilities>();
 	private Set<RailRoad> mortgageRailRoad = new HashSet<RailRoad>();
@@ -11,26 +9,23 @@ public class Mortgage {
 	public Mortgage() {
 	
 	}
-
+	
 	public void mortgageProperty(Properties p)
 	{
 		// code for mortgaging property
-		mortgageProperties.add(p);
-		
+		mortgageProperties.add(p);	
 	}
 	
 	public void mortgageUtilities(Utilities u)
 	{
 		// code for mortgaging utilities
-		mortgageUtilities.add(u);
-		
+		mortgageUtilities.add(u);		
 	}
 	
 	public void mortgageRailRoad(RailRoad r)
 	{
 		// code for mortgaging railroad
 		mortgageRailRoad.add(r);
-		
 	}
 	
 
@@ -45,14 +40,12 @@ public class Mortgage {
 	{
 		// code for unmortgaging utilities
 		mortgageUtilities.remove(u);
-		
 	}
 	
 	public void unMortgageRailRoad(RailRoad r)
 	{
 		// code for unmortgaging railroad
 		mortgageRailRoad.remove(r);
-		
 	}
 	
 	/**
