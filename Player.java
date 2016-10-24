@@ -91,7 +91,7 @@ public class Player {
 			}
 		}
 	}
-	
+
 	public boolean askToBuyProperty(Properties p, Bank b){
 		// ask to buy a property
 		if(b.getBankPropertiesSet().contains(p)){
@@ -214,12 +214,37 @@ public class Player {
 
 	}
 
+	public void mortgageProperty(Properties p, Bank b){
+		// asks bank for loan on a particular property 
+		
+		if(ownedProperty.contains(p)){
+			b.giveLoanProperty(this, p);
+		
+		}
+	}
+
+	public void mortgageUtility(Utilities u, Bank b){
+		// asks bank for loan on a particular utility
+		if(ownedUtilities.contains(u)){
+			b.giveLoanUtility(this, u);
+					
+		}
+	}
+
+	public void mortgageRailRoad(RailRoad r, Bank b){
+		// asks bank for loan on a particular railroad
+		if(ownedRailRoad.contains(r)){
+			b.giveLoanRailRoad(this, r);
+						
+		}
+	}
+
 	public void sellProperty(Properties p){
 
 		if(ownedProperty.contains(p))
 		{
-			balance=balance+((1/2)*p.getCost());
-			
+			balance=balance-((1/2)*p.getCost());
+			// why half?
 			ownedProperty.remove(p);
 		}
 	}
