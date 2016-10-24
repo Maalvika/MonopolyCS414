@@ -1,3 +1,4 @@
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -8,6 +9,8 @@ public class Bank {
 	private Set<RailRoad> bankRailRoad = new HashSet<RailRoad>();
 	private int cashReceived;
 	private int cashGranted;
+	private int bankHouse;
+	private int bankHotel;
 
 	// Constructor for the bank
 	public Bank() {
@@ -84,7 +87,8 @@ public class Bank {
 				
 	}
 	
-	// Collect Income Tax from player
+	/*This functionality no more required 
+	 * // Collect Income Tax from player
 	public void collectIncomeTax(Player p)
 	{
 		if (p.cash>200)
@@ -115,27 +119,38 @@ public class Bank {
 		{
 			// call the function to end game for player, if no deeds left
 		}
-	}
+	}*/
 	
 	
 	// give loan to the player by mortgaging property
-	public void giveLoanProperty(Player p, Properties prop)
+	public void giveLoanProperty(Player p, Properties prop, Mortgage m)
 	{
-	
+		int cost = prop.getMortgageValue();
+		int currentBalance = p.getBalance();
+		p.setBalance(currentBalance+cost);
+		m.mortgageProperty(prop);
+		
 	}
 	
 	// give loan to the player by mortgaging utilities
-	public void giveLoanUtility(Player p, Utilities u)
+	public void giveLoanUtility(Player p, Utilities u, Mortgage m)
 	{
-		
+		int cost = u.getMortgageValue();
+		int currentBalance = p.getBalance();
+		p.setBalance(currentBalance+cost);
+		m.mortgageUtilities(u);
 	}
 	
 	// give loan to the player by mortgaging railroad
-	public void giveLoanRailRoad( Player p, RailRoad r)
+	public void giveLoanRailRoad( Player p, RailRoad r, Mortgage m)
 	{
-		
+		int cost = r.getMortgageValue();
+		int currentBalance = p.getBalance();
+		p.setBalance(currentBalance+cost);
+		m.mortgageRailRoad(r);
 	}
 
+	/* This functionality is not required anymore, may be required at refactoring
 	// sell the property owned by a player
 	public void sellProperty(Player p, Properties prop)
 	{
@@ -159,7 +174,35 @@ public class Bank {
 	{
 		
 	}
-	
+	*/
+
+	/**
+	 * @return the bankHouse
+	 */
+	public int getBankHouse() {
+		return this.bankHouse;
+	}
+
+	/**
+	 * @param bankHouse the bankHouse to set
+	 */
+	public void setBankHouse(int bankHouse) {
+		this.bankHouse = bankHouse;
+	}
+
+	/**
+	 * @return the bankHotel
+	 */
+	public int getBankHotel() {
+		return this.bankHotel;
+	}
+
+	/**
+	 * @param bankHotel the bankHotel to set
+	 */
+	public void setBankHotel(int bankHotel) {
+		this.bankHotel = bankHotel;
+	}
 
 	/**
 	 * @return the bankUtilitySet
