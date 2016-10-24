@@ -218,8 +218,8 @@ public class Player {
 
 		if(ownedProperty.contains(p))
 		{
-			balance=balance-((1/2)*p.getCost());
-			// why half?
+			balance=balance+((1/2)*p.getCost());
+			
 			ownedProperty.remove(p);
 		}
 	}
