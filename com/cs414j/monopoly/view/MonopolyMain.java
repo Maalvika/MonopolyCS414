@@ -27,7 +27,7 @@ public class MonopolyMain {
 	private static JFrame frame;
 	private static Container contentPane;
 	static String currentpName;
-    private static int currentScore;
+    static int currentScore;
     public static Die _leftDie;     
     public static Die _rightDie;
     public static ImagePanel panel;
@@ -73,9 +73,13 @@ public class MonopolyMain {
 
 	private static Token adjustPosition(Token t) {
 		
-		if(t.getxCoordinate()==10) {
-			if((t.getyCoordinate()-80*(_leftDie.getValue()+_rightDie.getValue()))>70) {
-				t.setyCoordinate(t.getyCoordinate()-80*(_leftDie.getValue()+_rightDie.getValue()));
+		if(t.getxCoordinate()==10 || t.getxCoordinate() == 70) {
+			if((t.getyCoordinate()-80*(_leftDie.getValue()+_rightDie.getValue()))>=70) {
+				if(t.getyCoordinate() == 930) {
+					t.setyCoordinate(t.getyCoordinate()-80*(_leftDie.getValue()+_rightDie.getValue()+1));
+				} else {
+					t.setyCoordinate(t.getyCoordinate()-80*(_leftDie.getValue()+_rightDie.getValue()));
+				}
 			} else {		
 				int ypoint = (t.getyCoordinate()-70)/80;
 				//since the corner is a bigger block so we need 1 step more to get the 
@@ -118,7 +122,7 @@ public class MonopolyMain {
 				System.out.println("xc3:"+t.getxCoordinate()+"yc3:"+t.getyCoordinate());
 			}
 			
-		}else if(t.getyCoordinate() == 870) {
+		}else if(t.getyCoordinate() == 870 && (t.getxCoordinate()!=10 || t.getxCoordinate()!=70)) {
 			if(t.getxCoordinate()-80*(_leftDie.getValue()+_rightDie.getValue())>10) {
 				t.setxCoordinate(t.getxCoordinate()-80*(_leftDie.getValue()+_rightDie.getValue()));
 			} else if (t.getxCoordinate()==90) {

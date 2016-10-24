@@ -4,7 +4,10 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -18,6 +21,7 @@ public class ImagePanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private Image img;
 	private List<Token> tokens;
+	private Map<PropertyUI,Integer> properties = new HashMap<>();
 
 	  public ImagePanel(Image img, List<Token> tokens) {
 	    this.img = img;
@@ -31,24 +35,42 @@ public class ImagePanel extends JPanel {
 	    //setOpaque(true);
 	  }
 
-	  public void paintComponent(Graphics g) {
-	    g.drawImage(img, 0, 0, null);
-	    for(Token t: tokens) {
-	    	g.drawImage(getCarTokenImg(t.getToken()), t.getxCoordinate(), t.getyCoordinate(), 50,50,null);
-	    }
-	    repaint();
-	  }
-	  
+	public void paintComponent(Graphics g) {
+		g.drawImage(img, 0, 0, null);
+		for (Token t : tokens) {
+			g.drawImage(getTokenImg(t.getToken()), t.getxCoordinate(), t.getyCoordinate(), 50, 50, null);
+		}
+		if (!properties.isEmpty()) {
+			for (Entry<PropertyUI, Integer> prop : properties.entrySet()) {
+				if (prop.getValue() >= 1) {
+					PropertyUI temp = prop.getKey();
+					for (int i = 0; i < prop.getValue(); i++)
+						g.drawImage(getTokenImg(TokenUrls.HOUSE), temp.getxPoint()
+								+ i * 20, temp.getyPoint() + i * 20,20, 20, null);
+
+				}
+			}
+		}
+		repaint();
+	}
+
 	  public void changeTokenPosition(List<Token> tokens){
 		  this.tokens = tokens;
 		  repaint();
 	  }
 	  
-	  private Image getCarTokenImg(TokenUrls token) {
+	  public void buildHouse(Map<PropertyUI,Integer> properties){
+		  this.properties = properties;
+		  repaint();
+	  }
+	  
+	  
+	  
+	  private Image getTokenImg(TokenUrls token) {
 		  final BufferedImage img = new ImageUtility().scaleImage(1000, 1000, token.getURLValue());
 		  Image tokenImg = new ImageIcon(img).getImage();
 		  return tokenImg;
 		  
 	  }
-
+	  
 	}

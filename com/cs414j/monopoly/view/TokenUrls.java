@@ -2,7 +2,8 @@ package com.cs414j.monopoly.view;
 
 public enum TokenUrls {
 
-	CAR("images/car.jpg"), SHIP("images/ship.jpg"),HORSE("images/horse.jpg"),SHOE("images/shoe.jpg");
+	CAR("images/car.jpg"), SHIP("images/ship.jpg"),HORSE("images/horse.jpg"),
+	SHOE("images/shoe.jpg"),HOUSE("images/house.jpg"),HOTEL("images/hotel.jpg");
 
 	private final String name;
 

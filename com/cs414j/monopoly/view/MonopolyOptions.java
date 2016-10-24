@@ -4,6 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -30,6 +33,7 @@ public class MonopolyOptions extends JPanel {
 	static JButton mortgage;
 	static JButton tax;
 	static JButton conti;
+	static Map<PropertyUI, Integer> properties = new HashMap<>();
 
 	public MonopolyOptions(JFrame frame, String playerName, int playerScore) {
 		super(new BorderLayout());
@@ -109,20 +113,77 @@ public class MonopolyOptions extends JPanel {
 				contiActionPerformed(evt);
 			}
 		});
+		build.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				buildActionPerformed(evt);
+			}
+		});
+		buy.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				buyActionPerformed(evt);
+			}
+		});
 		return gameOptions;
+		
 
 	}
 
+	protected void buyActionPerformed(ActionEvent evt) {
+		String pName = MonopolyMain.currentpName;
+		Token currentToken = MonopolyMain.tokens.get(MonopolyMain.players.indexOf(pName));
+		PropertyUI p = new PropertyUI(currentToken.getxCoordinate(), currentToken.getyCoordinate(), pName);
+		if(!properties.containsKey(p)) {
+			properties.put(p, 0);
+		}
+		
+	}
+
+	protected void buildActionPerformed(ActionEvent evt) {
+		String pName = MonopolyMain.currentpName;
+		Token currentToken = MonopolyMain.tokens.get(MonopolyMain.players.indexOf(pName));
+		PropertyUI p = new PropertyUI(currentToken.getxCoordinate(), currentToken.getyCoordinate(), pName);
+		if(properties.containsKey(p) && properties.get(p)!=4) {
+			properties.put(p, properties.get(p)+1);
+		} 	
+		MonopolyMain.panel.buildHouse(properties);
+	}
+
 	protected void contiActionPerformed(ActionEvent evt) {
-		rollDice.setEnabled(true);
+		initButtonSettings();
+		switchToNextTurn();
+		changePlayerDetails(MonopolyMain.currentpName, MonopolyMain.currentScore);
+		
 
 	}
 
 	protected void rollDiceActionPerformed(ActionEvent evt) {
 		MonopolyMain._leftDie.roll();
 		MonopolyMain._rightDie.roll();
+		System.out.println("die rolled"+MonopolyMain.currentpName);
+		System.out.println("token:"+MonopolyMain.tokens.get(MonopolyMain.players.indexOf(MonopolyMain.currentpName)).getToken().name());
 		MonopolyMain.changeBoardImage();
 		ButtonValidate.landOnBloack(MonopolyMain.tokens.get(MonopolyMain.players.indexOf(MonopolyMain.currentpName)));
+	}
+	
+	private void switchToNextTurn(){
+		int currentIndex = MonopolyMain.players.indexOf(MonopolyMain.currentpName);
+		if(currentIndex == MonopolyMain.players.size()-1) {
+			MonopolyMain.currentpName = MonopolyMain.players.get(0);
+		} else {
+			MonopolyMain.currentpName = MonopolyMain.players.get(currentIndex+1);
+			MonopolyMain.currentScore = 50;
+		}
+	}
+	
+	private void initButtonSettings() {
+		MonopolyOptions.rollDice.setEnabled(true);
+		MonopolyOptions.buy.setEnabled(false);
+		MonopolyOptions.conti.setEnabled(false);
+		MonopolyOptions.pay.setEnabled(false);
+		MonopolyOptions.build.setEnabled(false);
+		MonopolyOptions.tax.setEnabled(false);
+		// TODO: check player balance before enabling the button
+		MonopolyOptions.mortgage.setEnabled(false);
 
 	}
 

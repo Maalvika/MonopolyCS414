@@ -33,6 +33,7 @@ public class ButtonValidate {
 
 	private static int validateCorners(int x, int y) {
 		for (Corner c : Corner.values()) {
+			System.out.println("a1");
 			if (x == c.getXpoint() && y == c.getYpoint()) {
 				MonopolyOptions.rollDice.setEnabled(true);
 				MonopolyOptions.buy.setEnabled(false);
@@ -59,7 +60,7 @@ public class ButtonValidate {
 				MonopolyOptions.build.setEnabled(false);
 				MonopolyOptions.tax.setEnabled(true);
 				// TODO: check player balance before enabling the button
-				MonopolyOptions.mortgage.setEnabled(false);
+				MonopolyOptions.mortgage.setEnabled(true);
 				return 1;
 			}
 
@@ -77,7 +78,7 @@ public class ButtonValidate {
 				MonopolyOptions.build.setEnabled(false);
 				MonopolyOptions.tax.setEnabled(false);
 				// TODO: check player balance before enabling the button
-				MonopolyOptions.mortgage.setEnabled(false);
+				MonopolyOptions.mortgage.setEnabled(true);
 				return 1;
 
 			}
@@ -97,7 +98,7 @@ public class ButtonValidate {
 				MonopolyOptions.build.setEnabled(false);
 				MonopolyOptions.tax.setEnabled(false);
 				// TODO: check player balance before enabling the button
-				MonopolyOptions.mortgage.setEnabled(false);
+				MonopolyOptions.mortgage.setEnabled(true);
 				return 1;
 
 			}
@@ -108,9 +109,9 @@ public class ButtonValidate {
 	}
 
 	private static int validateChance(int x, int y) {
-		System.out.println("chance1");
 		for (Chance c : Chance.values()) {
 			if (x == c.getXpoint() && y == c.getYpoint()) {
+				System.out.println("a2");
 				MonopolyOptions.rollDice.setEnabled(false);
 				MonopolyOptions.buy.setEnabled(false);
 				MonopolyOptions.conti.setEnabled(true);
@@ -118,7 +119,7 @@ public class ButtonValidate {
 				MonopolyOptions.build.setEnabled(false);
 				MonopolyOptions.tax.setEnabled(false);
 				// TODO: check player balance before enabling the button
-				MonopolyOptions.mortgage.setEnabled(false);
+				MonopolyOptions.mortgage.setEnabled(true);
 				return 1;
 
 			}
@@ -149,15 +150,29 @@ public class ButtonValidate {
 	}
 	
 	private static void defaultSettings() {
+		System.out.println("a3");
 		MonopolyOptions.rollDice.setEnabled(false);
-		MonopolyOptions.buy.setEnabled(true);
 		MonopolyOptions.conti.setEnabled(true);
 		MonopolyOptions.pay.setEnabled(false);
-		MonopolyOptions.build.setEnabled(false);
+		if(MonopolyOptions.properties.containsKey(getCurrentPropertyUI())) {
+			MonopolyOptions.build.setEnabled(true);
+			MonopolyOptions.buy.setEnabled(false);
+		} else {
+			MonopolyOptions.build.setEnabled(false);
+			MonopolyOptions.buy.setEnabled(true);
+		}
 		MonopolyOptions.tax.setEnabled(false);
 		// TODO: check player balance before enabling the button
-		MonopolyOptions.mortgage.setEnabled(false);
+		MonopolyOptions.mortgage.setEnabled(true);
 
+	}
+	
+	
+	private static PropertyUI getCurrentPropertyUI() {
+		String pName = MonopolyMain.currentpName;
+		Token currentToken = MonopolyMain.tokens.get(MonopolyMain.players.indexOf(pName));
+		PropertyUI p = new PropertyUI(currentToken.getxCoordinate(), currentToken.getyCoordinate(), pName);
+		return p;
 	}
 
 
