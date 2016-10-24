@@ -1,7 +1,6 @@
-package Monopoly;
-
 import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 
 public class Player {
@@ -14,6 +13,7 @@ public class Player {
 	private int hotelsOwned=0;
 	private HashSet<Utilities> ownedUtilities;
 	private HashSet<RailRoad> ownedRailRoad;
+	Token token;
 
 
 	public Player(){
@@ -48,6 +48,10 @@ public class Player {
 		this.balance = b;
 	}
 
+	public Set<Properties> getOwnedProperties(){
+		return ownedProperty;
+	}
+
 	public void moveForward(int diceValue){
 		// would move the player dicevalue squares forward on the board
 		location = (location + diceValue) % 40;
@@ -55,6 +59,14 @@ public class Player {
 
 	public int getBalance(){
 		return balance;
+	}
+
+	public boolean isPropertyOwned(Properties p){
+		// checks if a particular method is owned by a property
+		if(ownedProperty.contains(p)){
+			return true;
+		}
+		else return false;
 	}
 
 	public void passGo(int diceValue){
@@ -197,14 +209,9 @@ public class Player {
 	}
 
 	public void payTax(int location){
-		//		if(s instanceof Tax){
-		//			if(s.Tax.name.equals("Luxury Tax ")){
-		//				balance = balance - 100;
-		//			}
-		//			else if (s.Tax.name.equals("Income Tax")){
-		//				balance = balance -200;
-		//			}
-		//		}
+		// deducts $100 if player lands on luxury tax
+		//deducts $200 from player's balance if player lands on income tax
+
 		if(location == 4){
 			// income tax
 			balance = balance - 200;
@@ -218,10 +225,10 @@ public class Player {
 
 	public void mortgageProperty(Properties p, Bank b){
 		// asks bank for loan on a particular property 
-		
+
 		if(ownedProperty.contains(p)){
 			b.giveLoanProperty(this, p);
-		
+
 		}
 	}
 
@@ -229,7 +236,7 @@ public class Player {
 		// asks bank for loan on a particular utility
 		if(ownedUtilities.contains(u)){
 			b.giveLoanUtility(this, u);
-					
+
 		}
 	}
 
@@ -237,7 +244,7 @@ public class Player {
 		// asks bank for loan on a particular railroad
 		if(ownedRailRoad.contains(r)){
 			b.giveLoanRailRoad(this, r);
-						
+
 		}
 	}
 
