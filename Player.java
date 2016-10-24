@@ -1,3 +1,5 @@
+package Monopoly;
+
 import java.util.HashSet;
 import java.util.Scanner;
 
@@ -239,13 +241,14 @@ public class Player {
 		}
 	}
 
-	public void sellProperty(Properties p){
+	public void sellProperty(Properties p,Bank b){
 
 		if(ownedProperty.contains(p))
 		{
-			balance=balance-((1/2)*p.getCost());
-			// why half?
+			balance=balance+((1/2)*p.getCost());
+		
 			ownedProperty.remove(p);
+			b.getBankPropertiesSet().add(p);
 		}
 	}
 
