@@ -111,12 +111,6 @@ import java.util.Scanner;
 			
 		}
 		
-		public boolean landedOnGoToJail(Player p){
-			if(p.getLocation() == 30){
-				return true;
-			}
-			return false;
-		}
 		
 		public String[] getBoard()
 		{
