@@ -150,6 +150,38 @@ public class Bank {
 		}
 	}*/
 	
+	// un mortgaging by the bank
+	public void unMortgageProperty(Player p, Properties prop)
+	{
+		int unMortgageValue = prop.getMortgageValue();
+		double interest = 0.10*unMortgageValue;
+		int newInterest = (int) interest;
+		unMortgageValue = unMortgageValue + newInterest;
+		p.setBalance(p.getBalance() - unMortgageValue);
+		Mortgage.getInstance().unMortgageProperty(prop);
+		
+	}
+	
+	public void unMortgageUtility(Player p, Utilities u)
+	{
+		int unMortgageValue = u.getMortgageValue();
+		double interest = 0.10*unMortgageValue;
+		int newInterest = (int) interest;
+		unMortgageValue = unMortgageValue + newInterest;
+		p.setBalance(p.getBalance() - unMortgageValue);
+		Mortgage.getInstance().unMortgageUtilities(u);
+	}
+	
+	public void unMortgageRailRoad(Player p, RailRoad r)
+	{
+		int unMortgageValue = r.getMortgageValue();
+		double interest = 0.10*unMortgageValue;
+		int newInterest = (int) interest;
+		unMortgageValue = unMortgageValue + newInterest;
+		p.setBalance(p.getBalance() - unMortgageValue);
+		Mortgage.getInstance().unMortgageRailRoad(r);
+	}
+	
 	
 	// give loan to the player by mortgaging property
 	public void giveLoanProperty(Player p, Properties prop, Mortgage m)
