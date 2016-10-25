@@ -129,12 +129,26 @@ public class Player {
 		}
 		return false;
 	}
-
-
-	public void buyProperty(Properties p, Bank b){
-		// buy property from bank
-
-		if(askToBuyProperty(p,b) == true){
+	
+	public boolean mapContainsKey(String key, Board board){
+		if(board.stringProperties.containsKey(key)){
+			return true;
+		}
+		return false;
+	}
+	
+	public Properties getPropertyObject(String key, Board board){
+		if(mapContainsKey(key, board) == true){
+			return board.stringProperties.get(key);
+		}
+		else return null;
+	}
+	
+	public void buyProperty(String name, Bank b, Board board){
+		// to buy property from bank
+		if(!(getPropertyObject(name,board)==null))		
+		{
+		    Properties p = getPropertyObject(name,board);
 			balance =  balance - p.getCost();
 			ownedProperty.add(p);
 			b.getBankPropertiesSet().remove(p);
