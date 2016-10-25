@@ -90,18 +90,24 @@ public class Bank {
 		// similar logic is followed as explained above
 		RailRoad r1 = new RailRoad(5);
 		bankRailRoad.add(r1);
+		boardInstance.initializeStringRailRoad(5,r1);
 		RailRoad r2 = new RailRoad(15);
 		bankRailRoad.add(r2);
+		boardInstance.initializeStringRailRoad(15,r2);
 		RailRoad r3 = new RailRoad(25);
 		bankRailRoad.add(r3);
+		boardInstance.initializeStringRailRoad(25,r3);
 		RailRoad r4 = new RailRoad(35);
 		bankRailRoad.add(r4);
+		boardInstance.initializeStringRailRoad(35,r4);
 		
 		// Creating objects for Utilities
 		Utilities u1 = new Utilities(12);
 		bankUtilitySet.add(u1);
+		boardInstance.initializeStringUtilities(12,u1);
 		Utilities u2 = new Utilities(28);
 		bankUtilitySet.add(u2);
+		boardInstance.initializeStringUtilities(28,u2);
 		
 		// Creating Objects for Tax
 		Tax t1 = new Tax(4);
