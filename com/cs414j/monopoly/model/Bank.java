@@ -11,6 +11,7 @@ public class Bank {
 	private int bankHouse;
 	private int bankHotel;
 	private Board boardInstance;
+	private static Bank bankInstance;
 
 	// Constructor for the bank
 	public Bank() {
@@ -114,6 +115,13 @@ public class Bank {
 		Tax t2 = new Tax(38);
 		
 				
+	}
+	// singleton 
+	public static Bank getInstance() {
+		if(bankInstance == null) {
+			bankInstance = new Bank();
+		}
+		return bankInstance;
 	}
 	
 	/*This functionality no more required 
