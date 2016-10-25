@@ -23,6 +23,7 @@ public class Properties extends Squares {
 		
 	}
 	
+
 	public void setProperties(int i)
 	{
 		// populating Vertical First Grid
@@ -169,6 +170,13 @@ public class Properties extends Squares {
 	}
 	
 	
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
 	
 	/**
 	 * @return the owner of properties
