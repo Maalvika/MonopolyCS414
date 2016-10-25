@@ -1,5 +1,3 @@
-package com.cs414j.monopoly.model;
-
 
 public class Squares {
 	
@@ -29,12 +27,15 @@ public class Squares {
             {400,50,200,600,1400,1700,2000,200,200,200},{0,0,0,0,0,0,0,0,0,0}};
 	
 	
-	
+	String namesList[];
+	Board boardInstance;
 	
 	public Squares( int i)
 	{
 		//Constructor
 		//setCards(i);
+		boardInstance = Board.getInstance();
+		namesList = boardInstance.getBoard();
 	}
 
 	
