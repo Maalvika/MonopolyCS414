@@ -105,16 +105,5 @@ import java.util.Scanner;
 		{
 			return this.board;
 		}
-		{
-			String name = board[i];
-			stringProperties.put(name,p);
-			
-		}
-		
-		
-		public String[] getBoard()
-		{
-			return this.board;
-		}
 		
 	}
