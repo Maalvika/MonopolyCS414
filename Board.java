@@ -1,5 +1,6 @@
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -9,9 +10,10 @@ import java.util.Scanner;
 		public static String[] board;
 		private static Board boardInstance;
 		
-		
-		//private HashMap <Squares, Player> map = new HashMap<Squares, Player>();
-		private HashMap<String, Properties> stringProperties = new HashMap<String, Properties>();
+
+		public HashMap<String, Properties> stringProperties = new HashMap<String, Properties>();
+		public HashMap<String, Utilities> stringUtilities = new HashMap<String, Utilities>();
+		public HashMap<String, RailRoad> stringRailRoad = new HashMap<String, RailRoad>();
 		
 	    		
 		private Board(){
@@ -71,6 +73,38 @@ import java.util.Scanner;
 		}
 		
 		public void initializeStringProperties(int i, Properties p)
+		{
+			String name = board[i];
+			stringProperties.put(name,p);
+			
+		}
+		
+		public void initializeStringUtilities(int i, Utilities u)
+		{
+			String name = board[i];
+			stringUtilities.put(name,u);
+			
+		}
+		
+		public void initializeStringRailRoad(int i, RailRoad r)
+		{
+			String name = board[i];
+			stringRailRoad.put(name,r);
+			
+		}		
+		
+		public boolean landedOnGoToJail(Player p){
+			if(p.getLocation() == 30)
+			{
+				return true;
+			}
+			return false;
+		}
+		
+		public String[] getBoard()
+		{
+			return this.board;
+		}
 		{
 			String name = board[i];
 			stringProperties.put(name,p);
