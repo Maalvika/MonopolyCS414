@@ -7,16 +7,24 @@ import java.util.Scanner;
 	public class Board {
 
 		public static String[] board;
+		private static Board boardInstance;
 		
 		
-		HashMap <Squares, Player> map = new HashMap<Squares, Player>();
+		//private HashMap <Squares, Player> map = new HashMap<Squares, Player>();
+		private HashMap<String, Properties> stringProperties = new HashMap<String, Properties>();
 		
 	    		
-		public Board(){
+		private Board(){
 			board = new String[40];
 			initializeBoard();
 		}
 		
+		public static Board getInstance() {
+			if(boardInstance == null) {
+				boardInstance = new Board();
+			}
+			return boardInstance;
+		}
 		
 		public void initializeBoard(){
 			board[0] = "Go";
@@ -30,12 +38,12 @@ import java.util.Scanner;
 			board[8] = "Vermont Avenue";
 			board[9] = "Connecticut Avenue";
 			board[10] = "Visiting Jail";
-			board[11] = "St.Charles Place";
+			board[11] = "St Charles Place";
 			board[12] = "Electric Co";
 			board[13] = "State Avenue";
 			board[14] = "Virginia Avenue";
 			board[15] = "Pennsylvania Railroad";
-			board[16] = "St.James Place";
+			board[16] = "St James Place";
 			board[17] = "CC";
 			board[18] = "Tenesse Avenue";
 			board[19] = "New York Avenue";
@@ -44,7 +52,7 @@ import java.util.Scanner;
 			board[22] = "Chance";
 			board[23] = "Indiana Avenue";
 			board[24] = "Illinois Avenue";
-			board[25] = "B & O Railroad";
+			board[25] = "B O Railroad";
 			board[26] = "Atlantic Avenue";
 			board[27] = "Ventnor Avenue";
 			board[28] = "Water Works";
@@ -62,6 +70,13 @@ import java.util.Scanner;
 		
 		}
 		
+		public void initializeStringProperties(int i, Properties p)
+		{
+			String name = board[i];
+			stringProperties.put(name,p);
+			
+		}
+		
 		public boolean landedOnGoToJail(Player p){
 			if(p.getLocation() == 30){
 				return true;
@@ -69,4 +84,9 @@ import java.util.Scanner;
 			return false;
 		}
 		
+		public String[] getBoard()
+		{
+			return this.board;
+		}
 		
+	}
