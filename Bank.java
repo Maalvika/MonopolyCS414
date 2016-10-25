@@ -1,4 +1,3 @@
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,57 +10,81 @@ public class Bank {
 	private int cashGranted;
 	private int bankHouse;
 	private int bankHotel;
+	private Board boardInstance;
 
 	// Constructor for the bank
 	public Bank() {
 		// Creating Objects for squares and populating the sets respectively
 		// p1 ...p22 are sequential properties and are in sequence with the board
 		// for example p1 is property for location 1 on board "Mediterranean Avenue "
-		// p3 is for location 6 on board "Oreintal Avenue"
+		// p3 is for location 6 on board "Oriental Avenue"
+		boardInstance = Board.getInstance();
 		Properties p1 = new Properties(1);
 		bankPropertiesSet.add(p1);
+		boardInstance.initializeStringProperties(1,p1);
 		Properties p2 = new Properties(3);
 		bankPropertiesSet.add(p2);
+		boardInstance.initializeStringProperties(3,p2);
 		Properties p3 = new Properties(6);
 		bankPropertiesSet.add(p3);
+		boardInstance.initializeStringProperties(6,p3);
 		Properties p4 = new Properties(8);
 		bankPropertiesSet.add(p4);
+		boardInstance.initializeStringProperties(8,p4);
 		Properties p5 = new Properties(9);
 		bankPropertiesSet.add(p5);
+		boardInstance.initializeStringProperties(9,p5);
 		Properties p6 = new Properties(11);
 		bankPropertiesSet.add(p6);
+		boardInstance.initializeStringProperties(11,p6);
 		Properties p7 = new Properties(13);
 		bankPropertiesSet.add(p7);
+		boardInstance.initializeStringProperties(13,p7);
 		Properties p8 = new Properties(14);
 		bankPropertiesSet.add(p8);
+		boardInstance.initializeStringProperties(14,p8);
 		Properties p9 = new Properties(16);
 		bankPropertiesSet.add(p9);
+		boardInstance.initializeStringProperties(16,p9);
 		Properties p10 = new Properties(18);
 		bankPropertiesSet.add(p10);
+		boardInstance.initializeStringProperties(18,p10);
 		Properties p11 = new Properties(19);
 		bankPropertiesSet.add(p11);
+		boardInstance.initializeStringProperties(19,p11);
 		Properties p12 = new Properties(21);
 		bankPropertiesSet.add(p12);
+		boardInstance.initializeStringProperties(21,p12);
 		Properties p13 = new Properties(23);
 		bankPropertiesSet.add(p13);
+		boardInstance.initializeStringProperties(23,p13);
 		Properties p14 = new Properties(24);
 		bankPropertiesSet.add(p14);
+		boardInstance.initializeStringProperties(24,p14);
 		Properties p15 = new Properties(26);
 		bankPropertiesSet.add(p15);
+		boardInstance.initializeStringProperties(26,p15);
 		Properties p16 = new Properties(27);
 		bankPropertiesSet.add(p16);
+		boardInstance.initializeStringProperties(27,p16);
 		Properties p17 = new Properties(29);
 		bankPropertiesSet.add(p17);
+		boardInstance.initializeStringProperties(29,p17);
 		Properties p18 = new Properties(31);
 		bankPropertiesSet.add(p18);
+		boardInstance.initializeStringProperties(31,p18);
 		Properties p19 = new Properties(32);
 		bankPropertiesSet.add(p19);
+		boardInstance.initializeStringProperties(32,p19);
 		Properties p20 = new Properties(34);
 		bankPropertiesSet.add(p20);
+		boardInstance.initializeStringProperties(34,p20);
 		Properties p21 = new Properties(37);
 		bankPropertiesSet.add(p21);
+		boardInstance.initializeStringProperties(37,p21);
 		Properties p22 = new Properties(39);
 		bankPropertiesSet.add(p22);
+		boardInstance.initializeStringProperties(39,p22);
 		
 		// Creating objects for rail roads
 		// similar logic is followed as explained above
