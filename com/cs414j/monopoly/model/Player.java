@@ -140,7 +140,7 @@ public class Player {
 //		return false;
 //	}
 
-	public boolean mapContainsKey(String key, Board board){
+	public boolean mapContainsPropertyKey(String key, Board board){
 		// checks if the hashMap stringProperties caontains the string key.
 		if(board.stringProperties.containsKey(key)){
 			return true;
@@ -151,7 +151,7 @@ public class Player {
 	public Properties getPropertyObject(String key, Board board){
 		// if the key is contained in the hashMap
 		// the property object is returned corresponding to that key
-		if(mapContainsKey(key, board) == true){
+		if(mapContainsPropertyKey(key, board) == true){
 			return board.stringProperties.get(key);
 		}
 		else return null;
