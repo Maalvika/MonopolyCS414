@@ -1,6 +1,8 @@
+
 public class Properties extends Squares {
 
 	
+	String name;
 	int cost;
 	int rentInitial;
 	int rentFirstHouse;
@@ -17,6 +19,7 @@ public class Properties extends Squares {
 		super(i);
 		setProperties(i);
 		assignColors(i);
+		assignName(i);
 		
 	}
 	
@@ -160,6 +163,11 @@ public class Properties extends Squares {
 				}
 	}
 
+	public void assignName(int i)
+	{
+		this.name = namesList[i];
+	}
+	
 	
 	
 	/**
