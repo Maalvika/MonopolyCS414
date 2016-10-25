@@ -100,6 +100,7 @@ public class Bank {
 		RailRoad r4 = new RailRoad(35);
 		bankRailRoad.add(r4);
 		boardInstance.initializeStringRailRoad(35,r4);
+		
 		// Creating objects for Utilities
 		Utilities u1 = new Utilities(12);
 		bankUtilitySet.add(u1);
@@ -148,6 +149,38 @@ public class Bank {
 			// call the function to end game for player, if no deeds left
 		}
 	}*/
+	
+	// un mortgaging by the bank
+	public void unMortgageProperty(Player p, Properties prop)
+	{
+		int unMortgageValue = prop.getMortgageValue();
+		double interest = 0.10*unMortgageValue;
+		int newInterest = (int) interest;
+		unMortgageValue = unMortgageValue + newInterest;
+		p.setBalance(p.getBalance() - unMortgageValue);
+		Mortgage.getInstance().unMortgageProperty(prop);
+		
+	}
+	
+	public void unMortgageUtility(Player p, Utilities u)
+	{
+		int unMortgageValue = u.getMortgageValue();
+		double interest = 0.10*unMortgageValue;
+		int newInterest = (int) interest;
+		unMortgageValue = unMortgageValue + newInterest;
+		p.setBalance(p.getBalance() - unMortgageValue);
+		Mortgage.getInstance().unMortgageUtilities(u);
+	}
+	
+	public void unMortgageRailRoad(Player p, RailRoad r)
+	{
+		int unMortgageValue = r.getMortgageValue();
+		double interest = 0.10*unMortgageValue;
+		int newInterest = (int) interest;
+		unMortgageValue = unMortgageValue + newInterest;
+		p.setBalance(p.getBalance() - unMortgageValue);
+		Mortgage.getInstance().unMortgageRailRoad(r);
+	}
 	
 	
 	// give loan to the player by mortgaging property
