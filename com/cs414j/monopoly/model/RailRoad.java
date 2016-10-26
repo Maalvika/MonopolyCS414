@@ -1,7 +1,5 @@
 package com.cs414j.monopoly.model;
 
-
-
 public class RailRoad extends Squares {
 
 	private int cost;
@@ -44,7 +42,12 @@ public class RailRoad extends Squares {
 	// return the owner
 	public Player getOwner()
 	{
-		return this.getOwner();
+		return this.rOwner;
+	}
+	
+	public void setOwner(Player p)
+	{
+		this.rOwner = p;
 	}
 	/**
 	 * @return the cost
