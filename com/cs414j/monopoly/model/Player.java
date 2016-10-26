@@ -309,34 +309,43 @@ public class Player {
 		//		}
 	}
 
-	public void buyHouse(String name){
+	public void buyHouse(String name, Board board){
 		// buy house on owned property
-		//		if(ownedProperty.contains(p))
-		//		{
-		//			if(balance > p.getHouseCost())
-		//			{
-		//				balance=balance-p.getHouseCost();
-		//				housesOwned++;
-		//			}
-		//		}
+		if(board.stringProperties.containsKey(name))
+		{
+			Properties p = getPropertyObject(name, board );
+			
+				if(ownedProperty.contains(p))
+				{
+					if(balance > p.getHouseCost())
+					{
+						balance=balance-p.getHouseCost();
+						housesOwned++;
+					}
+				}
+		}
 	}
 
-	public void buyHotel(String name){
+	public void buyHotel(String name, Board board){
 		// buy hotel on owned property
-		//		if(ownedProperty.contains(p))
-		//		{
-		//			if(housesOwned>=4)
-		//			{
-		//				if(balance > p.getHotelCost())
-		//				{
-		//					balance=balance-p.getHotelCost();
-		//					hotelsOwned++;
-		//					housesOwned=0;
-		//				}
-		//
-		//			}
-		//		}
-	}
+		if(board.stringProperties.containsKey(name))
+		{
+			Properties p = getPropertyObject(name, board );			
+			
+				if(ownedProperty.contains(p))
+				{
+					if(housesOwned>=4)
+					{
+						if(balance > p.getHotelCost())
+						{
+							balance=balance-p.getHotelCost();
+							hotelsOwned++;
+							housesOwned=0;
+						}
+		
+					}
+				}
+		}
 }
 
 
