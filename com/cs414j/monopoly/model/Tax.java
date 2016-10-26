@@ -1,7 +1,7 @@
 package com.cs414j.monopoly.model;
 
 
-public class Tax extends Properties {
+public class Tax extends Sqaures {
 	
 	private int incomeTax;
 	private int luxuryTax; 
