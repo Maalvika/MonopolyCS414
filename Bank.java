@@ -192,31 +192,31 @@ public class Bank {
 	
 	
 	// give loan to the player by mortgaging property
-	public void giveLoanProperty(Player p, Properties prop, Mortgage m)
+	public void giveLoanProperty(Player p, Properties prop)
 	{
 		int cost = prop.getMortgageValue();
 		int currentBalance = p.getBalance();
 		p.setBalance(currentBalance+cost);
-		m.mortgageProperty(prop);
+		Mortgage.getInstance().mortgageProperty(prop);
 		
 	}
 	
 	// give loan to the player by mortgaging utilities
-	public void giveLoanUtility(Player p, Utilities u, Mortgage m)
+	public void giveLoanUtility(Player p, Utilities u)
 	{
 		int cost = u.getMortgageValue();
 		int currentBalance = p.getBalance();
 		p.setBalance(currentBalance+cost);
-		m.mortgageUtilities(u);
+		Mortgage.getInstance().mortgageUtilities(u);
 	}
 	
 	// give loan to the player by mortgaging railroad
-	public void giveLoanRailRoad( Player p, RailRoad r, Mortgage m)
+	public void giveLoanRailRoad( Player p, RailRoad r)
 	{
 		int cost = r.getMortgageValue();
 		int currentBalance = p.getBalance();
 		p.setBalance(currentBalance+cost);
-		m.mortgageRailRoad(r);
+		Mortgage.getInstance().mortgageRailRoad(r);
 	}
 
 	/* This functionality is not required anymore, may be required at refactoring
