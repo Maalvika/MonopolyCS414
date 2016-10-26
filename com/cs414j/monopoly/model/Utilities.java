@@ -1,3 +1,4 @@
+package com.cs414j.monopoly.model;
 
 public class Utilities extends Squares {
 	
