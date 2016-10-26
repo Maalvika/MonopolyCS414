@@ -87,4 +87,27 @@ public class Mortgage {
 		return this.mortgageRailRoad;
 	}
 
+	/**
+	 * @param mortgageProperties the mortgageProperties to set
+	 */
+	public void setMortgageProperties(Set<Properties> mortgageProperties) {
+		this.mortgageProperties = mortgageProperties;
+	}
+
+	/**
+	 * @param mortgageUtilities the mortgageUtilities to set
+	 */
+	public void setMortgageUtilities(Set<Utilities> mortgageUtilities) {
+		this.mortgageUtilities = mortgageUtilities;
+	}
+
+	/**
+	 * @param mortgageRailRoad the mortgageRailRoad to set
+	 */
+	public void setMortgageRailRoad(Set<RailRoad> mortgageRailRoad) {
+		this.mortgageRailRoad = mortgageRailRoad;
+	}
+	
+	
+
 }
