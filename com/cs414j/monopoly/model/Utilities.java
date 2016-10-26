@@ -1,5 +1,6 @@
 package com.cs414j.monopoly.model;
 
+
 public class Utilities extends Squares {
 	
 	private int cost;
@@ -31,6 +32,11 @@ public class Utilities extends Squares {
 	public Player getOwner()
 	{
 		return this.uOwner;
+	}
+	
+	public void setOwner(Player p)
+	{
+		this.uOwner = p;
 	}
 	/**
 	 * @return the cost
