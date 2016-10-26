@@ -2,6 +2,7 @@ package com.cs414j.monopoly.model;
 
 public class RailRoad extends Squares {
 
+	private String name;
 	private int cost;
 	private int rentInitial;
 	private int rent2RROwned;
@@ -14,6 +15,7 @@ public class RailRoad extends Squares {
 	{
 		super(i);
 		setRRValue(i);
+		assignName(i);
 	}
 	
 	public void setRRValue(int i)
@@ -33,11 +35,24 @@ public class RailRoad extends Squares {
 			this.rent4RROwned = value[5];
 			this.mortgageValue = value[6];	
 			//return value;
+		}
 	}
 		
 		
-}
 
+
+	
+	public void assignName(int i)
+	{
+		this.name = namesList[i];
+	}
+	
+	
+	// return the name
+	public String getName()
+	{
+		return this.name;
+	}
 	
 	// return the owner
 	public Player getOwner()
@@ -91,4 +106,3 @@ public class RailRoad extends Squares {
 		return this.mortgageValue;
 	}
 }
-
