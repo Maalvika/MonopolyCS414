@@ -52,6 +52,20 @@ public class Player {
 			Properties p = (Properties)itr.next();
 			propertyNames.add(p.getName());
 		}
+
+		Iterator<Utilities> itrU = ownedUtilities.iterator();
+		while(!(this.ownedUtilities.isEmpty() && itrU.hasNext())){
+
+			Utilities u = (Utilities)itrU.next();
+			propertyNames.add(u.getName());
+		}
+		Iterator<RailRoad> itrR = ownedRailRoad.iterator();
+		while(!(this.ownedRailRoad.isEmpty()) && itr.hasNext())
+		{
+
+			RailRoad r = (RailRoad)itrR.next();
+			propertyNames.add(r.getName());
+		}
 		return propertyNames;
 	}
 
@@ -81,7 +95,8 @@ public class Player {
 		return balance;
 	}
 
-	public void unMortgageProperty(String name, Bank b){
+	public void unMortgageProperty(String name, Bank b, Board board){
+
 
 	}
 
@@ -131,6 +146,7 @@ public class Player {
 		}
 	}
 
+
 	public Properties getPropertyObject(String key, Board board){
 		// if the key is contained in the hashMap
 		// the property object is returned corresponding to that key
@@ -168,7 +184,7 @@ public class Player {
 			Properties p = getPropertyObject(name, board );
 
 			int cost = p.getCost();
-			if(b.getBankPropertiesSet().contains(p)){
+			if(b.getBankPropertiesSet().contains(p) && balance > cost){
 				balance =  balance - cost;
 				ownedProperty.add(p);
 				p.setOwner(this);
@@ -179,21 +195,24 @@ public class Player {
 		if(board.stringUtilities.containsKey(name))
 		{
 			Utilities u = this.getUtilityObject(name, board);
-			if(b.getBankUtilitySet().contains(u)){
-				int cost = u.getCost();
+			int cost = u.getCost();
+			if(b.getBankUtilitySet().contains(u) && balance > cost){
+				
 				balance = balance -cost;
 				ownedUtilities.add(u);
 				u.setOwner(this);
 				b.getBankUtilitySet().remove(u);
 			}
+		}
 
 			if(board.stringRailRoad.containsKey(name))
 
 			{
 
 				RailRoad r = this.getRailRoadObject(name, board);
-				if(b.getBankRailRoad().contains(r)){
-					int cost = r.getCost();
+				int cost = r.getCost();
+				if(b.getBankRailRoad().contains(r) && balance > cost ){
+					
 					balance = balance - cost;
 					ownedRailRoad.add(r);
 					r.setOwner(this);
@@ -202,7 +221,7 @@ public class Player {
 
 			}
 		}
-	}
+	
 
 	public void payRent(String name, Board b, int diceValue){
 		// pay rent to another player
@@ -269,52 +288,75 @@ public class Player {
 
 	}
 
-	public void mortgageProperty(String name, Bank b){
+	public void mortgageProperty(String name, Bank b, Board board){
 		// asks bank for loan on a particular property 
-		
+		if(board.stringProperties.containsKey(name))
+		{
+			Properties p = getPropertyObject(name, board );
+			if(isPropertyOwned(p) == true)
+			{
+				b.giveLoanProperty(this, p);
+			}
+		}
+		if(board.stringUtilities.containsKey(name)){
+			Utilities u = this.getUtilityObject(name, board);
+			if(ownedUtilities.contains(u)){
+				b.giveLoanUtility(this, u);
+			}
+		}
+
+		if(board.stringRailRoad.containsKey(name)){
+			RailRoad r = this.getRailRoadObject(name, board);
+			if(ownedRailRoad.contains(r)){
+				b.giveLoanRailRoad(this, r);
+			}
+
+		}
 
 	}
 
-	public void sellProperty(String name ,Bank b){
-
-		//		if(ownedProperty.contains(p))
-		//		{
-		//			balance=balance+((1/2)*p.getCost());
-		//
-		//			ownedProperty.remove(p);
-		//			b.getBankPropertiesSet().add(p);
-		//		}
-	}
-
-	public void buyHouse(String name){
+	public void buyHouse(String name, Board board){
 		// buy house on owned property
-		//		if(ownedProperty.contains(p))
-		//		{
-		//			if(balance > p.getHouseCost())
-		//			{
-		//				balance=balance-p.getHouseCost();
-		//				housesOwned++;
-		//			}
-		//		}
+		if(board.stringProperties.containsKey(name))
+		{
+			Properties p = getPropertyObject(name, board );
+
+			if(ownedProperty.contains(p))
+			{
+				if(balance > p.getHouseCost())
+				{
+					balance=balance-p.getHouseCost();
+					housesOwned++;
+				}
+			}
+		}
 	}
 
-	public void buyHotel(String name){
+	public void buyHotel(String name, Board board){
 		// buy hotel on owned property
-		//		if(ownedProperty.contains(p))
-		//		{
-		//			if(housesOwned>=4)
-		//			{
-		//				if(balance > p.getHotelCost())
-		//				{
-		//					balance=balance-p.getHotelCost();
-		//					hotelsOwned++;
-		//					housesOwned=0;
-		//				}
-		//
-		//			}
-		//		}
+		if(board.stringProperties.containsKey(name))
+		{
+			Properties p = getPropertyObject(name, board );			
+
+			if(ownedProperty.contains(p))
+			{
+				if(housesOwned>=4)
+				{
+					if(balance > p.getHotelCost())
+					{
+						balance=balance-p.getHotelCost();
+						hotelsOwned++;
+						housesOwned=0;
+					}
+
+				}
+			}
+		}
 	}
 }
+
+
+
 
 
 
