@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.Scanner;
 import java.util.Set;
 
+import com.cs414j.monopoly.view.Token;
+
 public class Player {
 
 	private String name;
