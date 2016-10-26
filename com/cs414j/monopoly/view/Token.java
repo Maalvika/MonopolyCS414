@@ -2,19 +2,19 @@ package com.cs414j.monopoly.view;
 
 public class Token {
 	
-	private TokenUrls token;
+	private TokenUrls tokenUrl;
 	private int xCoordinate;
 	private int yCoordinate;
 	// delta value is the difference between different block wrt token
 	public Token(TokenUrls token,int xPos, int yPos) {
-		this.token = token;
+		this.tokenUrl = token;
 		this.xCoordinate = xPos;
 		this.yCoordinate = yPos;
 		
 	}
 
-	public TokenUrls getToken() {
-		return token;
+	public TokenUrls getTokenURL() {
+		return tokenUrl;
 	}
 
 	public int getxCoordinate() {
@@ -36,7 +36,7 @@ public class Token {
 	@Override
 	public boolean equals(Object o) {
 		Token tempToken = (Token)o;
-		if(this.token == tempToken.token)
+		if(this.tokenUrl == tempToken.tokenUrl)
 			return true;
 		return false;
 		

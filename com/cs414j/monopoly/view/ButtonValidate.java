@@ -1,5 +1,6 @@
 package com.cs414j.monopoly.view;
 
+import com.cs414j.monopoly.model.Player;
 import com.cs414j.monopoly.view.SpecialBlocks.Chance;
 import com.cs414j.monopoly.view.SpecialBlocks.CommunityChest;
 import com.cs414j.monopoly.view.SpecialBlocks.Corner;
@@ -9,7 +10,7 @@ import com.cs414j.monopoly.view.SpecialBlocks.Tax;
 
 public class ButtonValidate {
 
-	public static void landOnBloack(Token t) {
+	public static void landOnBlock(Token t) {
 		int xPoint = t.getxCoordinate();
 		int yPoint = t.getyCoordinate();
 		// check for corner
@@ -133,12 +134,12 @@ public class ButtonValidate {
 		for (Others o : Others.values()) {
 			if (x == o.getXpoint() && y == o.getYpoint()) {
 				MonopolyOptions.rollDice.setEnabled(false);
-				MonopolyOptions.buy.setEnabled(false);
+				MonopolyOptions.buy.setEnabled(true);
 				MonopolyOptions.conti.setEnabled(true);
-				MonopolyOptions.pay.setEnabled(true);
+				// TODO: check if property is assigned to someone else
+				MonopolyOptions.pay.setEnabled(false);
 				MonopolyOptions.build.setEnabled(false);
 				MonopolyOptions.tax.setEnabled(true);
-				// TODO: check player balance before enabling the button
 				MonopolyOptions.mortgage.setEnabled(true);
 				return 1;
 
@@ -156,9 +157,9 @@ public class ButtonValidate {
 		MonopolyOptions.pay.setEnabled(false);
 		if(MonopolyOptions.properties.containsKey(getCurrentPropertyUI())) {
 			MonopolyOptions.build.setEnabled(true);
-			MonopolyOptions.buy.setEnabled(false);
+			MonopolyOptions.buy.setEnabled(true);
 		} else {
-			MonopolyOptions.build.setEnabled(false);
+			MonopolyOptions.build.setEnabled(true);
 			MonopolyOptions.buy.setEnabled(true);
 		}
 		MonopolyOptions.tax.setEnabled(false);
@@ -169,9 +170,9 @@ public class ButtonValidate {
 	
 	
 	private static PropertyUI getCurrentPropertyUI() {
-		String pName = MonopolyMain.currentpName;
-		Token currentToken = MonopolyMain.tokens.get(MonopolyMain.players.indexOf(pName));
-		PropertyUI p = new PropertyUI(currentToken.getxCoordinate(), currentToken.getyCoordinate(), pName);
+		Player player = MonopolyMain.currentPlayer;
+		Token currentToken = player.getToken();
+		PropertyUI p = new PropertyUI(currentToken.getxCoordinate(), currentToken.getyCoordinate(), player.getName());
 		return p;
 	}
 

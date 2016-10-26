@@ -21,30 +21,34 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
+import com.cs414j.monopoly.model.Bank;
+import com.cs414j.monopoly.model.Board;
+import com.cs414j.monopoly.model.Player;
+
 public class MonopolyMain {
 
-	public static List<String> players;
+	public static List<Player> players;
 	private static JFrame frame;
 	private static Container contentPane;
-	static String currentpName;
-    static int currentScore;
+	static Player currentPlayer;
     public static Die _leftDie;     
     public static Die _rightDie;
     public static ImagePanel panel;
-    public static List<Token> tokens = new LinkedList<>();
 	private static JPanel boardPanel;
+	public static Board board;
+	public static Bank bank;
     
 
 	public static void init() {
 
 		// added Monopoly game board image
-		prepareTokenList();
+		initBackendValues();
 		boardPanel = addBoardImage();
 		frame = new JFrame();
 		contentPane = frame.getContentPane();
 		JPanel board = new JPanel(new GridLayout(1, 2));
 		board.add(addDiePanel());
-		board.add(new MonopolyOptions(frame, currentpName, currentScore));
+		board.add(new MonopolyOptions(frame, currentPlayer));
 		contentPane.setLayout(new BorderLayout());
 		
 		contentPane.add(boardPanel,BorderLayout.CENTER);
@@ -54,106 +58,105 @@ public class MonopolyMain {
 		// added the die
 		frame.pack();
 		frame.setVisible(true);
+	} 
+	
+	private static void initBackendValues() {
+		
+		board = Board.getInstance();
+		bank = new Bank();
+		
 	}
 	
 	private static JPanel addBoardImage() {
 
 		final BufferedImage img = new ImageUtility().scaleImage(1000, 980, "images/background.jpg");
-		panel = new ImagePanel(new ImageIcon(img).getImage(), tokens);
+		panel = new ImagePanel(new ImageIcon(img).getImage(), PlayerForm.tokens);
 		return panel;
 	}
 
 	public static void changeBoardImage() {
 
-		int tokenIndex = players.indexOf(currentpName);
-		Token t = adjustPosition(tokens.get(tokenIndex));
-		tokens.set(tokenIndex, t);
-		panel.changeTokenPosition(tokens);
+		Token t = adjustPosition(currentPlayer.getToken());
+		PlayerForm.tokens.set(PlayerForm.tokens.indexOf(currentPlayer.getToken()), t);
+		currentPlayer.setToken(t);
+		panel.changeTokenPosition(PlayerForm.tokens);
 	}
 
 	private static Token adjustPosition(Token t) {
-		
-		if(t.getxCoordinate()==10 || t.getxCoordinate() == 70) {
-			if((t.getyCoordinate()-80*(_leftDie.getValue()+_rightDie.getValue()))>=70) {
-				if(t.getyCoordinate() == 930) {
-					t.setyCoordinate(t.getyCoordinate()-80*(_leftDie.getValue()+_rightDie.getValue()+1));
-				} else {
-					t.setyCoordinate(t.getyCoordinate()-80*(_leftDie.getValue()+_rightDie.getValue()));
-				}
-			} else {		
-				int ypoint = (t.getyCoordinate()-70)/80;
-				//since the corner is a bigger block so we need 1 step more to get the 
-				//token at correct position
-				int xpoint = (_leftDie.getValue()+_rightDie.getValue())-ypoint+1;
-				System.out.println("x1:"+xpoint+"y1:"+ypoint);
-				t.setxCoordinate(t.getxCoordinate()+80*xpoint);
-				System.out.println("xc1:"+t.getxCoordinate()+"yc1:"+t.getyCoordinate());
+
+		int x = t.getxCoordinate();
+		int y = t.getyCoordinate();
+		if (x == 70 && y == 930) {
+			t.setxCoordinate(10);
+			t.setyCoordinate(870);
+			x = 10;
+			y = 870;
+		} else if (x == 10 && y == 930) {
+			t.setyCoordinate(870);
+			y = 870;
+		} else if (x==70 && y==870) {
+			t.setxCoordinate(10);
+			x=10;
+		}
+		if (x == 10) {
+			if ((y - 80 * (_leftDie.getValue() + _rightDie.getValue())) > 70) {
+				t.setyCoordinate(y - 80 * (_leftDie.getValue() + _rightDie.getValue()));
+			} else {
+				int ypoint = (y - 70) / 80;
+				// since the corner is a bigger block so we need 1 step more to
+				// get the
+				// token at correct position
+				int xpoint = (_leftDie.getValue() + _rightDie.getValue()) - ypoint + 1;
+				System.out.println("x1:" + xpoint + "y1:" + ypoint);
+				t.setxCoordinate(x + 80 * xpoint);
 				t.setyCoordinate(70);
 			}
-		} else if(t.getyCoordinate()==70) {
-			if((t.getxCoordinate()+80*(_leftDie.getValue()+_rightDie.getValue()))<890) {
-				t.setxCoordinate(t.getxCoordinate()+80*(_leftDie.getValue()+_rightDie.getValue()));
-			} else {		
-				int xpoint = (890-t.getxCoordinate())/80;
-				//since the corner is a bigger block so we need 1 step more to get the 
-				//token at correct position
-				int ypoint = (_leftDie.getValue()+_rightDie.getValue())-xpoint;
-				System.out.println("x2:"+xpoint+"y2:"+ypoint);
+		} else if (y == 70) {
+			if ((x + 80 * (_leftDie.getValue() + _rightDie.getValue())) < 890) {
+				t.setxCoordinate(x + 80 * (_leftDie.getValue() + _rightDie.getValue()));
+			} else {
+				int xpoint = (890 - x) / 80;
+				// since the corner is a bigger block so we need 1 step more to
+				// get the
+				// token at correct position
+				int ypoint = (_leftDie.getValue() + _rightDie.getValue()) - xpoint;
 				t.setxCoordinate(890);
-				t.setyCoordinate(t.getyCoordinate()+80*ypoint);
-				System.out.println("xc2:"+t.getxCoordinate()+"yc2:"+t.getyCoordinate());
-				
+				t.setyCoordinate(y + 80 * ypoint);
+
 			}
-			
-		}else if(t.getxCoordinate()==890) {
+
+		} else if (x == 890) {
 			System.out.println("c");
-			if((t.getyCoordinate()+80*(_leftDie.getValue()+_rightDie.getValue()))<870) {
-				System.out.println("a");
-				t.setyCoordinate(t.getyCoordinate()+80*(_leftDie.getValue()+_rightDie.getValue()));
-			} else {	
-				System.out.println("b");
-				int ypoint = (870-t.getyCoordinate())/80;
-				//since the corner is a bigger block so we need 1 step more to get the 
-				//token at correct position
-				int xpoint = (_leftDie.getValue()+_rightDie.getValue())-ypoint;
-				System.out.println("x:"+xpoint+"y:"+ypoint);
+			if ((y + 80 * (_leftDie.getValue() + _rightDie.getValue())) < 870) {
+				t.setyCoordinate(y + 80 * (_leftDie.getValue() + _rightDie.getValue()));
+			} else {
+				int ypoint = (870 - y) / 80;
+				// since the corner is a bigger block so we need 1 step more to
+				// get the
+				// token at correct position
+				int xpoint = (_leftDie.getValue() + _rightDie.getValue()) - ypoint;
 				t.setyCoordinate(870);
-				t.setxCoordinate(t.getxCoordinate()-80*xpoint);
-				System.out.println("xc3:"+t.getxCoordinate()+"yc3:"+t.getyCoordinate());
+				t.setxCoordinate(x - 80 * xpoint);
 			}
-			
-		}else if(t.getyCoordinate() == 870 && (t.getxCoordinate()!=10 || t.getxCoordinate()!=70)) {
-			if(t.getxCoordinate()-80*(_leftDie.getValue()+_rightDie.getValue())>10) {
-				t.setxCoordinate(t.getxCoordinate()-80*(_leftDie.getValue()+_rightDie.getValue()));
-			} else if (t.getxCoordinate()==90) {
+
+		} else if (y == 870 && (x != 10 || x != 70)) {
+			if (x - 80 * (_leftDie.getValue() + _rightDie.getValue()) > 10) {
+				t.setxCoordinate(x - 80 * (_leftDie.getValue() + _rightDie.getValue()));
+			} else if (x == 90) {
 				t.setxCoordinate(10);
-			}else {
-				int xpoint = ((t.getxCoordinate()-10)/80)-1;
-				//since the corner is a bigger block so we need 1 step more to get the 
-				//token at correct position
-				int ypoint = (_leftDie.getValue()+_rightDie.getValue())-xpoint;
-				System.out.println("x:"+xpoint+"y:"+ypoint);
+			} else {
+				int xpoint = ((x - 10) / 80) - 1;
+				// since the corner is a bigger block so we need 1 step more to
+				// get the
+				// token at correct position
+				int ypoint = (_leftDie.getValue() + _rightDie.getValue()) - xpoint;
 				t.setxCoordinate(10);
-				t.setyCoordinate(t.getyCoordinate()-80*ypoint);
-				System.out.println("xc4:"+t.getxCoordinate()+"yc4:"+t.getyCoordinate()); 
+				t.setyCoordinate(y - 80 * ypoint);
 			}
-			
+
 		}
 		return t;
-		
-	}
-	private static void prepareTokenList() {
-		tokens.add(new Token(TokenUrls.CAR, 10, 870));
-		tokens.add(new Token(TokenUrls.SHIP, 70, 870));
-		switch (players.size()) {
-		case 3:
-			tokens.add(new Token(TokenUrls.HORSE, 70, 930));
-			break;
-		case 4:
-			tokens.add(new Token(TokenUrls.HORSE, 70, 930));
-			tokens.add(new Token(TokenUrls.SHOE, 10, 930));
-			break;
-		}
+
 	}
 	
 	private static JPanel addDiePanel() {
@@ -168,23 +171,21 @@ public class MonopolyMain {
 		return temp;
 	}
 
-	public static void setPlayers(List<String> players) {
+	public static void setPlayers(List<Player> players) {
 		MonopolyMain.players = players;
-		currentpName = players.get(0);
-		currentScore = 0;
+		currentPlayer = players.get(0);
 		
 	}
 
-	public static void setPlayerDetails(String playerName, int score) {
-		currentpName = playerName;
-		currentScore = score;
-		contentPane.add(new MonopolyOptions(frame, playerName, score), BorderLayout.EAST);
+	public static void setPlayerDetails(Player p) {
+		currentPlayer = p;
+		contentPane.add(new MonopolyOptions(frame, currentPlayer), BorderLayout.EAST);
 
 	}
 	
 	public static JPanel setPlayerDetails() {
 		JPanel p = new JPanel();
-		p.add(new MonopolyOptions(frame, currentpName, currentScore));
+		p.add(new MonopolyOptions(frame, currentPlayer));
 		return p;
 
 	}

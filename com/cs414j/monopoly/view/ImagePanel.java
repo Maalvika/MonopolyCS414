@@ -38,7 +38,7 @@ public class ImagePanel extends JPanel {
 	public void paintComponent(Graphics g) {
 		g.drawImage(img, 0, 0, null);
 		for (Token t : tokens) {
-			g.drawImage(getTokenImg(t.getToken()), t.getxCoordinate(), t.getyCoordinate(), 50, 50, null);
+			g.drawImage(getTokenImg(t.getTokenURL()), t.getxCoordinate(), t.getyCoordinate(), 50, 50, null);
 		}
 		if (!properties.isEmpty()) {
 			for (Entry<PropertyUI, Integer> prop : properties.entrySet()) {

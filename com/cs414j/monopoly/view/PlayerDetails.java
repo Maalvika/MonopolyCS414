@@ -11,7 +11,7 @@ import javax.swing.JTextField;
  */
 
 /**
- *
+ *	
  * @author maalv
  */
 public class PlayerDetails extends javax.swing.JFrame {

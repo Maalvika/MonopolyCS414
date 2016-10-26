@@ -7,6 +7,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import com.cs414j.monopoly.model.Player;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -24,13 +26,16 @@ public class PlayerForm extends javax.swing.JFrame {
     private int playerCount;
     private JTextField[] playerNames = new JTextField[4]; 
     private JLabel[] playerLabels = new JLabel[4]; 
+    public static List<Token> tokens = new LinkedList<>();
     /**
      * Creates new form PlayerForm2
      */
     public PlayerForm(int pCount) {
         this.playerCount = pCount;
+        prepareTokenList();
         initComponents();
         hideComponents(pCount);
+        
     }
     
     public void hideComponents(int pCount) {
@@ -158,15 +163,31 @@ public class PlayerForm extends javax.swing.JFrame {
             errorLabel.setVisible(true);
         } else {
         	this.setVisible(false);
-        	List<String> playerNames = new LinkedList<>();
+        	List<Player> players = new LinkedList<>();
         	for(int i=0; i<playerCount;i++) {
-        		playerNames.add(this.playerNames[i].getText());
+        		Player p = new Player(this.playerNames[i].getText());
+        		p.setToken(tokens.get(i));
+        		players.add(p);
         	}
-        	MonopolyMain.setPlayers(playerNames);
+        	MonopolyMain.setPlayers(players);
         	MonopolyMain.init();
         	//MonopolyMain.setPlayerDetails(this.playerNames[1].getText(), 50);
         }
-    }                                             
+    }  
+    
+    private void prepareTokenList() {
+		tokens.add(new Token(TokenUrls.CAR, 10, 870));
+		tokens.add(new Token(TokenUrls.SHIP, 70, 870));
+		switch (playerCount) {
+		case 3:
+			tokens.add(new Token(TokenUrls.HORSE, 70, 930));
+			break;
+		case 4:
+			tokens.add(new Token(TokenUrls.HORSE, 70, 930));
+			tokens.add(new Token(TokenUrls.SHOE, 10, 930));
+			break;
+		}
+	}
 
 
     // Variables declaration - do not modify                     
