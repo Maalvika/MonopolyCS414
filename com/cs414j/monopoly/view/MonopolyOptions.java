@@ -119,20 +119,19 @@ public class MonopolyOptions extends JPanel {
 		String currentProperty = getPropertyName(MonopolyMain.currentPlayer.getToken());
 		int diceValue =MonopolyMain._leftDie.getValue() + MonopolyMain._rightDie.getValue();
 		MonopolyMain.currentPlayer.payRent(currentProperty, MonopolyMain.board, diceValue);
+		disableButtonSettings();
 		
 	}
 	
 	protected void taxActionPerformed(ActionEvent evt) {
 		MonopolyMain.currentPlayer.payTax();
+		disableButtonSettings();
 		
 	}
 
 	
 	protected void mortgageActionPerformed(ActionEvent evt) {
-		Set<String> prop = new HashSet<>();
-		prop.add("abc");
-		prop.add("def");
-		prop.add("Boston");
+		Set<String> prop = MonopolyMain.currentPlayer.OwnedSquareName();
 		new MortgageOptions(prop);
 		
 	}
@@ -144,8 +143,9 @@ public class MonopolyOptions extends JPanel {
 		if(!properties.containsKey(p)) {
 			properties.put(p, 0);
 		}
-		String currentProperty = getPropertyName(currentToken).replaceAll("_", " ");
+		String currentProperty = getPropertyName(currentToken);
 		player.buyProperty(currentProperty, MonopolyMain.bank, MonopolyMain.board);
+		disableButtonSettings();
 		
 	}
 
@@ -159,14 +159,13 @@ public class MonopolyOptions extends JPanel {
 			properties.put(p, 1);
 		}
 		MonopolyMain.panel.buildHouse(properties);
+		disableButtonSettings();
 	}
 
 	protected void contiActionPerformed(ActionEvent evt) {
 		initButtonSettings();
 		switchToNextTurn();
 		changePlayerDetails(MonopolyMain.currentPlayer);
-		
-
 	}
 
 	protected void rollDiceActionPerformed(ActionEvent evt) {
@@ -191,6 +190,18 @@ public class MonopolyOptions extends JPanel {
 		MonopolyOptions.rollDice.setEnabled(true);
 		MonopolyOptions.buy.setEnabled(false);
 		MonopolyOptions.conti.setEnabled(false);
+		MonopolyOptions.pay.setEnabled(false);
+		MonopolyOptions.build.setEnabled(false);
+		MonopolyOptions.tax.setEnabled(false);
+		// TODO: check player balance before enabling the button
+		MonopolyOptions.mortgage.setEnabled(false);
+
+	}
+	
+	private void disableButtonSettings() {
+		MonopolyOptions.rollDice.setEnabled(false);
+		MonopolyOptions.buy.setEnabled(false);
+		MonopolyOptions.conti.setEnabled(true);
 		MonopolyOptions.pay.setEnabled(false);
 		MonopolyOptions.build.setEnabled(false);
 		MonopolyOptions.tax.setEnabled(false);
@@ -243,12 +254,12 @@ public class MonopolyOptions extends JPanel {
 	}
 
 
-	private String getPropertyName(Token t) {
+	static String getPropertyName(Token t) {
 
 		if (t.getxCoordinate() == 10) {
 			for (PurchasePropertyList.LVBlocks block : PurchasePropertyList.LVBlocks.values()) {
 				if (block.getYpoint() == t.getyCoordinate()) {
-					return block.name();
+					return block.name().replaceAll("_", " ");
 				}
 			}
 
@@ -256,21 +267,21 @@ public class MonopolyOptions extends JPanel {
 
 			for (PurchasePropertyList.UHBlocks block : PurchasePropertyList.UHBlocks.values()) {
 				if (block.getXpoint() == t.getxCoordinate()) {
-					return block.name();
+					return block.name().replaceAll("_", " ");
 				}
 			}
 
 		} else if (t.getxCoordinate() == 890) {
 			for (PurchasePropertyList.RVBlocks block : PurchasePropertyList.RVBlocks.values()) {
 				if (block.getYpoint() == t.getyCoordinate()) {
-					return block.name();
+					return block.name().replaceAll("_", " ");
 				}
 			}
 
 		} else if (t.getyCoordinate() == 870) {
 			for (PurchasePropertyList.LHBlocks block : PurchasePropertyList.LHBlocks.values()) {
 				if (block.getXpoint() == t.getxCoordinate()) {
-					return block.name();
+					return block.name().replaceAll("_", " ");
 				}
 			}
 

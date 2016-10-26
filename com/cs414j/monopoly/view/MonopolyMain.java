@@ -139,12 +139,10 @@ public class MonopolyMain {
 				t.setxCoordinate(x - 80 * xpoint);
 			}
 
-		} else if (y == 870 && (x != 10 || x != 70)) {
-			if (x - 80 * (_leftDie.getValue() + _rightDie.getValue()) > 10) {
+		} else if (y == 870 && x != 10 ) {
+			if (x - 80 * (_leftDie.getValue() + _rightDie.getValue()) >= 170) {
 				t.setxCoordinate(x - 80 * (_leftDie.getValue() + _rightDie.getValue()));
-			} else if (x == 90) {
-				t.setxCoordinate(10);
-			} else {
+			} else if(x - 80 * (_leftDie.getValue() + _rightDie.getValue()) < 10) {
 				int xpoint = ((x - 10) / 80) - 1;
 				// since the corner is a bigger block so we need 1 step more to
 				// get the
@@ -152,6 +150,8 @@ public class MonopolyMain {
 				int ypoint = (_leftDie.getValue() + _rightDie.getValue()) - xpoint;
 				t.setxCoordinate(10);
 				t.setyCoordinate(y - 80 * ypoint);
+			} else {
+				t.setxCoordinate(10);
 			}
 
 		}

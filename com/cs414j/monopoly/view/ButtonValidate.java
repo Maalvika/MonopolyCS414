@@ -1,6 +1,8 @@
 package com.cs414j.monopoly.view;
 
 import com.cs414j.monopoly.model.Player;
+import com.cs414j.monopoly.model.Properties;
+import com.cs414j.monopoly.model.Squares;
 import com.cs414j.monopoly.view.SpecialBlocks.Chance;
 import com.cs414j.monopoly.view.SpecialBlocks.CommunityChest;
 import com.cs414j.monopoly.view.SpecialBlocks.Corner;
@@ -41,7 +43,7 @@ public class ButtonValidate {
 				MonopolyOptions.conti.setEnabled(true);
 				MonopolyOptions.pay.setEnabled(false);
 				MonopolyOptions.build.setEnabled(false);
-				MonopolyOptions.mortgage.setEnabled(false);
+				enableMortgageButton();
 				MonopolyOptions.tax.setEnabled(false);
 				return 1;
 			}
@@ -60,8 +62,7 @@ public class ButtonValidate {
 				MonopolyOptions.pay.setEnabled(false);
 				MonopolyOptions.build.setEnabled(false);
 				MonopolyOptions.tax.setEnabled(true);
-				// TODO: check player balance before enabling the button
-				MonopolyOptions.mortgage.setEnabled(true);
+				enableMortgageButton();
 				return 1;
 			}
 
@@ -78,8 +79,7 @@ public class ButtonValidate {
 				MonopolyOptions.pay.setEnabled(false);
 				MonopolyOptions.build.setEnabled(false);
 				MonopolyOptions.tax.setEnabled(false);
-				// TODO: check player balance before enabling the button
-				MonopolyOptions.mortgage.setEnabled(true);
+				enableMortgageButton();
 				return 1;
 
 			}
@@ -98,8 +98,7 @@ public class ButtonValidate {
 				MonopolyOptions.pay.setEnabled(false);
 				MonopolyOptions.build.setEnabled(false);
 				MonopolyOptions.tax.setEnabled(false);
-				// TODO: check player balance before enabling the button
-				MonopolyOptions.mortgage.setEnabled(true);
+				enableMortgageButton();
 				return 1;
 
 			}
@@ -119,8 +118,7 @@ public class ButtonValidate {
 				MonopolyOptions.pay.setEnabled(false);
 				MonopolyOptions.build.setEnabled(false);
 				MonopolyOptions.tax.setEnabled(false);
-				// TODO: check player balance before enabling the button
-				MonopolyOptions.mortgage.setEnabled(true);
+				enableMortgageButton();
 				return 1;
 
 			}
@@ -136,11 +134,17 @@ public class ButtonValidate {
 				MonopolyOptions.rollDice.setEnabled(false);
 				MonopolyOptions.buy.setEnabled(true);
 				MonopolyOptions.conti.setEnabled(true);
-				// TODO: check if property is assigned to someone else
-				MonopolyOptions.pay.setEnabled(false);
+				String currentProperty = MonopolyOptions.getPropertyName(MonopolyMain.currentPlayer.getToken());
+				if(!MonopolyMain.bank.isOwned(currentProperty) && 
+						!MonopolyMain.currentPlayer.OwnedSquareName().contains(currentProperty)) {
+				
+					MonopolyOptions.pay.setEnabled(true);
+				} else {
+					MonopolyOptions.pay.setEnabled(false);
+				}
 				MonopolyOptions.build.setEnabled(false);
 				MonopolyOptions.tax.setEnabled(true);
-				MonopolyOptions.mortgage.setEnabled(true);
+				enableMortgageButton();
 				return 1;
 
 			}
@@ -151,20 +155,32 @@ public class ButtonValidate {
 	}
 	
 	private static void defaultSettings() {
-		System.out.println("a3");
 		MonopolyOptions.rollDice.setEnabled(false);
 		MonopolyOptions.conti.setEnabled(true);
-		MonopolyOptions.pay.setEnabled(false);
+
 		if(MonopolyOptions.properties.containsKey(getCurrentPropertyUI())) {
 			MonopolyOptions.build.setEnabled(true);
-			MonopolyOptions.buy.setEnabled(true);
-		} else {
-			MonopolyOptions.build.setEnabled(true);
-			MonopolyOptions.buy.setEnabled(true);
+			MonopolyOptions.buy.setEnabled(false);
+			MonopolyOptions.pay.setEnabled(false);
+		}else {
+		
+			String currentProperty = MonopolyOptions.getPropertyName(MonopolyMain.currentPlayer.getToken());
+			System.out.println("current Property "+currentProperty);
+			if(!MonopolyMain.bank.isOwned(currentProperty) && 
+					!MonopolyMain.currentPlayer.OwnedSquareName().contains(currentProperty)) {
+				System.out.println("is owned:"+MonopolyMain.bank.isOwned(currentProperty));
+				MonopolyOptions.build.setEnabled(false);
+				MonopolyOptions.buy.setEnabled(false);
+				MonopolyOptions.pay.setEnabled(true);
+			} else {
+				System.out.println("b");
+				MonopolyOptions.build.setEnabled(false);
+				MonopolyOptions.buy.setEnabled(true);
+				MonopolyOptions.pay.setEnabled(false);
+			}
 		}
 		MonopolyOptions.tax.setEnabled(false);
-		// TODO: check player balance before enabling the button
-		MonopolyOptions.mortgage.setEnabled(true);
+		enableMortgageButton();
 
 	}
 	
@@ -174,6 +190,15 @@ public class ButtonValidate {
 		Token currentToken = player.getToken();
 		PropertyUI p = new PropertyUI(currentToken.getxCoordinate(), currentToken.getyCoordinate(), player.getName());
 		return p;
+	}
+	
+	private static void enableMortgageButton() {
+		if(MonopolyMain.currentPlayer.OwnedSquareName().isEmpty()) {
+			MonopolyOptions.mortgage.setEnabled(false);
+		}  else {
+			MonopolyOptions.mortgage.setEnabled(true);
+		}
+		
 	}
 
 
