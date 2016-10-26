@@ -82,29 +82,39 @@ public class Player {
 		// Iterates through the three hashSets of owned property/
 		// utility/railroad and populates their names in the propertyNames
 		// hashSet
-		Iterator<Properties> itr = ownedProperty.iterator();
+
 		HashSet<String> propertyNames = new HashSet<String>();
-		while(!(ownedProperty.isEmpty())&& itr.hasNext())
-		{
-			Properties p = (Properties)itr.next();
-			propertyNames.add(p.getName());
+		if(!(ownedProperty.isEmpty())){
+			Iterator<Properties> itr = ownedProperty.iterator();
+
+			while(itr.hasNext())
+			{
+				Properties p = (Properties)itr.next();
+				propertyNames.add(p.getName());
+			}
 		}
 
-		Iterator<Utilities> itrU = ownedUtilities.iterator();
-		while(!(this.ownedUtilities.isEmpty() && itrU.hasNext())){
 
-			Utilities u = (Utilities)itrU.next();
-			propertyNames.add(u.getName());
+		if(!(ownedUtilities.isEmpty())){
+			Iterator<Utilities> itrU = ownedUtilities.iterator();
+			while(itrU.hasNext()){
+
+				Utilities u = (Utilities)itrU.next();
+				propertyNames.add(u.getName());
+			}
 		}
-		Iterator<RailRoad> itrR = ownedRailRoad.iterator();
-		while(!(this.ownedRailRoad.isEmpty()) && itr.hasNext())
-		{
+		if(!(ownedRailRoad.isEmpty())){
+			Iterator<RailRoad> itrR = ownedRailRoad.iterator();
+			while(itrR.hasNext())
+			{
 
-			RailRoad r = (RailRoad)itrR.next();
-			propertyNames.add(r.getName());
+				RailRoad r = (RailRoad)itrR.next();
+				propertyNames.add(r.getName());
+			}
 		}
 		return propertyNames;
 	}
+
 
 	public Set<String> mortgagedSquareName(){
 		//gives names of the mortgaged properties
@@ -183,33 +193,20 @@ public class Player {
 		}
 	}
 
-	public boolean landedOnGoToJail(){
+	public void landedOnGoToJail(int l)
+	{
 		// to check if a player landed on Go To Jail square
-		if(getLocation() == 30){
-			return true;
+		// if it does send him to "in jail" location = 10
+		if(l == 30)
+		{
+		this.setLocation(10);
 		}
-		return false;
+	 }
+
+	public void paidJailPenalty()
+	{
+		this.setBalance(balance - 50);
 	}
-
-	public void sendtoInJail(){
-		// if a player lands on go to jail he is sent to in jail square which 
-		//is location 10 on board and is asked to pay $50 to get out of jail
-		if(landedOnGoToJail() == true){
-			location = 10;
-			if(getBalance() > 50){
-				System.out.println("Would you like to pay $50 to get out of jail? yes/no");
-				Scanner scanner = new Scanner(System.in);
-				String response = scanner.next();
-				if(response.equals("yes")){
-
-					int newBalance = balance-50;
-					setBalance(newBalance);
-				}
-				scanner.close();
-			}
-		}
-	}
-
 
 	public Properties getPropertyObject(String key, Board board){
 		// if the key is contained in the hashMap
