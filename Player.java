@@ -43,21 +43,18 @@ public class Player {
 	public Token getToken(){
 		return token;
 	}
-
-	public Set<String> OwnedSquareName(){
-		Iterator<Properties> itr = ownedProperty.iterator();
-		HashSet<String> propertyNames = new HashSet<String>();
-		while(!(ownedProperty.isEmpty())&& itr.hasNext())
-		{
-			Properties p = (Properties)itr.next();
-			propertyNames.add(p.getName());
-		}
-		return propertyNames;
+	
+	public void setToken(Token t){
+		this.token = t;
 	}
 
 	public int getLocation(){
 		// returns current location of the player
 		return location;
+	}
+	
+	public int getBalance(){
+		return balance;
 	}
 
 	public void setBalance(int b){
@@ -76,15 +73,93 @@ public class Player {
 		// would move the player dicevalue squares forward on the board
 		location = (location + diceValue) % 40;
 	}
+	
+	public Set<String> OwnedSquareName(){
+		// Iterates through the three hashSets of owned property/
+		// utility/railroad and populates their names in the propertyNames
+		// hashSet
+		Iterator<Properties> itr = ownedProperty.iterator();
+		HashSet<String> propertyNames = new HashSet<String>();
+		while(!(ownedProperty.isEmpty())&& itr.hasNext())
+		{
+			Properties p = (Properties)itr.next();
+			propertyNames.add(p.getName());
+		}
 
-	public int getBalance(){
-		return balance;
+		Iterator<Utilities> itrU = ownedUtilities.iterator();
+		while(!(this.ownedUtilities.isEmpty() && itrU.hasNext())){
+
+			Utilities u = (Utilities)itrU.next();
+			propertyNames.add(u.getName());
+		}
+		Iterator<RailRoad> itrR = ownedRailRoad.iterator();
+		while(!(this.ownedRailRoad.isEmpty()) && itr.hasNext())
+		{
+
+			RailRoad r = (RailRoad)itrR.next();
+			propertyNames.add(r.getName());
+		}
+		return propertyNames;
 	}
 
-	public void unMortgageProperty(String name, Bank b){
+	public Set<String> mortgagedSquareName(){
+		//gives names of the mortgaged properties
+		// Iterates through the three hashSets of mortgaged property/
+		// utility/railroad and populates their names in the propertyNames
+		// hashSet
+		Iterator<Properties> itr = this.mortgageProperties.iterator();
+		HashSet<String> mortgagedProperties = new HashSet<String>();
+		while(!(mortgageProperties.isEmpty())&& itr.hasNext())
+		{
+			Properties p = (Properties)itr.next();
+			mortgagedProperties.add(p.getName());
+		}
+
+		Iterator<Utilities> itrU = this.mortgageUtilities.iterator();
+		while(!(this.mortgageUtilities.isEmpty() && itrU.hasNext())){
+
+			Utilities u = (Utilities)itrU.next();
+			mortgagedProperties.add(u.getName());
+		}
+		Iterator<RailRoad> itrR = ownedRailRoad.iterator();
+		while(!(this.mortgageRailRoad.isEmpty()) && itr.hasNext())
+		{
+
+			RailRoad r = (RailRoad)itrR.next();
+			mortgagedProperties.add(r.getName());
+		}
+		return mortgagedProperties;
 
 	}
 
+	public void unMortgageProperty(String name, Bank b, Board board){
+
+		// asks bank for unmortgaging a particular property 
+		if(board.stringProperties.containsKey(name))
+		{
+			Properties p = getPropertyObject(name, board );
+			if(isPropertyOwned(p) == true && mortgageProperties.contains(p))
+			{
+				b.unMortgageProperty(this, p);
+				this.mortgageProperties.remove(p);
+			}
+		}
+		if(board.stringUtilities.containsKey(name)){
+			Utilities u = this.getUtilityObject(name, board);
+			if(ownedUtilities.contains(u) && this.mortgageUtilities.contains(u)){
+				b.unMortgageUtility(this, u);
+				this.mortgageUtilities.remove(u);
+			}
+		}
+
+		if(board.stringRailRoad.containsKey(name)){
+			RailRoad r = this.getRailRoadObject(name, board);
+			if(ownedRailRoad.contains(r) && this.mortgageRailRoad.contains(r)){
+				b.unMortgageRailRoad(this, r);
+				this.mortgageRailRoad.remove(r);
+			}
+		}
+	}
 
 	public boolean isPropertyOwned(Properties p){
 		// checks if a particular method is owned by a property
@@ -131,6 +206,7 @@ public class Player {
 		}
 	}
 
+
 	public Properties getPropertyObject(String key, Board board){
 		// if the key is contained in the hashMap
 		// the property object is returned corresponding to that key
@@ -168,7 +244,7 @@ public class Player {
 			Properties p = getPropertyObject(name, board );
 
 			int cost = p.getCost();
-			if(b.getBankPropertiesSet().contains(p)){
+			if(b.getBankPropertiesSet().contains(p) && balance > cost){
 				balance =  balance - cost;
 				ownedProperty.add(p);
 				p.setOwner(this);
@@ -179,28 +255,30 @@ public class Player {
 		if(board.stringUtilities.containsKey(name))
 		{
 			Utilities u = this.getUtilityObject(name, board);
-			if(b.getBankUtilitySet().contains(u)){
-				int cost = u.getCost();
+			int cost = u.getCost();
+			if(b.getBankUtilitySet().contains(u) && balance > cost){
+
 				balance = balance -cost;
 				ownedUtilities.add(u);
 				u.setOwner(this);
 				b.getBankUtilitySet().remove(u);
 			}
+		}
 
-			if(board.stringRailRoad.containsKey(name))
+		if(board.stringRailRoad.containsKey(name))
 
-			{
+		{
 
-				RailRoad r = this.getRailRoadObject(name, board);
-				if(b.getBankRailRoad().contains(r)){
-					int cost = r.getCost();
-					balance = balance - cost;
-					ownedRailRoad.add(r);
-					r.setOwner(this);
-					b.getBankRailRoad().remove(r);
-				}
+			RailRoad r = this.getRailRoadObject(name, board);
+			int cost = r.getCost();
+			if(b.getBankRailRoad().contains(r) && balance > cost ){
 
+				balance = balance - cost;
+				ownedRailRoad.add(r);
+				r.setOwner(this);
+				b.getBankRailRoad().remove(r);
 			}
+
 		}
 	}
 
@@ -269,50 +347,73 @@ public class Player {
 
 	}
 
-	public void mortgageProperty(String name, Bank b){
+	public void mortgageProperty(String name, Bank b, Board board){
 		// asks bank for loan on a particular property 
-		
+		if(board.stringProperties.containsKey(name))
+		{
+			Properties p = getPropertyObject(name, board );
+			if(isPropertyOwned(p) == true)
+			{
+				b.giveLoanProperty(this, p);
+				this.mortgageProperties.add(p);
+			}
+		}
+		if(board.stringUtilities.containsKey(name)){
+			Utilities u = this.getUtilityObject(name, board);
+			if(ownedUtilities.contains(u)){
+				b.giveLoanUtility(this, u);
+				this.mortgageUtilities.add(u);
+			}
+		}
+
+		if(board.stringRailRoad.containsKey(name)){
+			RailRoad r = this.getRailRoadObject(name, board);
+			if(ownedRailRoad.contains(r)){
+				b.giveLoanRailRoad(this, r);
+				this.mortgageRailRoad.add(r);
+			}
+
+		}
 
 	}
 
-	public void sellProperty(String name ,Bank b){
-
-		//		if(ownedProperty.contains(p))
-		//		{
-		//			balance=balance+((1/2)*p.getCost());
-		//
-		//			ownedProperty.remove(p);
-		//			b.getBankPropertiesSet().add(p);
-		//		}
-	}
-
-	public void buyHouse(String name){
+	public void buyHouse(String name, Board board){
 		// buy house on owned property
-		//		if(ownedProperty.contains(p))
-		//		{
-		//			if(balance > p.getHouseCost())
-		//			{
-		//				balance=balance-p.getHouseCost();
-		//				housesOwned++;
-		//			}
-		//		}
+		if(board.stringProperties.containsKey(name))
+		{
+			Properties p = getPropertyObject(name, board );
+
+			if(ownedProperty.contains(p))
+			{
+				if(balance > p.getHouseCost())
+				{
+					balance=balance-p.getHouseCost();
+					housesOwned++;
+				}
+			}
+		}
 	}
 
-	public void buyHotel(String name){
+	public void buyHotel(String name, Board board){
 		// buy hotel on owned property
-		//		if(ownedProperty.contains(p))
-		//		{
-		//			if(housesOwned>=4)
-		//			{
-		//				if(balance > p.getHotelCost())
-		//				{
-		//					balance=balance-p.getHotelCost();
-		//					hotelsOwned++;
-		//					housesOwned=0;
-		//				}
-		//
-		//			}
-		//		}
+		if(board.stringProperties.containsKey(name))
+		{
+			Properties p = getPropertyObject(name, board );			
+
+			if(ownedProperty.contains(p))
+			{
+				if(housesOwned>=4)
+				{
+					if(balance > p.getHotelCost())
+					{
+						balance=balance-p.getHotelCost();
+						hotelsOwned++;
+						housesOwned=0;
+					}
+
+				}
+			}
+		}
 	}
 }
 
