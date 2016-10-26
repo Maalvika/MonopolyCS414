@@ -1,3 +1,5 @@
+package com.cs414j.monopoly.model;
+
 import java.util.HashSet;
 import java.util.Set;
 
