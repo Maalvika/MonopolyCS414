@@ -126,6 +126,25 @@ public class Bank {
 		return bankInstance;
 	}
 	
+	// To check if the property is owned by bank or not.
+	public boolean isOwned(String name)
+	{
+		
+		if (boardInstance.stringProperties.containsKey(name))
+			{
+				
+				return bankPropertiesSet.contains(boardInstance.stringProperties.get(name));
+			}
+		else if (boardInstance.stringUtilities.containsKey(name))
+		{
+			return bankUtilitySet.contains(boardInstance.stringUtilities.get(name));
+		}
+		else 
+		{
+			return bankRailRoad.contains(boardInstance.stringRailRoad.get(name));
+		}
+	}
+	
 	/*This functionality no more required 
 	 * // Collect Income Tax from player
 	public void collectIncomeTax(Player p)
@@ -159,6 +178,27 @@ public class Bank {
 			// call the function to end game for player, if no deeds left
 		}
 	}*/
+	
+	/**
+	 * @param bankUtilitySet the bankUtilitySet to set
+	 */
+	public void setBankUtilitySet(Set<Utilities> bankUtilitySet) {
+		this.bankUtilitySet = bankUtilitySet;
+	}
+	
+	/**
+	 * @param bankPropertiesSet the bankPropertiesSet to set
+	 */
+	public void setBankPropertiesSet(Set<Properties> bankPropertiesSet) {
+		this.bankPropertiesSet = bankPropertiesSet;
+	}
+	
+	/**
+	 * @param bankRailRoad the bankRailRoad to set
+	 */
+	public void setBankRailRoad(Set<RailRoad> bankRailRoad) {
+		this.bankRailRoad = bankRailRoad;
+	}
 	
 	// un mortgaging by the bank
 	public void unMortgageProperty(Player p, Properties prop)
