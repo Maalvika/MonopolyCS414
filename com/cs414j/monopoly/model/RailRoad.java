@@ -1,6 +1,7 @@
 package com.cs414j.monopoly.model;
 
 
+
 public class RailRoad extends Squares {
 
 	private int cost;
@@ -9,6 +10,7 @@ public class RailRoad extends Squares {
 	private int rent3RROwned;
 	private int rent4RROwned;
 	private int mortgageValue;
+	private Player rOwner;
 	
 	public RailRoad(int i)
 	{
@@ -38,6 +40,12 @@ public class RailRoad extends Squares {
 		
 }
 
+	
+	// return the owner
+	public Player getOwner()
+	{
+		return this.getOwner();
+	}
 	/**
 	 * @return the cost
 	 */
@@ -80,3 +88,4 @@ public class RailRoad extends Squares {
 		return this.mortgageValue;
 	}
 }
+
