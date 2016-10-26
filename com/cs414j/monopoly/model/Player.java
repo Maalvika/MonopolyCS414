@@ -121,29 +121,37 @@ public class Player {
 		// Iterates through the three hashSets of mortgaged property/
 		// utility/railroad and populates their names in the propertyNames
 		// hashSet
-		Iterator<Properties> itr = this.mortgageProperties.iterator();
+		
 		HashSet<String> mortgagedProperties = new HashSet<String>();
-		while(!(mortgageProperties.isEmpty())&& itr.hasNext())
-		{
-			Properties p = (Properties)itr.next();
-			mortgagedProperties.add(p.getName());
+		if(!(mortgageProperties.isEmpty())){
+			Iterator<Properties> itr = this.mortgageProperties.iterator();
+
+			while(itr.hasNext())
+			{
+				Properties p = (Properties)itr.next();
+				mortgagedProperties.add(p.getName());
+			}
 		}
 
-		Iterator<Utilities> itrU = this.mortgageUtilities.iterator();
-		while(!(this.mortgageUtilities.isEmpty() && itrU.hasNext())){
+		if(!(this.mortgageUtilities.isEmpty())){
+			Iterator<Utilities> itrU = this.mortgageUtilities.iterator();
+			while(itrU.hasNext()){
 
-			Utilities u = (Utilities)itrU.next();
-			mortgagedProperties.add(u.getName());
+				Utilities u = (Utilities)itrU.next();
+				mortgagedProperties.add(u.getName());
+			}
 		}
-		Iterator<RailRoad> itrR = ownedRailRoad.iterator();
-		while(!(this.mortgageRailRoad.isEmpty()) && itr.hasNext())
-		{
+		
+		if(!(this.mortgageRailRoad.isEmpty())){
+			Iterator<RailRoad> itrR = ownedRailRoad.iterator();
+			while(itrR.hasNext())
+			{
+				RailRoad r = (RailRoad)itrR.next();
+				mortgagedProperties.add(r.getName());
+			}
+		}
 
-			RailRoad r = (RailRoad)itrR.next();
-			mortgagedProperties.add(r.getName());
-		}
 		return mortgagedProperties;
-
 	}
 
 	public void unMortgageProperty(String name, Bank b, Board board){
