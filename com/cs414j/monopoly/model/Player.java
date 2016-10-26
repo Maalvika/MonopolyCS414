@@ -271,10 +271,31 @@ public class Player {
 
 	}
 
-	public void mortgageProperty(String name, Bank b){
+	public void mortgageProperty(String name, Bank b, Board board){
 		// asks bank for loan on a particular property 
+		if(board.stringProperties.containsKey(name))
+		{
+			Properties p = getPropertyObject(name, board );
+			if(isPropertyOwned(p) == true)
+			{
+				b.giveLoanProperty(this, p);
+			}
+		}
+		if(board.stringUtilities.containsKey(name)){
+			Utilities u = this.getUtilityObject(name, board);
+			if(ownedUtilities.contains(u)){
+				b.giveLoanUtility(this, u);
+			}
+		}
 		
-
+		if(board.stringRailRoad.containsKey(name)){
+			RailRoad r = this.getRailRoadObject(name, board);
+			if(ownedRailRoad.contains(r)){
+				b.giveLoanRailRoad(this, r);
+			}
+			
+		}
+			
 	}
 
 	public void sellProperty(String name ,Bank b){
