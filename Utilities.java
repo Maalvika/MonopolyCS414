@@ -5,7 +5,7 @@ public class Utilities extends Squares {
 	private int rentFirstUtility;
 	private int rentSecondUtility;
 	private int mortgageValue;
-	
+	private Player uOwner;
 	
 	public Utilities(int i)
 	{
@@ -25,6 +25,12 @@ public class Utilities extends Squares {
 
 	}
 
+	// return the owner
+	
+	public Player getOwner()
+	{
+		return this.uOwner;
+	}
 	/**
 	 * @return the cost
 	 */
