@@ -26,7 +26,7 @@ public class RailRoad extends Squares {
 			int value[] = {cost,rentInitial,0,rent2RROwned,rent3RROwned, rent4RROwned, mortgageValue};
 			for (int k =0 ;k<7;k++)
 			{
-				value[k]= verticalFirstGrid[i][k];	
+				value[k]= verticalFirstGrid[5][k];	
 			}
 			this.cost = value[0];
 			this.rentInitial = value[1];
