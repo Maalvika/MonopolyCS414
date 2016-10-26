@@ -53,7 +53,7 @@ public class Properties extends Squares {
 		// populating vertical second grid
 		if ((i==21)|(i==23)|(i==24)|(i==26)|(i==27)|(i==29))
 		{
-			int temp = 20-i;
+			int temp = i-20;
 			int value[]={cost, rentInitial, rentFirstHouse, rentSecondHouse, rentThirdHouse, rentFourthHouse,
 				     rentHotel, mortgageValue, houseCost,hotelCost};
 				for (int k=0; k<10; k++)
@@ -76,9 +76,12 @@ public class Properties extends Squares {
 		// populating horizontal above grid
 		if ((i==11)|(i==13)|(i==14)|(i==16)|(i==18)|(i==19))
 		{
-			int temp = 10-i;
+			int temp = i-10;
 			int value[]={cost, rentInitial, rentFirstHouse, rentSecondHouse, rentThirdHouse, rentFourthHouse,
 				     rentHotel, mortgageValue, houseCost,hotelCost};
+			System.out.println("value size:"+value.length);
+			System.out.println("horizontal size:"+horizontalAboveGrid.length);
+			System.out.println("temp:"+temp);
 				for (int k=0; k<10; k++)
 					{
 						value[k] = horizontalAboveGrid[temp][k];
@@ -99,7 +102,7 @@ public class Properties extends Squares {
 		// populating horizontal below grid
 		if ((i==31)|(i==32)|(i==34)|(i==37)|(i==39))
 		{
-			int temp = 30-i;
+			int temp = i-30;
 			int value[]={cost, rentInitial, rentFirstHouse, rentSecondHouse, rentThirdHouse, rentFourthHouse,
 				     rentHotel, mortgageValue, houseCost,hotelCost};
 				for (int k=0; k<10; k++)
