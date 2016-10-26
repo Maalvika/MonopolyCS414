@@ -3,6 +3,7 @@ package com.cs414j.monopoly.model;
 
 public class Utilities extends Squares {
 	
+	private String name;
 	private int cost;
 	private int rentFirstUtility;
 	private int rentSecondUtility;
@@ -13,6 +14,7 @@ public class Utilities extends Squares {
 	{
 		super(i);
 		setUtilitiesValues(i);
+		assignName(i);
 	}
 	
 	public void setUtilitiesValues(int i)
@@ -26,7 +28,17 @@ public class Utilities extends Squares {
 		}
 
 	}
+	
+	public void assignName(int i)
+	{
+		this.name = namesList[i];
+	}
 
+	// return the name 
+	public String getName()
+	{
+		return this.name;
+	}
 	// return the owner
 	
 	public Player getOwner()
