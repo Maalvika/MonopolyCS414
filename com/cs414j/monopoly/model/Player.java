@@ -240,6 +240,7 @@ public class Player {
 				balance = balance -200;
 			}
 		}
+		MonopolyOptions.changePlayerDetails(this);
 
 	}
 
@@ -255,6 +256,7 @@ public class Player {
 			// luxury tax
 			balance = balance - 100;
 		}
+		MonopolyOptions.changePlayerDetails(this);
 
 	}
 
