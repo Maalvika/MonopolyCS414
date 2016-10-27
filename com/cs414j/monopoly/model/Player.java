@@ -1,7 +1,5 @@
 package com.cs414j.monopoly.model;
 
-package com.cs414j.monopoly.model;
-
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -22,6 +20,7 @@ public class Player {
 	private HashSet<Properties>mortgageProperties;
 	private HashSet<Utilities>mortgageUtilities;
 	private HashSet<RailRoad>mortgageRailRoad;
+	private HashSet<String>ownedAfterMortgage;
 
 
 	public Player(String n){
@@ -81,6 +80,18 @@ public class Player {
 
 	public void setToken(Token t){
 		this.token = t;
+	}
+	
+	public void setOwnedProperty(){
+		
+	}
+	
+	public void setOwnedUtilities(){
+		
+	}
+	
+	public void setownedRailRoads(){
+		
 	}
 
 	public Set<String> OwnedSquareName(){
@@ -204,6 +215,7 @@ public class Player {
 			if(getLocation() + diceValue >= 40){
 				int newBalance = getBalance() + 200;
 				setBalance(newBalance);
+		
 			}
 		}
 	}
@@ -371,6 +383,8 @@ public class Player {
 			{
 				b.giveLoanProperty(this, p);
 				this.mortgageProperties.add(p);
+				this.ownedProperty.remove(p);
+				
 			}
 		}
 		if(board.stringUtilities.containsKey(name)){
@@ -378,6 +392,7 @@ public class Player {
 			if(ownedUtilities.contains(u)){
 				b.giveLoanUtility(this, u);
 				this.mortgageUtilities.add(u);
+				this.ownedProperty.remove(u);
 			}
 		}
 
@@ -386,6 +401,7 @@ public class Player {
 			if(ownedRailRoad.contains(r)){
 				b.giveLoanRailRoad(this, r);
 				this.mortgageRailRoad.add(r);
+				this.ownedProperty.remove(r);
 			}
 
 		}
@@ -431,6 +447,7 @@ public class Player {
 		}
 	}
 }
+
 
 
 
