@@ -285,7 +285,8 @@ public class Player {
 				p.setOwner(this);
 				b.getBankPropertiesSet().remove(p);
 			} else {
-				MonopolyOptions.displayPopUp("Your balance is insufficient!!!! You cant purchase the property");
+				MonopolyOptions.displayPopUp("Your balance is insufficient!!!! "
+						+ "You cant purchase the property");
 			}
 		}
 
