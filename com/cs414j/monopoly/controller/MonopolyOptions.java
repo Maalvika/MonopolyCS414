@@ -1,4 +1,4 @@
-package com.cs414j.monopoly.view;
+package com.cs414j.monopoly.controller;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -21,6 +21,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import com.cs414j.monopoly.model.Player;
+import com.cs414j.monopoly.view.ButtonValidate;
+import com.cs414j.monopoly.view.EndForm;
+import com.cs414j.monopoly.view.MortgageOptions;
+import com.cs414j.monopoly.view.PlayerForm;
+import com.cs414j.monopoly.view.PropertyUI;
+import com.cs414j.monopoly.view.Token;
 import com.cs414j.monopoly.view.SpecialBlocks.Corner;
 import com.cs414j.monopoly.view.SpecialBlocks.PurchasePropertyList;
 
@@ -34,16 +40,16 @@ public class MonopolyOptions extends JPanel {
 	private static JLabel tokenLabel;
 	private static JLabel nameLabel;
 	private static JLabel scoreLabel;
-	static JButton rollDice;
-	static JButton buy;
-	static JButton pay;
-	static JButton build;
-	static JButton mortgage;
-	static JButton tax;
-	static JButton conti;
-	static JButton endGame;
+	public static JButton rollDice;
+	public static JButton buy;
+	public static JButton pay;
+	public static JButton build;
+	public static JButton mortgage;
+	public static JButton tax;
+	public static JButton conti;
+	public static JButton endGame;
 	private int rolledDoubleSix = 0;
-	static Map<PropertyUI, Integer> properties = new HashMap<>();
+	public static Map<PropertyUI, Integer> properties = new HashMap<>();
 
 	public MonopolyOptions(JFrame frame, Player p) {
 		super(new BorderLayout());
@@ -307,7 +313,7 @@ public class MonopolyOptions extends JPanel {
 		
 	}
 
-	static String getPropertyName(Token t) {
+	public static String getPropertyName(Token t) {
 
 		if (t.getxCoordinate() == 10) {
 			for (PurchasePropertyList.LVBlocks block : PurchasePropertyList.LVBlocks.values()) {

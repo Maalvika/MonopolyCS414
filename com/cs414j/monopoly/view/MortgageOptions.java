@@ -9,6 +9,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import com.cs414j.monopoly.controller.MonopolyMain;
+
 public class MortgageOptions {
 
 	public MortgageOptions(Set<String> properties) {

@@ -1,8 +1,10 @@
-package com.cs414j.monopoly.view;
+package com.cs414j.monopoly.model.junitTest;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import com.cs414j.monopoly.model.Tax;
 
 public class TaxTest {
 

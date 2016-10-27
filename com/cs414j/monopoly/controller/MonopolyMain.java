@@ -1,4 +1,4 @@
-package com.cs414j.monopoly.view;
+package com.cs414j.monopoly.controller;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -24,13 +24,18 @@ import javax.swing.border.Border;
 import com.cs414j.monopoly.model.Bank;
 import com.cs414j.monopoly.model.Board;
 import com.cs414j.monopoly.model.Player;
+import com.cs414j.monopoly.view.Die;
+import com.cs414j.monopoly.view.ImagePanel;
+import com.cs414j.monopoly.view.ImageUtility;
+import com.cs414j.monopoly.view.PlayerForm;
+import com.cs414j.monopoly.view.Token;
 
 public class MonopolyMain {
 
 	public static List<Player> players;
-	static JFrame frame;
+	public static JFrame frame;
 	private static Container contentPane;
-	static Player currentPlayer;
+	public static Player currentPlayer;
     public static Die _leftDie;     
     public static Die _rightDie;
     public static ImagePanel panel;
@@ -101,13 +106,15 @@ public class MonopolyMain {
 		if (x == 10) {
 			if ((y - 80 * (_leftDie.getValue() + _rightDie.getValue())) > 70) {
 				t.setyCoordinate(y - 80 * (_leftDie.getValue() + _rightDie.getValue()));
-			} else {
+			} else if (y==70) {
+				t.setxCoordinate(90);
+			}
+				else {
 				int ypoint = (y - 70) / 80;
 				// since the corner is a bigger block so we need 1 step more to
 				// get the
 				// token at correct position
 				int xpoint = (_leftDie.getValue() + _rightDie.getValue()) - ypoint + 1;
-				System.out.println("x1:" + xpoint + "y1:" + ypoint);
 				t.setxCoordinate(x + 80 * xpoint);
 				t.setyCoordinate(70);
 			}
@@ -126,7 +133,6 @@ public class MonopolyMain {
 			}
 
 		} else if (x == 890) {
-			System.out.println("c");
 			if ((y + 80 * (_leftDie.getValue() + _rightDie.getValue())) < 870) {
 				t.setyCoordinate(y + 80 * (_leftDie.getValue() + _rightDie.getValue()));
 			} else {

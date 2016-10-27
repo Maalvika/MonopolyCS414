@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import com.cs414j.monopoly.controller.MonopolyMain;
 import com.cs414j.monopoly.model.Player;
 
 /*
@@ -27,9 +28,11 @@ public class PlayerForm extends javax.swing.JFrame {
     private JTextField[] playerNames = new JTextField[4]; 
     private JLabel[] playerLabels = new JLabel[4]; 
     public static List<Token> tokens = new LinkedList<>();
-    /**
-     * Creates new form PlayerForm2
-     */
+    private javax.swing.JLabel errorLabel;
+    private javax.swing.JLabel pInfo;
+    private javax.swing.JButton startMonopoly;
+    
+    
     public PlayerForm(int pCount) {
         this.playerCount = pCount;
         prepareTokenList();
@@ -188,11 +191,5 @@ public class PlayerForm extends javax.swing.JFrame {
 			break;
 		}
 	}
-
-
-    // Variables declaration - do not modify                     
-    private javax.swing.JLabel errorLabel;
-    private javax.swing.JLabel pInfo;
-    private javax.swing.JButton startMonopoly;
-    // End of variables declaration                   
+                 
 }

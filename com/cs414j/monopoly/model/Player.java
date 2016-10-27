@@ -4,8 +4,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import com.cs414j.monopoly.view.MonopolyMain;
-import com.cs414j.monopoly.view.MonopolyOptions;
+import com.cs414j.monopoly.controller.MonopolyOptions;
 import com.cs414j.monopoly.view.Token;
 
 public class Player {
@@ -238,7 +237,7 @@ public class Player {
 			int newBalance = getBalance() + 200;
 			this.setBalance(newBalance);
 			String input = "$200 has been added to your balance";
-			com.cs414j.monopoly.view.MonopolyOptions.displayPopUp(input);	
+			MonopolyOptions.displayPopUp(input);	
 			MonopolyOptions.changePlayerDetails(this);
 		}
 	}

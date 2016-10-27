@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 
+import com.cs414j.monopoly.controller.MonopolyMain;
 import com.cs414j.monopoly.model.Player;
 
 /*
@@ -21,6 +22,12 @@ import com.cs414j.monopoly.model.Player;
  * @author maalv
  */
 public class EndForm extends javax.swing.JFrame {
+	
+	private javax.swing.JLabel finalResultLabel;
+    private JLabel propertyPLabel[] = new JLabel[4];
+    private javax.swing.JList<String> propertyList[] = new JList[4];
+    private javax.swing.JScrollPane jScrollPane[] = new JScrollPane[4];
+    private JLabel pResult[] = new JLabel[4];
 
     /**
      * Creates new form EndForm
@@ -179,12 +186,5 @@ public class EndForm extends javax.swing.JFrame {
             }
         });
     }
-
-    // Variables declaration - do not modify                     
-    private javax.swing.JLabel finalResultLabel;
-    private JLabel propertyPLabel[] = new JLabel[4];
-    private javax.swing.JList<String> propertyList[] = new JList[4];
-    private javax.swing.JScrollPane jScrollPane[] = new JScrollPane[4];
-    private JLabel pResult[] = new JLabel[4];
-    // End of variables declaration                   
+               
 }

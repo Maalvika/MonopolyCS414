@@ -1,5 +1,7 @@
 package com.cs414j.monopoly.view;
 
+import com.cs414j.monopoly.controller.MonopolyMain;
+import com.cs414j.monopoly.controller.MonopolyOptions;
 import com.cs414j.monopoly.model.Player;
 import com.cs414j.monopoly.model.Properties;
 import com.cs414j.monopoly.model.Squares;
@@ -36,7 +38,6 @@ public class ButtonValidate {
 
 	private static int validateCorners(int x, int y) {
 		for (Corner c : Corner.values()) {
-			System.out.println("a1");
 			if (x == c.getXpoint() && y == c.getYpoint()) {
 				MonopolyOptions.rollDice.setEnabled(true);
 				MonopolyOptions.buy.setEnabled(false);
@@ -111,7 +112,6 @@ public class ButtonValidate {
 	private static int validateChance(int x, int y) {
 		for (Chance c : Chance.values()) {
 			if (x == c.getXpoint() && y == c.getYpoint()) {
-				System.out.println("a2");
 				MonopolyOptions.rollDice.setEnabled(false);
 				MonopolyOptions.buy.setEnabled(false);
 				MonopolyOptions.conti.setEnabled(true);
@@ -165,15 +165,12 @@ public class ButtonValidate {
 		}else {
 		
 			String currentProperty = MonopolyOptions.getPropertyName(MonopolyMain.currentPlayer.getToken());
-			System.out.println("current Property "+currentProperty);
 			if(!MonopolyMain.bank.isOwned(currentProperty) && 
 					!MonopolyMain.currentPlayer.OwnedSquareName().contains(currentProperty)) {
-				System.out.println("is owned:"+MonopolyMain.bank.isOwned(currentProperty));
 				MonopolyOptions.build.setEnabled(false);
 				MonopolyOptions.buy.setEnabled(false);
 				MonopolyOptions.pay.setEnabled(true);
 			} else {
-				System.out.println("b");
 				MonopolyOptions.build.setEnabled(false);
 				MonopolyOptions.buy.setEnabled(true);
 				MonopolyOptions.pay.setEnabled(false);
