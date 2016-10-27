@@ -392,7 +392,7 @@ public class Player {
 			if(ownedUtilities.contains(u)){
 				b.giveLoanUtility(this, u);
 				this.mortgageUtilities.add(u);
-				this.ownedProperty.remove(u);
+				this.ownedUtilities.remove(u);
 			}
 		}
 
@@ -401,7 +401,7 @@ public class Player {
 			if(ownedRailRoad.contains(r)){
 				b.giveLoanRailRoad(this, r);
 				this.mortgageRailRoad.add(r);
-				this.ownedProperty.remove(r);
+				this.ownedRailRoad.remove(r);
 			}
 
 		}
