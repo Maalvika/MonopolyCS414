@@ -1,5 +1,7 @@
 package com.cs414j.monopoly.view;
 
+package monopoly.cs414;
+
 import static org.junit.Assert.*;
 
 import java.util.HashSet;
@@ -127,7 +129,7 @@ public class BankTest {
 		while(iterator.hasNext()) 
 		{
 	        RailRoad r = iterator.next();
-	        System.out.println(r.getName());
+	        //System.out.println(r.getName());
 	        boolean flag = false;
 	        int counter =0;
 	        for (int i=0; i<40;i++)
@@ -364,3 +366,4 @@ public class BankTest {
 
 
 }
+
