@@ -84,8 +84,8 @@ public class PropertiesTest {
 	public final void testGetOwner() {
 		Properties p1 = new Properties(18);
 		Properties p2 = new Properties(23);
-		Player pop1 = new Player();
-		Player pop2 = new Player();
+		Player pop1 = new Player("Joe");
+		Player pop2 = new Player("Mark");
 		p1.setOwner(pop1);
 		p2.setOwner(pop2);
 		assertEquals(pop1, p1.getOwner());
@@ -96,8 +96,8 @@ public class PropertiesTest {
 	public final void testSetOwner() {
 		Properties p1 = new Properties(18);
 		Properties p2 = new Properties(23);
-		Player pop1 = new Player();
-		Player pop2 = new Player();
+		Player pop1 = new Player("Ali");
+		Player pop2 = new Player("Jim");
 		p1.setOwner(pop1);
 		p2.setOwner(pop2);
 		assertEquals(pop1, p1.getOwner());
