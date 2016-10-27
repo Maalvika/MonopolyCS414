@@ -87,17 +87,14 @@ public class Player {
 		this.token = t;
 	}
 	
-	public void setOwnedProperty(){
-		
+	public int getHousesOwned(){
+		return this.housesOwned;
 	}
-	
-	public void setOwnedUtilities(){
-		
+
+	public int getHotelsOwned(){
+		return this.hotelsOwned;
 	}
-	
-	public void setownedRailRoads(){
-		
-	}
+
 
 	public Set<String> OwnedSquareName(){
 		// Iterates through the three hashSets of owned property/
@@ -176,37 +173,40 @@ public class Player {
 
 		return mortgagedProperties;
 	}
-
-	public void unMortgageProperty(String name, Bank b, Board board){
+        public void unMortgageProperty(String name, Bank b, Board board){
 
 		// asks bank for unmortgaging a particular property 
 		if(board.stringProperties.containsKey(name))
 		{
 			Properties p = getPropertyObject(name, board );
-			if(isPropertyOwned(p) == true && mortgageProperties.contains(p))
+			if(mortgageProperties.contains(p))
 			{
 				b.unMortgageProperty(this, p);
 				this.mortgageProperties.remove(p);
+				this.ownedProperty.add(p);
 			}
 		}
 		if(board.stringUtilities.containsKey(name)){
 			Utilities u = this.getUtilityObject(name, board);
-			if(ownedUtilities.contains(u) && this.mortgageUtilities.contains(u)){
+			if(this.mortgageUtilities.contains(u)){
 				b.unMortgageUtility(this, u);
 				this.mortgageUtilities.remove(u);
+				this.ownedUtilities.add(u);
 			}
 		}
 
 		if(board.stringRailRoad.containsKey(name)){
 			RailRoad r = this.getRailRoadObject(name, board);
-			if(ownedRailRoad.contains(r) && this.mortgageRailRoad.contains(r)){
+			if(this.mortgageRailRoad.contains(r)){
 				b.unMortgageRailRoad(this, r);
 				this.mortgageRailRoad.remove(r);
+				this.ownedRailRoad.add(r);
 			}
 		}
+
 		MonopolyOptions.changePlayerDetails(this);
 	}
-
+	
 	public boolean isPropertyOwned(Properties p){
 		// checks if a particular method is owned by a property
 		if(ownedProperty.contains(p)){
@@ -217,13 +217,13 @@ public class Player {
 
 	public void passGo(int diceValue){
 		// This is to add $200 every time a player lands on or crosses "GO".
-		for(int i = 0; i>40;i++ ){
-			if(getLocation() + diceValue >= 40){
-				int newBalance = getBalance() + 200;
-				setBalance(newBalance);
-				String input = "$200 has been added to your balance";
-				com.cs414j.monopoly.view.MonopolyOptions.displayPopUp(input);		
-			}
+
+		if(getLocation() + diceValue >= 40){
+			int newBalance = getBalance() + 200;
+			this.setBalance(newBalance);
+			String input = "$200 has been added to your balance";
+			com.cs414j.monopoly.view.MonopolyOptions.displayPopUp(input);	
+			MonopolyOptions.changePlayerDetails(this);
 		}
 	}
 
@@ -301,6 +301,11 @@ public class Player {
 				u.setOwner(this);
 				b.getBankUtilitySet().remove(u);
 			}
+			
+			else {
+				MonopolyOptions.displayPopUp("Your balance is insufficient!!!! "
+						+ "You cant purchase the property");
+			}
 		}
 
 		if(board.stringRailRoad.containsKey(name))
@@ -315,7 +320,12 @@ public class Player {
 				ownedRailRoad.add(r);
 				r.setOwner(this);
 				b.getBankRailRoad().remove(r);
-			}
+		}
+			
+		else {
+				MonopolyOptions.displayPopUp("Your balance is insufficient!!!! "
+						+ "You cant purchase the property");
+		     }
 
 		}
 		MonopolyOptions.changePlayerDetails(this);
@@ -343,11 +353,13 @@ public class Player {
 			{
 				int rent = 10 * diceValue;
 				balance = balance - rent;
+				receiver.balance = receiver.balance + rent;
 			}
 			else
 			{
 				int rent = 4 * diceValue;
 				balance = balance - rent;
+				receiver.balance = receiver.balance + rent;
 			}
 		}
 		if(b.stringRailRoad.containsKey(name))
@@ -357,15 +369,19 @@ public class Player {
 			Player receiver = r.getOwner();
 			if(receiver.ownedRailRoad.size() == 1){
 				balance = balance - 25;
+				receiver.balance = receiver.balance + 25;
 			}
 			else if(receiver.ownedRailRoad.size() == 2){
 				balance = balance - 50;
+				receiver.balance = receiver.balance + 50;
 			}
 			else if(receiver.ownedRailRoad.size() == 3){
 				balance = balance - 100;
+				receiver.balance = receiver.balance + 100;
 			}
 			else if(receiver.ownedRailRoad.size() == 4){
 				balance = balance -200;
+				receiver.balance = receiver.balance + 200;
 			}
 		}
 		MonopolyOptions.changePlayerDetails(this);
@@ -432,9 +448,11 @@ public class Player {
 				{
 					balance=balance-p.getHouseCost();
 					housesOwned++;
+					p.houses++;
 				}
 			}
 		}
+		
 		MonopolyOptions.changePlayerDetails(this);
 	}
 
@@ -446,18 +464,19 @@ public class Player {
 
 			if(ownedProperty.contains(p))
 			{
-				if(housesOwned>=4)
+				if(p.houses >= 4)
 				{
 					if(balance > p.getHotelCost())
 					{
 						balance=balance-p.getHotelCost();
 						hotelsOwned++;
-						housesOwned=0;
+						p.hotel = true;
 					}
 
 				}
 			}
 		}
+		
 		MonopolyOptions.changePlayerDetails(this);
 	}
 }
