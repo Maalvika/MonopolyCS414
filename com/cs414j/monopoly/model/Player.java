@@ -1,8 +1,9 @@
 package com.cs414j.monopoly.model;
 
+package com.cs414j.monopoly.model;
+
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Scanner;
 import java.util.Set;
 
 import com.cs414j.monopoly.view.Token;
@@ -47,16 +48,16 @@ public class Player {
 	public Token getToken(){
 		return token;
 	}
-	
-	public void setToken(Token t){
-		this.token = t;
-	}
 
 	public int getLocation(){
 		// returns current location of the player
 		return location;
 	}
-	
+
+	public void setLocation(int l){
+		location = l;
+	}
+
 	public int getBalance(){
 		return balance;
 	}
@@ -78,13 +79,17 @@ public class Player {
 		location = (location + diceValue) % 40;
 	}
 
+	public void setToken(Token t){
+		this.token = t;
+	}
+
 	public Set<String> OwnedSquareName(){
 		// Iterates through the three hashSets of owned property/
 		// utility/railroad and populates their names in the propertyNames
 		// hashSet
 
 		HashSet<String> propertyNames = new HashSet<String>();
-		if(!(ownedProperty.isEmpty())){
+		if(!ownedProperty.isEmpty()){
 			Iterator<Properties> itr = ownedProperty.iterator();
 
 			while(itr.hasNext())
@@ -94,8 +99,7 @@ public class Player {
 			}
 		}
 
-
-		if(!(ownedUtilities.isEmpty())){
+		if(!ownedUtilities.isEmpty()){
 			Iterator<Utilities> itrU = ownedUtilities.iterator();
 			while(itrU.hasNext()){
 
@@ -103,7 +107,8 @@ public class Player {
 				propertyNames.add(u.getName());
 			}
 		}
-		if(!(ownedRailRoad.isEmpty())){
+
+		if(!ownedRailRoad.isEmpty()){
 			Iterator<RailRoad> itrR = ownedRailRoad.iterator();
 			while(itrR.hasNext())
 			{
@@ -114,7 +119,6 @@ public class Player {
 		}
 		return propertyNames;
 	}
-
 
 	public Set<String> mortgagedSquareName(){
 		//gives names of the mortgaged properties
@@ -134,6 +138,7 @@ public class Player {
 		}
 
 		if(!(this.mortgageUtilities.isEmpty())){
+
 			Iterator<Utilities> itrU = this.mortgageUtilities.iterator();
 			while(itrU.hasNext()){
 
@@ -141,11 +146,13 @@ public class Player {
 				mortgagedProperties.add(u.getName());
 			}
 		}
-		
+
+
 		if(!(this.mortgageRailRoad.isEmpty())){
 			Iterator<RailRoad> itrR = ownedRailRoad.iterator();
 			while(itrR.hasNext())
 			{
+
 				RailRoad r = (RailRoad)itrR.next();
 				mortgagedProperties.add(r.getName());
 			}
@@ -201,18 +208,17 @@ public class Player {
 		}
 	}
 
-	public void landedOnGoToJail(int l)
-	{
+	public void landedOnGoToJail(int l){
 		// to check if a player landed on Go To Jail square
 		// if it does send him to "in jail" location = 10
-		if(l == 30)
-		{
-		this.setLocation(10);
-		}
-	 }
 
-	public void paidJailPenalty()
-	{
+		if(l == 30){
+			this.setLocation(10);
+
+		}
+	}
+
+	public void paidJailPenalty(){
 		this.setBalance(balance - 50);
 	}
 
@@ -425,6 +431,7 @@ public class Player {
 		}
 	}
 }
+
 
 
 
