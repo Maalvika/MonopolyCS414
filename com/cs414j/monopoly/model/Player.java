@@ -94,6 +94,22 @@ public class Player {
 	public int getHotelsOwned(){
 		return this.hotelsOwned;
 	}
+	
+	public Set<RailRoad> getOwnedRailRoad(){
+		return ownedRailRoad;
+	}
+	
+	public Set<Utilities> getMortgageUtilities(){
+		return this.mortgageUtilities;
+	}
+	
+	public Set<RailRoad> getMortgageRailRoad(){
+		return this.mortgageRailRoad;
+	}
+	
+	public Set<Properties> getMortgageProperties(){
+		return mortgageProperties;
+	}
 
 
 	public Set<String> OwnedSquareName(){
@@ -480,11 +496,3 @@ public class Player {
 		MonopolyOptions.changePlayerDetails(this);
 	}
 }
-
-
-
-
-
-
-
-
