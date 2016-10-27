@@ -10,6 +10,8 @@ import org.junit.Test;
 
 public class PlayerTest {
 
+	
+
 	@Test
 	public final void testBuyProperty() {
 		Board board = new Board();
@@ -175,6 +177,68 @@ public class PlayerTest {
 		assertEquals(1070,p.getBalance());
     	
     }
+    
+    @Test
+    public void testPayRent()
+    {
+    	Board board = new Board();
+		Bank bank = new Bank();		
+		Player p = new Player("Trump");
+		Set<Utilities> ownedUtilities= new HashSet<Utilities>();
+		Set<RailRoad> ownedRailRoad = new HashSet<RailRoad>();
+		Set<Properties>ownedProperty = new HashSet<Properties>();
+	
+		assertEquals(22,bank.getBankPropertiesSet().size());
+		p.buyProperty("Mediterranean Avenue", bank, board);
+		ownedProperty = p.getOwnedProperties();
+		Iterator<Properties> iter = ownedProperty.iterator();
+		Properties prop = iter.next();
+		assertEquals("Mediterranean Avenue",prop.getName());
+		assertEquals(21,bank.getBankPropertiesSet().size());
+		
+		Player p2 = new Player("Joe");
+		p2.payRent("Mediterranean Avenue", board, 1);
+		assertEquals(1442,p.getBalance());
+		assertEquals(1498,p2.getBalance());
+		
+		//Checking the rent for utility
+		p.buyProperty("Electric Co", bank, board);
+		ownedUtilities = p.getOwnedUtilities();
+		Iterator<Utilities> iter2 = ownedUtilities.iterator();
+		Utilities ui = iter2.next();
+		assertEquals("Electric Co",ui.getName());
+		assertEquals(1,bank.getBankUtilitySet().size());
+		p.buyProperty("Water Works", bank, board);
+		
+		p2.payRent("Electric Co", board, 6);
+		assertEquals(1202,p.getBalance());
+		assertEquals(1438,p2.getBalance());
+		
+		// pay rent for the railroad
+		p.buyProperty("Pennsylvania Railroad", bank, board);
+		p2.payRent("Pennsylvania Railroad", board, 3);
+		assertEquals(1027,p.getBalance());
+		assertEquals(1413,p2.getBalance());
+		
+		p.buyProperty("Reading Railroad", bank, board);
+		p2.payRent("Pennsylvania Railroad", board, 3);
+		assertEquals(877,p.getBalance());
+		assertEquals(1363,p2.getBalance());
+		
+		p.buyProperty("B O Railroad", bank, board);
+		p2.payRent("Reading Railroad", board, 3);
+		assertEquals(777,p.getBalance());
+		assertEquals(1263,p2.getBalance());
+		
+		p.buyProperty("Short Line", bank, board);
+		p2.payRent("B O Railroad", board, 3);
+		assertEquals(777,p.getBalance());
+		assertEquals(1063,p2.getBalance());
+		
+		
+    	
+    }
 	
 }
+
 
