@@ -3,6 +3,7 @@ package com.cs414j.monopoly.view;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -16,9 +17,11 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import com.cs414j.monopoly.model.Player;
+import com.cs414j.monopoly.view.SpecialBlocks.Corner;
 import com.cs414j.monopoly.view.SpecialBlocks.PurchasePropertyList;
 
 public class MonopolyOptions extends JPanel {
@@ -38,6 +41,8 @@ public class MonopolyOptions extends JPanel {
 	static JButton mortgage;
 	static JButton tax;
 	static JButton conti;
+	static JButton endGame;
+	private int rolledDoubleSix = 0;
 	static Map<PropertyUI, Integer> properties = new HashMap<>();
 
 	public MonopolyOptions(JFrame frame, Player p) {
@@ -93,6 +98,7 @@ public class MonopolyOptions extends JPanel {
 		build = new JButton("Build on Property");
 		mortgage = new JButton("Mortgage Property");
 		tax = new JButton("Pay Tax");
+		endGame = new JButton("End Game");
 		// playerDetails.setLayout(new BoxLayout(playerDetails,
 		// BoxLayout.Y_AXIS));
 		gameOptions.setLayout(new GridLayout(4, 2, 10, 100));
@@ -103,6 +109,7 @@ public class MonopolyOptions extends JPanel {
 		gameOptions.add(build);
 		gameOptions.add(mortgage);
 		gameOptions.add(tax);
+		gameOptions.add(endGame);
 		buy.setEnabled(false);
 		conti.setEnabled(false);
 		pay.setEnabled(false);
@@ -111,6 +118,13 @@ public class MonopolyOptions extends JPanel {
 		tax.setEnabled(false);
 		addActionListener();
 		return gameOptions;
+		
+	}
+	protected void endGameActionPerformed(ActionEvent evt) {
+		MonopolyMain.frame.dispose();
+		EndForm f=new EndForm();
+		f.setVisible(true);
+		
 		
 	}
 	
@@ -145,6 +159,7 @@ public class MonopolyOptions extends JPanel {
 		}
 		String currentProperty = getPropertyName(currentToken);
 		player.buyProperty(currentProperty, MonopolyMain.bank, MonopolyMain.board);
+		displayPopUp("Congrats!!!! "+currentProperty+" is yours. \n Your new balance is: $"+player.getBalance());
 		disableButtonSettings();
 		
 	}
@@ -165,16 +180,49 @@ public class MonopolyOptions extends JPanel {
 	protected void contiActionPerformed(ActionEvent evt) {
 		initButtonSettings();
 		switchToNextTurn();
-		changePlayerDetails(MonopolyMain.currentPlayer);
+		Player p = MonopolyMain.currentPlayer;
+		changePlayerDetails(p);
+		Token currentToken = p.getToken();
+		if(currentToken.getxCoordinate() == Corner.JUST_VISITING.getXpoint() && 
+						currentToken.getyCoordinate() == Corner.JUST_VISITING.getYpoint()) {
+			
+			
+		}
 	}
 
 	protected void rollDiceActionPerformed(ActionEvent evt) {
 		MonopolyMain._leftDie.roll();
 		MonopolyMain._rightDie.roll();
-		MonopolyMain.changeBoardImage();
-		ButtonValidate.landOnBlock(MonopolyMain.currentPlayer.getToken());
 		int diceValue = MonopolyMain._leftDie.getValue()+MonopolyMain._rightDie.getValue();
-		MonopolyMain.currentPlayer.moveForward(diceValue);
+		if(diceValue == 12) {
+			rolledDoubleSix += diceValue;
+			if(rolledDoubleSix == 36) {
+				rolledDoubleSix = 0;
+				Token t = MonopolyMain.currentPlayer.getToken();
+				t.setxCoordinate(Corner.JUST_VISITING.getXpoint());
+				t.setyCoordinate(Corner.JUST_VISITING.getYpoint());
+				PlayerForm.tokens.set(PlayerForm.tokens.indexOf(MonopolyMain.currentPlayer.getToken()), t);
+				MonopolyMain.currentPlayer.setToken(t);
+				MonopolyMain.panel.changeTokenPosition(PlayerForm.tokens);
+				displayPopUp("Oops!!! You rolled a double six, thrice. You'll have to go to jail");
+				disableButtonSettings();
+			} else {
+				displayPopUp("Oops!!! You rolled a double six. Press Ok to roll again");
+				initButtonSettings();
+			}
+			
+			// Todo: hook with backend rolled a double
+			//MonopolyMain.currentPlayer.
+		} else {
+			 if(rolledDoubleSix > 0 && rolledDoubleSix <36) {
+				
+				diceValue = rolledDoubleSix;
+				rolledDoubleSix = 0;
+			} 
+			MonopolyMain.changeBoardImage();
+			ButtonValidate.landOnBlock(MonopolyMain.currentPlayer.getToken());
+			MonopolyMain.currentPlayer.moveForward(diceValue);
+		}
 	}
 	
 	private void switchToNextTurn(){
@@ -198,7 +246,7 @@ public class MonopolyOptions extends JPanel {
 
 	}
 	
-	private void disableButtonSettings() {
+	private static void disableButtonSettings() {
 		MonopolyOptions.rollDice.setEnabled(false);
 		MonopolyOptions.buy.setEnabled(false);
 		MonopolyOptions.conti.setEnabled(true);
@@ -251,8 +299,13 @@ public class MonopolyOptions extends JPanel {
 			}
 		});
 		
+		endGame.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				endGameActionPerformed(evt);
+			}
+		});
+		
 	}
-
 
 	static String getPropertyName(Token t) {
 
@@ -289,4 +342,26 @@ public class MonopolyOptions extends JPanel {
 		return " ";
 	}
 
+	public static void displayPopUp(String message) {
+		JOptionPane.showMessageDialog(null, message);
+	}
+	
+	public static void displayVotePopup(String message, String operation) {
+		Object[] options = { "Pay", "Cancel"};
+		int n = JOptionPane.showOptionDialog(null, message,
+				"Ask User", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options,
+				options[2]);
+		switch(n) {
+		case JOptionPane.OK_OPTION: 
+			if(operation.equals("Jail Fee")) {
+				MonopolyMain.currentPlayer.paidJailPenalty();
+			}
+			break;
+		case JOptionPane.NO_OPTION:
+			//
+			break;
+			
+		}
+		disableButtonSettings();
+	}
 }

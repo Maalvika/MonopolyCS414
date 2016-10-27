@@ -28,7 +28,7 @@ public final class PurchasePropertyList {
 	public enum UHBlocks {
 		St_Charles_Place(170,70),Electric_Co(250,70),State_Avenue(330,70),
 		Virginia_Avenue(410,70),Pennsylvania_Railroad(490,70),St_James_Place(570,70),
-		Tenesse_Avenue(730,70),Avenue(810,70);
+		Tenesse_Avenue(730,70),New_York_Avenue(810,70);
 		
 		private int xpoint, ypoint;
 

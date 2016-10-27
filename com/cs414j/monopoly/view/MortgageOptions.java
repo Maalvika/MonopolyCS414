@@ -26,7 +26,8 @@ public class MortgageOptions {
 				JOptionPane.QUESTION_MESSAGE);
 		switch (result) {
 		case JOptionPane.OK_OPTION:
-			System.out.println("You selected " + comboBox.getSelectedItem());
+			MonopolyMain.currentPlayer.mortgageProperty(comboBox.getSelectedItem().toString(), 
+															MonopolyMain.bank,MonopolyMain.board);
 			break;
 		}
 

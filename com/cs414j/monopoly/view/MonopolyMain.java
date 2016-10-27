@@ -28,7 +28,7 @@ import com.cs414j.monopoly.model.Player;
 public class MonopolyMain {
 
 	public static List<Player> players;
-	private static JFrame frame;
+	static JFrame frame;
 	private static Container contentPane;
 	static Player currentPlayer;
     public static Die _leftDie;     
@@ -150,8 +150,10 @@ public class MonopolyMain {
 				int ypoint = (_leftDie.getValue() + _rightDie.getValue()) - xpoint;
 				t.setxCoordinate(10);
 				t.setyCoordinate(y - 80 * ypoint);
+				currentPlayer.passGo(_leftDie.getValue() + _rightDie.getValue());
 			} else {
 				t.setxCoordinate(10);
+				currentPlayer.passGo(_leftDie.getValue() + _rightDie.getValue());
 			}
 
 		}
