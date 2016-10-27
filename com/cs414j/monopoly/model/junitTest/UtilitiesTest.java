@@ -55,7 +55,7 @@ public class UtilitiesTest {
 	@Test
 	public final void testGetOwner() {
 		Utilities u1 = new Utilities(12);
-		Player p = new Player();
+		Player p = new Player("Danny");
 		u1.setOwner(p);
 		Player temp = u1.getOwner();
 		assertEquals(p,temp);
@@ -65,7 +65,7 @@ public class UtilitiesTest {
 	@Test
 	public final void testSetOwner() {
 		Utilities u1 = new Utilities(12);
-		Player p = new Player();
+		Player p = new Player("Danny");
 		u1.setOwner(p);
 		Player temp = u1.getOwner();
 		assertEquals(p,temp);
