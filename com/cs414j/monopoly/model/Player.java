@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import com.cs414j.monopoly.view.MonopolyMain;
+import com.cs414j.monopoly.view.MonopolyOptions;
 import com.cs414j.monopoly.view.Token;
 
 public class Player {
@@ -20,7 +22,6 @@ public class Player {
 	private HashSet<Properties>mortgageProperties;
 	private HashSet<Utilities>mortgageUtilities;
 	private HashSet<RailRoad>mortgageRailRoad;
-	private HashSet<String>ownedAfterMortgage;
 
 
 	public Player(String n){
@@ -30,6 +31,10 @@ public class Player {
 		ownedProperty = new HashSet<Properties>();
 		ownedUtilities = new HashSet<Utilities>();
 		ownedRailRoad = new HashSet<RailRoad>();
+		mortgageProperties = new HashSet<>();
+		mortgageRailRoad = new HashSet<>();
+		mortgageUtilities = new HashSet<>();
+		
 
 	}
 
@@ -199,6 +204,7 @@ public class Player {
 				this.mortgageRailRoad.remove(r);
 			}
 		}
+		MonopolyOptions.changePlayerDetails(this);
 	}
 
 	public boolean isPropertyOwned(Properties p){
@@ -233,6 +239,7 @@ public class Player {
 
 	public void paidJailPenalty(){
 		this.setBalance(balance - 50);
+		MonopolyOptions.changePlayerDetails(this);
 	}
 
 	public Properties getPropertyObject(String key, Board board){
@@ -277,6 +284,8 @@ public class Player {
 				ownedProperty.add(p);
 				p.setOwner(this);
 				b.getBankPropertiesSet().remove(p);
+			} else {
+				MonopolyOptions.displayPopUp("Your balance is insufficient!!!! You cant purchase the property");
 			}
 		}
 
@@ -308,6 +317,7 @@ public class Player {
 			}
 
 		}
+		MonopolyOptions.changePlayerDetails(this);
 	}
 
 	public void payRent(String name, Board b, int diceValue){
@@ -357,7 +367,7 @@ public class Player {
 				balance = balance -200;
 			}
 		}
-
+		MonopolyOptions.changePlayerDetails(this);
 	}
 
 	public void payTax(){
@@ -372,7 +382,7 @@ public class Player {
 			// luxury tax
 			balance = balance - 100;
 		}
-
+		MonopolyOptions.changePlayerDetails(this);
 	}
 
 	public void mortgageProperty(String name, Bank b, Board board){
@@ -406,7 +416,7 @@ public class Player {
 			}
 
 		}
-
+		MonopolyOptions.changePlayerDetails(this);
 	}
 
 	public void buyHouse(String name, Board board){
@@ -424,6 +434,7 @@ public class Player {
 				}
 			}
 		}
+		MonopolyOptions.changePlayerDetails(this);
 	}
 
 	public void buyHotel(String name, Board board){
@@ -446,6 +457,7 @@ public class Player {
 				}
 			}
 		}
+		MonopolyOptions.changePlayerDetails(this);
 	}
 }
 
