@@ -58,7 +58,7 @@ public class RailRoadTest {
 	@Test
 	public final void testGetOwner() {
 		RailRoad r1 = new RailRoad(5);
-		Player po = new Player();
+		Player po = new Player("BMW");
 		r1.setOwner(po);
 		Player temp = r1.getOwner();
 		assertEquals(po, temp);
@@ -67,7 +67,7 @@ public class RailRoadTest {
 	@Test
 	public final void testSetOwner() {
 		RailRoad r1 = new RailRoad(5);
-		Player po = new Player();
+		Player po = new Player("Ausi");
 		r1.setOwner(po);
 		Player temp = r1.getOwner();
 		assertEquals(po, temp);
