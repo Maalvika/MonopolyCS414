@@ -16,6 +16,8 @@ public class Properties extends Squares {
 	int hotelCost;
 	String color;
 	Player owner;
+	int houses;
+	boolean hotel;
 	public Properties(int i) {
 		super(i);
 		setProperties(i);
