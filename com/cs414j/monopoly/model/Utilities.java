@@ -4,10 +4,10 @@ package com.cs414j.monopoly.model;
 public class Utilities extends Squares {
 	
 	private String name;
-	private int cost;
+	private int cost = 150;
 	private int rentFirstUtility;
 	private int rentSecondUtility;
-	private int mortgageValue;
+	private int mortgageValue = 75;
 	private Player uOwner;
 	
 	public Utilities(int i)
