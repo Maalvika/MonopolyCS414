@@ -215,7 +215,8 @@ public class Player {
 			if(getLocation() + diceValue >= 40){
 				int newBalance = getBalance() + 200;
 				setBalance(newBalance);
-		
+				String input = "$200 has been added to your balance";
+				com.cs414j.monopoly.view.MonopolyOptions.displayPopUp(input);		
 			}
 		}
 	}
