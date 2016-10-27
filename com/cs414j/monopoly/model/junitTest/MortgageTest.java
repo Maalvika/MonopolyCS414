@@ -1,4 +1,4 @@
-package monopoly.cs414;
+package com.cs414j.monopoly.view;
 
 import static org.junit.Assert.*;
 
