@@ -294,33 +294,40 @@ public class Player {
 			Properties p = getPropertyObject(name, board );
 
 			int cost = p.getCost();
-			if(b.getBankPropertiesSet().contains(p) && balance > cost){
-				balance =  balance - cost;
-				ownedProperty.add(p);
-				p.setOwner(this);
-				b.getBankPropertiesSet().remove(p);
-			} else {
-				MonopolyOptions.displayPopUp("Your balance is insufficient!!!! "
-						+ "You cant purchase the property");
+			if(b.getBankPropertiesSet().contains(p)) {
+				if( balance > cost){
+					balance =  balance - cost;
+					ownedProperty.add(p);
+					p.setOwner(this);
+					b.getBankPropertiesSet().remove(p);
+				} 
+				else {
+					MonopolyOptions.displayPopUp("Your balance is insufficient!!!! "
+							+ "You cant purchase the property");
+				}
 			}
+
 		}
 
 		if(board.stringUtilities.containsKey(name))
 		{
 			Utilities u = this.getUtilityObject(name, board);
 			int cost = u.getCost();
-			if(b.getBankUtilitySet().contains(u) && balance > cost){
+			if(b.getBankUtilitySet().contains(u)){
+				if(balance > cost){
 
-				balance = balance -cost;
-				ownedUtilities.add(u);
-				u.setOwner(this);
-				b.getBankUtilitySet().remove(u);
+					balance = balance -cost;
+					ownedUtilities.add(u);
+					u.setOwner(this);
+					b.getBankUtilitySet().remove(u);
+				}
+				else{
+					MonopolyOptions.displayPopUp("Your balance is insufficient!!!! "
+							+ "You cant purchase the property");
+				}
 			}
-			
-			else {
-				MonopolyOptions.displayPopUp("Your balance is insufficient!!!! "
-						+ "You cant purchase the property");
-			}
+
+
 		}
 
 		if(board.stringRailRoad.containsKey(name))
@@ -329,18 +336,20 @@ public class Player {
 
 			RailRoad r = this.getRailRoadObject(name, board);
 			int cost = r.getCost();
-			if(b.getBankRailRoad().contains(r) && balance > cost ){
-
+			if(b.getBankRailRoad().contains(r)){ 
+					if(balance > cost){
 				balance = balance - cost;
 				ownedRailRoad.add(r);
 				r.setOwner(this);
 				b.getBankRailRoad().remove(r);
-		}
-			
-		else {
-				MonopolyOptions.displayPopUp("Your balance is insufficient!!!! "
-						+ "You cant purchase the property");
-		     }
+			}
+					else{
+						MonopolyOptions.displayPopUp("Your balance is insufficient!!!! "
+								+ "You cant purchase the property");
+					}
+			}
+
+
 
 		}
 		MonopolyOptions.changePlayerDetails(this);
