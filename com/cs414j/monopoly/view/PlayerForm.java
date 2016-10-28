@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import com.cs414j.monopoly.controller.EndTimerTask;
 import com.cs414j.monopoly.controller.MonopolyMain;
 import com.cs414j.monopoly.model.Player;
 
@@ -31,10 +32,12 @@ public class PlayerForm extends javax.swing.JFrame {
     private javax.swing.JLabel errorLabel;
     private javax.swing.JLabel pInfo;
     private javax.swing.JButton startMonopoly;
+    private int duration;
     
     
-    public PlayerForm(int pCount) {
+    public PlayerForm(int pCount, int duration) {
         this.playerCount = pCount;
+        this.duration = duration;
         prepareTokenList();
         initComponents();
         hideComponents(pCount);
@@ -188,7 +191,8 @@ public class PlayerForm extends javax.swing.JFrame {
         	}
         	MonopolyMain.setPlayers(players);
         	MonopolyMain.init();
-        	//MonopolyMain.setPlayerDetails(this.playerNames[1].getText(), 50);
+        	//Start a timer
+        	new EndTimerTask(duration);
         }
     }  
     

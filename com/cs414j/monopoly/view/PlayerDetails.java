@@ -16,7 +16,7 @@ import javax.swing.JTextField;
  */
 public class PlayerDetails extends javax.swing.JFrame {
     
-    private int noOfPlayers = -1;  
+    private int noOfPlayers = -1;
 
     /**
      * Creates new form PlayerDetails
@@ -40,6 +40,8 @@ public class PlayerDetails extends javax.swing.JFrame {
         playerNum = new javax.swing.JLabel();
         nextButton = new javax.swing.JButton();
         errorLabel = new javax.swing.JLabel();
+        EndTime = new javax.swing.JLabel();
+        timeText = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -62,6 +64,7 @@ public class PlayerDetails extends javax.swing.JFrame {
         });
 
         errorLabel.setText("<html><font color=\"red\">INVALID OPTION</html>");
+        EndTime.setText("Duration of Game(in minutes)");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -70,10 +73,10 @@ public class PlayerDetails extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addComponent(playerNum, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(52, 52, 52)
-                        .addComponent(playerNumCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap()
+                        .addComponent(EndTime)
+                        .addGap(51, 51, 51)
+                        .addComponent(timeText, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(119, 119, 119)
                         .addComponent(playerDetailsIntro, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -82,7 +85,12 @@ public class PlayerDetails extends javax.swing.JFrame {
                         .addComponent(nextButton, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(128, 128, 128)
-                        .addComponent(errorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(errorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addComponent(playerNum, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(52, 52, 52)
+                        .addComponent(playerNumCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(62, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -94,7 +102,11 @@ public class PlayerDetails extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(playerNumCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(playerNum, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(59, 59, 59)
+                .addGap(17, 17, 17)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(timeText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(EndTime))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(nextButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
                 .addComponent(errorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -111,15 +123,20 @@ public class PlayerDetails extends javax.swing.JFrame {
             noOfPlayers = Integer.parseInt(playerNumCombo.getSelectedItem().toString());
         }
         
-    }                                              
+    }         
 
-    private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
-        if(noOfPlayers >= 2) {
+    private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {  
+    	String duration = timeText.getText();
+        if(noOfPlayers >= 2 && (duration!=null || !duration.isEmpty())) {
             this.setVisible(false);
             //PlayerNames pn = new PlayerNames(noOfPlayers);
-            PlayerForm pn = new PlayerForm(noOfPlayers);
+           
+            PlayerForm pn = new PlayerForm(noOfPlayers,Integer.parseInt(duration));
             pn.setVisible(true);
         } else  {
+        	if(duration== null || duration.isEmpty()) {
+        		errorLabel.setText("Duration of game is empty");
+        	}
             errorLabel.setVisible(true);
         }
     }                                          
@@ -159,11 +176,14 @@ public class PlayerDetails extends javax.swing.JFrame {
         });
     }
 
-    // Variables declaration - do not modify                     
+    // Variables declaration - do not modify  
+    private javax.swing.JLabel EndTime;
     private javax.swing.JLabel errorLabel;
     private javax.swing.JButton nextButton;
     private javax.swing.JLabel playerDetailsIntro;
     private javax.swing.JLabel playerNum;
     private javax.swing.JComboBox<String> playerNumCombo;
+    private javax.swing.JTextField timeText;
+    private javax.swing.JLabel finalResult;
     // End of variables declaration                   
 }

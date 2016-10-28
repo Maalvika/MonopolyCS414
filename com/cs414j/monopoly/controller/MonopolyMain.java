@@ -79,15 +79,15 @@ public class MonopolyMain {
 		return panel;
 	}
 
-	public static void changeBoardImage() {
+	public static void changeBoardImage(int diceValue) {
 
-		Token t = adjustPosition(currentPlayer.getToken());
+		Token t = adjustPosition(currentPlayer.getToken(), diceValue);
 		PlayerForm.tokens.set(PlayerForm.tokens.indexOf(currentPlayer.getToken()), t);
 		currentPlayer.setToken(t);
 		panel.changeTokenPosition(PlayerForm.tokens);
 	}
 
-	private static Token adjustPosition(Token t) {
+	private static Token adjustPosition(Token t, int diceValue) {
 
 		int x = t.getxCoordinate();
 		int y = t.getyCoordinate();
@@ -104,8 +104,8 @@ public class MonopolyMain {
 			x=10;
 		}
 		if (x == 10) {
-			if ((y - 80 * (_leftDie.getValue() + _rightDie.getValue())) > 70) {
-				t.setyCoordinate(y - 80 * (_leftDie.getValue() + _rightDie.getValue()));
+			if ((y - 80 * diceValue) > 70) {
+				t.setyCoordinate(y - 80 * diceValue);
 			} else if (y==70) {
 				t.setxCoordinate(90);
 			}
@@ -114,52 +114,52 @@ public class MonopolyMain {
 				// since the corner is a bigger block so we need 1 step more to
 				// get the
 				// token at correct position
-				int xpoint = (_leftDie.getValue() + _rightDie.getValue()) - ypoint + 1;
+				int xpoint = diceValue - ypoint + 1;
 				t.setxCoordinate(x + 80 * xpoint);
 				t.setyCoordinate(70);
 			}
 		} else if (y == 70) {
-			if ((x + 80 * (_leftDie.getValue() + _rightDie.getValue())) < 890) {
-				t.setxCoordinate(x + 80 * (_leftDie.getValue() + _rightDie.getValue()));
+			if ((x + 80 * diceValue) < 890) {
+				t.setxCoordinate(x + 80 * diceValue);
 			} else {
 				int xpoint = (890 - x) / 80;
 				// since the corner is a bigger block so we need 1 step more to
 				// get the
 				// token at correct position
-				int ypoint = (_leftDie.getValue() + _rightDie.getValue()) - xpoint;
+				int ypoint = diceValue - xpoint;
 				t.setxCoordinate(890);
 				t.setyCoordinate(y + 80 * ypoint);
 
 			}
 
 		} else if (x == 890) {
-			if ((y + 80 * (_leftDie.getValue() + _rightDie.getValue())) < 870) {
-				t.setyCoordinate(y + 80 * (_leftDie.getValue() + _rightDie.getValue()));
+			if ((y + 80 * diceValue) < 870) {
+				t.setyCoordinate(y + 80 * diceValue);
 			} else {
 				int ypoint = (870 - y) / 80;
 				// since the corner is a bigger block so we need 1 step more to
 				// get the
 				// token at correct position
-				int xpoint = (_leftDie.getValue() + _rightDie.getValue()) - ypoint;
+				int xpoint = diceValue - ypoint;
 				t.setyCoordinate(870);
 				t.setxCoordinate(x - 80 * xpoint);
 			}
 
 		} else if (y == 870 && x != 10 ) {
-			if (x - 80 * (_leftDie.getValue() + _rightDie.getValue()) >= 170) {
-				t.setxCoordinate(x - 80 * (_leftDie.getValue() + _rightDie.getValue()));
-			} else if(x - 80 * (_leftDie.getValue() + _rightDie.getValue()) < 10) {
+			if (x - 80 * diceValue >= 170) {
+				t.setxCoordinate(x - 80 * diceValue);
+			} else if(x - 80 * diceValue < 10) {
 				int xpoint = ((x - 10) / 80) - 1;
 				// since the corner is a bigger block so we need 1 step more to
 				// get the
 				// token at correct position
-				int ypoint = (_leftDie.getValue() + _rightDie.getValue()) - xpoint;
+				int ypoint = diceValue - xpoint;
 				t.setxCoordinate(10);
 				t.setyCoordinate(y - 80 * ypoint);
-				currentPlayer.passGo(_leftDie.getValue() + _rightDie.getValue());
+				currentPlayer.passGo(diceValue);
 			} else {
 				t.setxCoordinate(10);
-				currentPlayer.passGo(_leftDie.getValue() + _rightDie.getValue());
+				currentPlayer.passGo(diceValue);
 			}
 
 		}

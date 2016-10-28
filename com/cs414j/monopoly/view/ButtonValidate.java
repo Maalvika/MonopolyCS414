@@ -94,9 +94,16 @@ public class ButtonValidate {
 		for (RailRoad t : RailRoad.values()) {
 			if (x == t.getXpoint() && y == t.getYpoint()) {
 				MonopolyOptions.rollDice.setEnabled(false);
-				MonopolyOptions.buy.setEnabled(true);
 				MonopolyOptions.conti.setEnabled(true);
-				MonopolyOptions.pay.setEnabled(false);
+				String currentProperty = MonopolyOptions.getPropertyName(MonopolyMain.currentPlayer.getToken());
+				if(!MonopolyMain.bank.isOwned(currentProperty) && 
+						!MonopolyMain.currentPlayer.OwnedSquareName().contains(currentProperty)) {
+					MonopolyOptions.buy.setEnabled(false);
+					MonopolyOptions.pay.setEnabled(true);
+				} else {
+					MonopolyOptions.pay.setEnabled(false);
+					MonopolyOptions.buy.setEnabled(true);
+				}
 				MonopolyOptions.build.setEnabled(false);
 				MonopolyOptions.tax.setEnabled(false);
 				enableMortgageButton();
@@ -138,6 +145,7 @@ public class ButtonValidate {
 						!MonopolyMain.currentPlayer.OwnedSquareName().contains(currentProperty)) {
 					MonopolyOptions.buy.setEnabled(false);
 					MonopolyOptions.pay.setEnabled(true);
+					MonopolyOptions.conti.setEnabled(false);
 				} else {
 					MonopolyOptions.pay.setEnabled(false);
 					MonopolyOptions.buy.setEnabled(true);
@@ -171,8 +179,13 @@ public class ButtonValidate {
 				MonopolyOptions.buy.setEnabled(false);
 				MonopolyOptions.pay.setEnabled(true);
 			} else {
-				MonopolyOptions.build.setEnabled(false);
-				MonopolyOptions.buy.setEnabled(true);
+				if(MonopolyMain.currentPlayer.OwnedSquareName().contains(currentProperty)) {
+					MonopolyOptions.build.setEnabled(true);
+					MonopolyOptions.buy.setEnabled(false);
+				} else {
+					MonopolyOptions.build.setEnabled(false);
+					MonopolyOptions.buy.setEnabled(true);
+				}
 				MonopolyOptions.pay.setEnabled(false);
 			}
 		}

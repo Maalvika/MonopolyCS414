@@ -48,7 +48,7 @@ public class MonopolyOptions extends JPanel {
 	public static JButton tax;
 	public static JButton conti;
 	public static JButton endGame;
-	private int rolledDoubleSix = 0;
+	private static int rolledDoubleSix = 0;
 	public static Map<PropertyUI, Integer> properties = new HashMap<>();
 
 	public MonopolyOptions(JFrame frame, Player p) {
@@ -153,6 +153,7 @@ public class MonopolyOptions extends JPanel {
 	protected void mortgageActionPerformed(ActionEvent evt) {
 		Set<String> prop = MonopolyMain.currentPlayer.OwnedSquareName();
 		new MortgageOptions(prop);
+		disableButtonSettings();
 		
 	}
 
@@ -188,12 +189,6 @@ public class MonopolyOptions extends JPanel {
 		switchToNextTurn();
 		Player p = MonopolyMain.currentPlayer;
 		changePlayerDetails(p);
-		Token currentToken = p.getToken();
-		if(currentToken.getxCoordinate() == Corner.JUST_VISITING.getXpoint() && 
-						currentToken.getyCoordinate() == Corner.JUST_VISITING.getYpoint()) {
-			
-			
-		}
 	}
 
 	protected void rollDiceActionPerformed(ActionEvent evt) {
@@ -216,16 +211,12 @@ public class MonopolyOptions extends JPanel {
 				displayPopUp("Oops!!! You rolled a double six. Press Ok to roll again");
 				initButtonSettings();
 			}
-			
-			// Todo: hook with backend rolled a double
-			//MonopolyMain.currentPlayer.
 		} else {
-			 if(rolledDoubleSix > 0 && rolledDoubleSix <36) {
+			 if(rolledDoubleSix > 0) {
 				
-				diceValue = rolledDoubleSix;
-				rolledDoubleSix = 0;
+				diceValue += rolledDoubleSix ;
 			} 
-			MonopolyMain.changeBoardImage();
+			MonopolyMain.changeBoardImage(diceValue);
 			ButtonValidate.landOnBlock(MonopolyMain.currentPlayer.getToken());
 			MonopolyMain.currentPlayer.moveForward(diceValue);
 		}
@@ -249,7 +240,7 @@ public class MonopolyOptions extends JPanel {
 		MonopolyOptions.tax.setEnabled(false);
 		// TODO: check player balance before enabling the button
 		MonopolyOptions.mortgage.setEnabled(false);
-
+		
 	}
 	
 	private static void disableButtonSettings() {
@@ -356,7 +347,7 @@ public class MonopolyOptions extends JPanel {
 		Object[] options = { "Pay", "Cancel"};
 		int n = JOptionPane.showOptionDialog(null, message,
 				"Ask User", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options,
-				options[2]);
+				options[1]);
 		switch(n) {
 		case JOptionPane.OK_OPTION: 
 			if(operation.equals("Jail Fee")) {

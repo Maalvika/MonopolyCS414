@@ -47,7 +47,11 @@ public class EndForm extends javax.swing.JFrame {
         finalResultLabel = new javax.swing.JLabel();
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        finalResultLabel.setText("END RESULT");
+        Player winner = calculateWinner();
+        String name = winner.getName();
+        int totalBal = winner.getBalance();
+        System.out.println("Winner is :"+winner.getName());
+        finalResultLabel.setText("END RESULT: Winner is player : "+name+ " with Total Balance $"+totalBal);
         for(int i=0; i<pResult.length; i++) {
         	pResult[i] = new JLabel();
         	propertyPLabel[i] = new JLabel();
@@ -152,7 +156,21 @@ public class EndForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>                        
 
-    /**
+    private Player calculateWinner() {
+		int max = 0;
+		Player winner = null;
+		for(Player p: MonopolyMain.players) {
+			if((p.getBalance() + p.getpropertyCost())> max) {
+				max = p.getBalance()+ p.getpropertyCost();
+				winner = p;
+				
+			}
+		}
+		System.out.println("max is :"+max);
+		return winner;
+	}
+
+	/**
      * @param args the command line arguments
      */
     public static void main(String args[]) {

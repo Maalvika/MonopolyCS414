@@ -46,7 +46,7 @@ public class ImagePanel extends JPanel {
 					PropertyUI temp = prop.getKey();
 					for (int i = 1; i <= prop.getValue(); i++)
 						g.drawImage(getTokenImg(TokenUrls.HOUSE), temp.getxPoint()
-								+ i * 50, temp.getyPoint() + i * 50,40, 40, null);
+								- i * 50, temp.getyPoint() - i * 50,40, 40, null);
 
 				} else if(prop.getValue()==4) {
 					g.drawImage(getTokenImg(TokenUrls.HOTEL), prop.getKey().getxPoint(), 
