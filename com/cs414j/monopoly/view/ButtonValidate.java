@@ -39,7 +39,7 @@ public class ButtonValidate {
 	private static int validateCorners(int x, int y) {
 		for (Corner c : Corner.values()) {
 			if (x == c.getXpoint() && y == c.getYpoint()) {
-				MonopolyOptions.rollDice.setEnabled(true);
+				MonopolyOptions.rollDice.setEnabled(false);
 				MonopolyOptions.buy.setEnabled(false);
 				MonopolyOptions.conti.setEnabled(true);
 				MonopolyOptions.pay.setEnabled(false);
@@ -59,7 +59,7 @@ public class ButtonValidate {
 			if (x == t.getXpoint() && y == t.getYpoint()) {
 				MonopolyOptions.rollDice.setEnabled(false);
 				MonopolyOptions.buy.setEnabled(false);
-				MonopolyOptions.conti.setEnabled(true);
+				MonopolyOptions.conti.setEnabled(false);
 				MonopolyOptions.pay.setEnabled(false);
 				MonopolyOptions.build.setEnabled(false);
 				MonopolyOptions.tax.setEnabled(true);
@@ -132,18 +132,18 @@ public class ButtonValidate {
 		for (Others o : Others.values()) {
 			if (x == o.getXpoint() && y == o.getYpoint()) {
 				MonopolyOptions.rollDice.setEnabled(false);
-				MonopolyOptions.buy.setEnabled(true);
 				MonopolyOptions.conti.setEnabled(true);
 				String currentProperty = MonopolyOptions.getPropertyName(MonopolyMain.currentPlayer.getToken());
 				if(!MonopolyMain.bank.isOwned(currentProperty) && 
 						!MonopolyMain.currentPlayer.OwnedSquareName().contains(currentProperty)) {
-				
+					MonopolyOptions.buy.setEnabled(false);
 					MonopolyOptions.pay.setEnabled(true);
 				} else {
 					MonopolyOptions.pay.setEnabled(false);
+					MonopolyOptions.buy.setEnabled(true);
 				}
 				MonopolyOptions.build.setEnabled(false);
-				MonopolyOptions.tax.setEnabled(true);
+				MonopolyOptions.tax.setEnabled(false);
 				enableMortgageButton();
 				return 1;
 

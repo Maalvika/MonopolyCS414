@@ -43,7 +43,6 @@ public class PlayerForm extends javax.swing.JFrame {
     
     public void hideComponents(int pCount) {
         
-        System.out.println("Pcount:"+pCount);
         for(int i=playerCount; i<playerNames.length; i++) {
         	playerNames[i].setVisible(false);
         	playerLabels[i].setVisible(false);
@@ -156,15 +155,30 @@ public class PlayerForm extends javax.swing.JFrame {
     
     private void startMonopolyActionPerformed(java.awt.event.ActionEvent evt) {                                              
         // TODO add your handling code here:
+
         int flag=0;
     	for(int i=0; i<playerCount; i++) {
     		if(playerNames[i].getText().isEmpty())
     			flag = -1;
     	}
+    	
+		for (int i = 0; i < playerCount; i++) {
+			for (int j = i + 1; j < playerCount; j++) {
+				if (playerNames[i].getText().toString().equals(playerNames[j].getText().toString())) {
+					System.out.println("entered");
+					flag = 1;
+					break;
+				}
+			}
+		}
         
         if(flag == -1) {
             errorLabel.setVisible(true);
-        } else {
+        } else if(flag == 1){
+        	errorLabel.setText("Duplicate Name!!!! Enter unique names");
+        	errorLabel.setVisible(true);
+        }else {
+        
         	this.setVisible(false);
         	List<Player> players = new LinkedList<>();
         	for(int i=0; i<playerCount;i++) {

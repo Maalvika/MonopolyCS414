@@ -115,7 +115,6 @@ public class PlayerDetails extends javax.swing.JFrame {
 
     private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
         if(noOfPlayers >= 2) {
-            System.out.println("valid option");
             this.setVisible(false);
             //PlayerNames pn = new PlayerNames(noOfPlayers);
             PlayerForm pn = new PlayerForm(noOfPlayers);
