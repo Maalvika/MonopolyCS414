@@ -21,6 +21,7 @@ public class Player {
 	private HashSet<Properties>mortgageProperties;
 	private HashSet<Utilities>mortgageUtilities;
 	private HashSet<RailRoad>mortgageRailRoad;
+	private int propertyCost;
 
 
 	public Player(String n){
@@ -33,8 +34,13 @@ public class Player {
 		mortgageProperties = new HashSet<>();
 		mortgageRailRoad = new HashSet<>();
 		mortgageUtilities = new HashSet<>();
-		
+		propertyCost = 0;
+	}
+	
+	public int getpropertyCost(){
+		// to get player's name
 
+		return propertyCost;
 	}
 
 	public String getName(){
@@ -300,6 +306,7 @@ public class Player {
 					ownedProperty.add(p);
 					p.setOwner(this);
 					b.getBankPropertiesSet().remove(p);
+					this.propertyCost = propertyCost + cost;
 				} 
 				else {
 					MonopolyOptions.displayPopUp("Your balance is insufficient!!!! "
@@ -320,6 +327,7 @@ public class Player {
 					ownedUtilities.add(u);
 					u.setOwner(this);
 					b.getBankUtilitySet().remove(u);
+					this.propertyCost = propertyCost + cost;
 				}
 				else{
 					MonopolyOptions.displayPopUp("Your balance is insufficient!!!! "
@@ -342,6 +350,7 @@ public class Player {
 				ownedRailRoad.add(r);
 				r.setOwner(this);
 				b.getBankRailRoad().remove(r);
+				this.propertyCost = propertyCost + cost;
 			}
 					else{
 						MonopolyOptions.displayPopUp("Your balance is insufficient!!!! "
@@ -436,6 +445,8 @@ public class Player {
 				b.giveLoanProperty(this, p);
 				this.mortgageProperties.add(p);
 				this.ownedProperty.remove(p);
+				int cost = p.getCost();
+				propertyCost = propertyCost - cost;
 				
 			}
 		}
@@ -445,6 +456,8 @@ public class Player {
 				b.giveLoanUtility(this, u);
 				this.mortgageUtilities.add(u);
 				this.ownedUtilities.remove(u);
+				int cost = u.getCost();
+				propertyCost = propertyCost - cost;
 			}
 		}
 
@@ -454,6 +467,8 @@ public class Player {
 				b.giveLoanRailRoad(this, r);
 				this.mortgageRailRoad.add(r);
 				this.ownedRailRoad.remove(r);
+				int cost = r.getCost();
+				propertyCost = propertyCost - cost;
 			}
 
 		}
