@@ -288,7 +288,6 @@ public class Player {
 		else return null;
 	}
 
-
 	public void buyProperty(String name, Bank b, Board board){
 		// takes square name from UI and 
 		// checks if it is a utility or a property or a rairoad
@@ -333,15 +332,13 @@ public class Player {
 					MonopolyOptions.displayPopUp("Your balance is insufficient!!!! "
 							+ "You cant purchase the property");
 				}
-			}
-
+  			}
 
 		}
 
 		if(board.stringRailRoad.containsKey(name))
 
 		{
-
 			RailRoad r = this.getRailRoadObject(name, board);
 			int cost = r.getCost();
 			if(b.getBankRailRoad().contains(r)){ 
@@ -357,12 +354,77 @@ public class Player {
 								+ "You cant purchase the property");
 					}
 			}
-
-
-
 		}
 		MonopolyOptions.changePlayerDetails(this);
 	}
+	
+	public void buyProperty(String name, Bank b, Board board, int bid){
+			// buying a property when players bid for it
+			
+		if(board.stringProperties.containsKey(name))
+		{
+			Properties p = getPropertyObject(name, board );
+
+			int cost = p.getCost();
+			if(b.getBankPropertiesSet().contains(p)) {
+				if( balance > bid){
+					balance =  balance - bid;
+					ownedProperty.add(p);
+					p.setOwner(this);
+					b.getBankPropertiesSet().remove(p);
+					this.propertyCost = propertyCost + cost;
+				} 
+				else {
+					MonopolyOptions.displayPopUp("Your balance is insufficient!!!! "
+							+ "You cant purchase the property");
+				}
+			}
+
+		}
+
+		if(board.stringUtilities.containsKey(name))
+		{
+			Utilities u = this.getUtilityObject(name, board);
+			int cost = u.getCost();
+			if(b.getBankUtilitySet().contains(u)){
+				if(balance > bid){
+
+					balance = balance - bid;
+					ownedUtilities.add(u);
+					u.setOwner(this);
+					b.getBankUtilitySet().remove(u);
+					this.propertyCost = propertyCost + cost;
+				}
+				else{
+					MonopolyOptions.displayPopUp("Your balance is insufficient!!!! "
+							+ "You cant purchase the property");
+				}
+  			}
+
+		}
+
+		if(board.stringRailRoad.containsKey(name))
+
+		{
+			RailRoad r = this.getRailRoadObject(name, board);
+			int cost = r.getCost();
+			if(b.getBankRailRoad().contains(r)){ 
+					if(balance > bid){
+				balance = balance - bid;
+				ownedRailRoad.add(r);
+				r.setOwner(this);
+				b.getBankRailRoad().remove(r);
+				this.propertyCost = propertyCost + cost;
+			}
+					else{
+						MonopolyOptions.displayPopUp("Your balance is insufficient!!!! "
+								+ "You cant purchase the property");
+					}
+			}
+		}
+		MonopolyOptions.changePlayerDetails(this);
+	}
+	
 
 	public void payRent(String name, Board b, int diceValue){
 		// pay rent to another player
