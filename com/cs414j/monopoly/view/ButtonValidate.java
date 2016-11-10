@@ -12,7 +12,10 @@ import com.cs414j.monopoly.view.SpecialBlocks.Others;
 import com.cs414j.monopoly.view.SpecialBlocks.RailRoad;
 import com.cs414j.monopoly.view.SpecialBlocks.Tax;
 
+
 public class ButtonValidate {
+	
+	public static boolean buyPropertyEnabled=false;
 
 	public static void landOnBlock(Token t) {
 		int xPoint = t.getxCoordinate();
@@ -185,6 +188,7 @@ public class ButtonValidate {
 				} else {
 					MonopolyOptions.build.setEnabled(false);
 					MonopolyOptions.buy.setEnabled(true);
+					buyPropertyEnabled = true;
 				}
 				MonopolyOptions.pay.setEnabled(false);
 			}

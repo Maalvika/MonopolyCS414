@@ -49,7 +49,7 @@ public class EndForm extends javax.swing.JFrame {
 
         Player winner = calculateWinner();
         String name = winner.getName();
-        int totalBal = winner.getBalance();
+        int totalBal = winner.getBalance() + winner.getpropertyCost();
         System.out.println("Winner is :"+winner.getName());
         finalResultLabel.setText("END RESULT: Winner is player : "+name+ " with Total Balance $"+totalBal);
         for(int i=0; i<pResult.length; i++) {
