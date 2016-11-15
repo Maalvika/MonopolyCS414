@@ -79,7 +79,8 @@ public class MonopolyOptions extends JPanel {
 	}
 
 	private JPanel createPlayerDetails(Player p) throws RemoteException {
-		JLabel title = new JLabel("<html><font size=\"6\">PLAYER DETAILS</font></html>", JLabel.CENTER);
+		JLabel title = new JLabel("<html><font size=\"6\">PLAYER DETAILS: "+
+					PlayerDetailForm.myPlayer.getName()+"</font></html>", JLabel.CENTER);
 		JPanel playerDetails = new JPanel();
 		nameLabel = new JLabel("<html><font size=\"4\"> Player Name: <b>" + p.getName() + "</b></font></html>");
 		tokenLabel = new JLabel("<html><font size=\"4\"> Player's Token: <b>"
@@ -147,7 +148,7 @@ public class MonopolyOptions extends JPanel {
 	protected void payRentActionPerformed(ActionEvent evt) throws RemoteException {
 		String currentProperty = getPropertyName(ClientMain.store.getCurrentPlayer().getToken());
 		int diceValue =MonopolyMain._leftDie.getValue() + MonopolyMain._rightDie.getValue();
-		ClientMain.store.getCurrentPlayer().payRent(currentProperty, MonopolyMain.board, diceValue);
+		ClientMain.store.getCurrentPlayer().payRent(currentProperty, diceValue);
 		disableButtonSettings();
 		
 	}
@@ -174,8 +175,8 @@ public class MonopolyOptions extends JPanel {
 			properties.put(p, 0);
 		}
 		String currentProperty = getPropertyName(currentToken);
-		player.buyProperty(currentProperty, MonopolyMain.bank, MonopolyMain.board);
-		displayPopUp("Congrats!!!! "+currentProperty+" is yours. \n Your new balance is: $"+player.getBalance());
+		player.buyProperty(currentProperty);
+		displayPopUp("Congrats!!!! "+currentProperty+" is yours. \n Your new balance is: $"+ClientMain.store.getCurrentPlayer().getBalance());
 		ButtonValidate.buyPropertyEnabled = false;
 		disableButtonSettings();
 		
@@ -489,7 +490,7 @@ public class MonopolyOptions extends JPanel {
 			Token currentToken = player.getToken();
 			String currentProperty = MonopolyOptions.getPropertyName(currentToken);
 			System.out.println("current:"+currentProperty);
-	        winner.buyProperty(currentProperty,  MonopolyMain.bank, MonopolyMain.board);
+	        winner.buyProperty(currentProperty);
 	        MonopolyOptions.displayPopUp(winner.getName()+" bought the property  "+currentProperty+" for $"+max);
 	        MonopolyOptions.disableButtonSettings();
 	    }

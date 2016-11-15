@@ -31,8 +31,8 @@ public class MonopolyServerStore extends
 	private static MonopolyServerStore serverStore = null;
 	private static List<Token> alltokens;
 	public List<Token> selectedTokens;
-	private Bank bank;
-	private Board board;
+	private static Bank bank;
+	private static Board board;
 	private static Player currentPlayer;
 	private static List<ClientCallback> clientObj;
 	
@@ -92,14 +92,14 @@ public class MonopolyServerStore extends
 		this.selectedTokens = selectedTokens;
 	}
 	
-	public Bank getBankInstance() throws RemoteException{
+	public static Bank getBankInstance() {
 		if(bank == null) {
 			bank = new Bank();
 		}
 		return bank;
 	}
 	
-	public Board getBoardInstance() throws RemoteException{
+	public static Board getBoardInstance() {
 		if(board == null) {
 			board = new Board();
 		}
@@ -139,7 +139,7 @@ public class MonopolyServerStore extends
 		} else {
 			currentPlayer =  serverStore.players.get(currentIndex+1);
 		}
-		
+		changeAllPlayerDetails();
 		
 	}
 
@@ -159,18 +159,30 @@ public class MonopolyServerStore extends
 		
 	}
 
-	public List<ClientCallback> getClientObj() {
+	public static List<ClientCallback> getClientObj() {
 		return clientObj;
 	}
 
-	public void setClientObj(List<ClientCallback> clientObj) {
-		this.clientObj = clientObj;
+	public static  void setClientObj(List<ClientCallback> clientObj) {
+		MonopolyServerStore.clientObj = clientObj;
 	}
 	
 	public static void changeAllPlayerDetails() throws RemoteException {
 		for (ClientCallback client : clientObj) {
 			client.changeOtherPlayerDetails(currentPlayer);
 		}
+	}
+	
+	public static void sendMessageToAll(String myMessage, String otherMessage) throws RemoteException {
+		for (ClientCallback c : clientObj) {
+			System.out.println("called");
+			c.showMsg(currentPlayer.getName(), myMessage, otherMessage);
+		}
+	}
+
+	@Override
+	public boolean isOwnedByBank(String name) throws RemoteException {
+		return MonopolyServerStore.getBankInstance().isOwned(name);
 	}
 	
 	

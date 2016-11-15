@@ -30,15 +30,13 @@ public class MonopolyMain {
     public static Die _rightDie;
     public static ImagePanel panel;
 	private static JPanel boardPanel;
-	public static Board board;
-	public static Bank bank;
+	
 	
     
 
 	public static void init() throws RemoteException {
 
 		// added Monopoly game board image
-		initBackendValues();
 		boardPanel = addBoardImage();
 		frame = new JFrame();
 		contentPane = frame.getContentPane();
@@ -55,18 +53,6 @@ public class MonopolyMain {
 		frame.pack();
 		frame.setVisible(true);
 	} 
-	
-	private static void initBackendValues() {
-		
-		try {
-			board = ClientMain.store.getBoardInstance();
-			bank = ClientMain.store.getBankInstance();
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
 	
 	private static JPanel addBoardImage() throws RemoteException {
 

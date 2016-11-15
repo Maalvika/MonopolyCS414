@@ -63,5 +63,16 @@ public class ClientCallbackImpl extends UnicastRemoteObject implements ClientCal
 		}
 		
 	}
+	
+	public void showMsg(String currentPlayer, String currentMsg, String otherMessage) throws RemoteException {
+		
+		if(PlayerDetailForm.myPlayer.getName().equals(currentPlayer)) {
+			System.out.println("currentMsg"+currentMsg);
+			MonopolyOptions.displayPopUp(currentMsg);
+		} else {
+			MonopolyOptions.displayPopUp(otherMessage);
+			System.out.println("otherMessage"+otherMessage);
+		}
+	}
 
 }

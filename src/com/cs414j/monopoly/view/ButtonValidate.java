@@ -104,7 +104,7 @@ public class ButtonValidate {
 				MonopolyOptions.conti.setEnabled(true);
 				String currentProperty = MonopolyOptions.getPropertyName
 							(ClientMain.store.getCurrentPlayer().getToken());
-				if(!MonopolyMain.bank.isOwned(currentProperty) && 
+				if(!ClientMain.store.isOwnedByBank(currentProperty) && 
 						!ClientMain.store.getCurrentPlayer().OwnedSquareName().contains(currentProperty)) {
 					MonopolyOptions.buy.setEnabled(false);
 					MonopolyOptions.pay.setEnabled(true);
@@ -150,7 +150,7 @@ public class ButtonValidate {
 				MonopolyOptions.conti.setEnabled(true);
 				String currentProperty = MonopolyOptions.getPropertyName
 						(ClientMain.store.getCurrentPlayer().getToken());
-				if(!MonopolyMain.bank.isOwned(currentProperty) && 
+				if(!ClientMain.store.isOwnedByBank(currentProperty) && 
 						!ClientMain.store.getCurrentPlayer().OwnedSquareName().contains(currentProperty)) {
 					MonopolyOptions.buy.setEnabled(false);
 					MonopolyOptions.pay.setEnabled(true);
@@ -182,7 +182,8 @@ public class ButtonValidate {
 		}else {
 		
 			String currentProperty = MonopolyOptions.getPropertyName(ClientMain.store.getCurrentPlayer().getToken());
-			if(!MonopolyMain.bank.isOwned(currentProperty) && 
+			
+			if(!ClientMain.store.isOwnedByBank(currentProperty) && 
 					!ClientMain.store.getCurrentPlayer().OwnedSquareName().contains(currentProperty)) {
 				MonopolyOptions.build.setEnabled(false);
 				MonopolyOptions.buy.setEnabled(false);
@@ -220,6 +221,16 @@ public class ButtonValidate {
 		}
 		
 	}
-
+	
+	private static boolean isOtherOwns(String propertyName) throws RemoteException {
+		for (Player p : ClientMain.store.getPlayers()) {
+			if (!p.getName().equals(ClientMain.store.getCurrentPlayer().getName())) {
+				if (p.OwnedSquareName().contains(propertyName)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 
 }

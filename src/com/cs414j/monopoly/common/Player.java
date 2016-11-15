@@ -46,7 +46,7 @@ public interface Player extends java.rmi.Remote {
 
 	public Set<String> OwnedSquareName()throws RemoteException;
 	
-	public void unMortgageProperty(String name, Bank b, Board board)throws RemoteException;
+	public void unMortgageProperty(String name)throws RemoteException;
 	
 	public boolean isPropertyOwned(Properties p)throws RemoteException;
 
@@ -56,20 +56,20 @@ public interface Player extends java.rmi.Remote {
 
 	public void paidJailPenalty()throws RemoteException;
 
-	public Properties getPropertyObject(String key, Board board)throws RemoteException;
+	public Properties getPropertyObject(String key)throws RemoteException;
 
-	public Utilities getUtilityObject(String key, Board board)throws RemoteException;
+	public Utilities getUtilityObject(String key)throws RemoteException;
 	
-	public void buyProperty(String name, Bank b, Board board)throws RemoteException;
+	public void buyProperty(String name)throws RemoteException;
 	
-	public void payRent(String name, Board b, int diceValue)throws RemoteException;
+	public void payRent(String name, int diceValue)throws RemoteException;
 
 	public void payTax()throws RemoteException;
 
-	public void mortgageProperty(String name, Bank b, Board board)throws RemoteException;
+	public void mortgageProperty(String name)throws RemoteException;
 
-	public void buyHouse(String name, Board board)throws RemoteException;
+	public void buyHouse(String name)throws RemoteException;
 
-	public void buyHotel(String name, Board board)throws RemoteException;
+	public void buyHotel(String name)throws RemoteException;
 
 }

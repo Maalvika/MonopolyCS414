@@ -30,8 +30,7 @@ public class MortgageOptions {
 				JOptionPane.QUESTION_MESSAGE);
 		switch (result) {
 		case JOptionPane.OK_OPTION:
-			ClientMain.store.getCurrentPlayer().mortgageProperty(comboBox.getSelectedItem().toString(), 
-															MonopolyMain.bank,MonopolyMain.board);
+			ClientMain.store.getCurrentPlayer().mortgageProperty(comboBox.getSelectedItem().toString());
 			break;
 		}
 

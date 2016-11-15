@@ -291,5 +291,15 @@ public class Properties extends Squares implements Serializable{
 		return this.color;
 	}
 	
+	@Override
+	public boolean equals(Object o) {
+		Properties p = (Properties)o;
+		if(this.name.equals(p.getName())) {
+			return true;
+		}
+		return false;
+		
+	}
+	
 
 }
