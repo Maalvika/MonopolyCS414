@@ -23,10 +23,6 @@ public interface Player extends java.rmi.Remote {
 	public int getBalance()throws RemoteException;
 
 	public void setBalance(int b)throws RemoteException;
-	
-	public int getRent(String name) throws RemoteException;
-	
-	public Player getOwner(String name) throws RemoteException;
 
 	public Set<Properties> getOwnedProperties()throws RemoteException;
 	
@@ -49,9 +45,12 @@ public interface Player extends java.rmi.Remote {
 	public Set<Properties> getMortgageProperties()throws RemoteException;
 
 	public Set<String> OwnedSquareName()throws RemoteException;
+	// ID24
+	
+	public Set<String> mortgagedSquareName()throws RemoteException;
 	
 	public void unMortgageProperty(String name)throws RemoteException;
-	
+		
 	public boolean isPropertyOwned(Properties p)throws RemoteException;
 
 	public void passGo(int diceValue)throws RemoteException;
@@ -76,6 +75,6 @@ public interface Player extends java.rmi.Remote {
 
 	public void buyHotel(String name)throws RemoteException;
 	
-	public void buyProperty(String name, int bid) throws RemoteException;
+	public void buyProperty(String name, Bank b, int bid) throws RemoteException;
 
 }
