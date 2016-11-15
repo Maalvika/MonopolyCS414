@@ -363,6 +363,81 @@ public class PlayerImpl implements Player {
 		MonopolyServerStore.sendMessageToAll(myMessage, otherMessage);
 		
 	}
+	
+	public void buyProperty(String name, int bid) throws RemoteException {
+		// takes square name from UI and
+		// checks if it is a utility or a property or a rairoad
+		// and accordingly gets it cost, subtracts the cost from balance,
+		// adds the square into player's ownedproperties/utilities/railroad
+
+		if (MonopolyServerStore.getBoardInstance().stringProperties.containsKey(name)) {
+			Properties p = getPropertyObject(name);
+
+			System.out.println("my prop name:" + p.getName());
+			System.out.println(
+					"my prop name:" + MonopolyServerStore.getBankInstance().getBankPropertiesSet().contains(p));
+			int cost = p.getCost();
+			if (MonopolyServerStore.getBankInstance().getBankPropertiesSet().contains(p)) {
+				if (balance > bid) {
+					balance = balance - bid;
+					ownedProperty.add(p);
+					p.setOwner(this);
+					MonopolyServerStore.getBankInstance().getBankPropertiesSet().remove(p);
+					this.propertyCost = propertyCost + cost;
+				} else {
+					MonopolyOptions
+							.displayPopUp("Your balance is insufficient!!!! " + "You cant purchase the property");
+				}
+			}
+
+		}
+
+		if (MonopolyServerStore.getBoardInstance().stringUtilities.containsKey(name)) {
+			Utilities u = this.getUtilityObject(name);
+			int cost = u.getCost();
+			if (MonopolyServerStore.getBankInstance().getBankUtilitySet().contains(u)) {
+				if (balance > bid) {
+
+					balance = balance - bid;
+					ownedUtilities.add(u);
+					u.setOwner(this);
+					MonopolyServerStore.getBankInstance().getBankUtilitySet().remove(u);
+					this.propertyCost = propertyCost + cost;
+				} else {
+					MonopolyOptions
+							.displayPopUp("Your balance is insufficient!!!! " + "You cant purchase the property");
+				}
+			}
+
+		}
+
+		if (MonopolyServerStore.getBoardInstance().stringRailRoad.containsKey(name))
+
+		{
+
+			RailRoad r = this.getRailRoadObject(name);
+			int cost = r.getCost();
+			if (MonopolyServerStore.getBankInstance().getBankRailRoad().contains(r)) {
+				if (balance > bid) {
+					balance = balance - bid;
+					ownedRailRoad.add(r);
+					r.setOwner(this);
+					MonopolyServerStore.getBankInstance().getBankRailRoad().remove(r);
+					this.propertyCost = propertyCost + cost;
+				} else {
+					MonopolyOptions
+							.displayPopUp("Your balance is insufficient!!!! " + "You cant purchase the property");
+				}
+			}
+
+		}
+		
+		MonopolyServerStore.changeAllPlayerDetails();
+		String myMessage = "Congrats!!!! "+name+" is yours. \n Your new balance is: $"+balance;
+		String otherMessage = "Property: "+ name+" is sold to Player: "+this.getName();
+		MonopolyServerStore.sendMessageToAll(myMessage, otherMessage);
+		
+	}
 
 	public void payRent(String name, int diceValue) throws RemoteException {
 		// pay rent to another player
