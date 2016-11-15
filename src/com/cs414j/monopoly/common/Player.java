@@ -71,5 +71,7 @@ public interface Player extends java.rmi.Remote {
 	public void buyHouse(String name)throws RemoteException;
 
 	public void buyHotel(String name)throws RemoteException;
+	
+	public void buyProperty(String name, Bank b, int bid) throws RemoteException;
 
 }
