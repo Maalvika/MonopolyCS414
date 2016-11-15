@@ -138,7 +138,7 @@ public class PlayerImpl implements Player {
 		
 		if(MonopolyServerStore.getBoardInstance().stringRailRoad.containsKey(name)){
 			RailRoad r = this.getRailRoadObject(name);
-			rent = r.getOwner();
+			owner = r.getOwner();
 			return owner;
 		}
 		return owner		
