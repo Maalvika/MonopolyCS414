@@ -63,7 +63,14 @@ public class MonopolyOptions extends JPanel {
 	public MonopolyOptions(JFrame frame, Player p) throws RemoteException {
 		super(new BorderLayout());
 		this.frame = frame;
-		JLabel optionLabel = new JLabel("<html><h2> Select the options to choose:</h2></html>");
+		JPanel title = createTitle();
+		title.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		title.setBorder(BorderFactory.createEmptyBorder(20, 20, 5, 20));
+		/*JLabel optionLabel = new JLabel("<html><h2> Select the options to choose:  \n"
+				+ "Time elapsed"
+				+ "</h2></html> /n"+
+		"Time Elapsed: "+"3");*/
+		//JLabel optionLabel2 = new JLabel("<html><h2> Select the options to choose: /h2></html>");
 		JPanel player = createPlayerDetails(p);
 		player.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		player.setBorder(BorderFactory.createEmptyBorder(20, 20, 5, 20));
@@ -73,12 +80,25 @@ public class MonopolyOptions extends JPanel {
 		options.setBorder(BorderFactory.createEmptyBorder(20, 20, 5, 20));
 
 		// Lay out the main panel.
-		add(optionLabel, BorderLayout.NORTH);
+		add(title, BorderLayout.NORTH);
+		//add(optionLabel2, BorderLayout.NORTH);
 		add(options, BorderLayout.CENTER);
 		add(player, BorderLayout.SOUTH);
 
 	}
 
+	// ID24
+	private JPanel createTitle() throws RemoteException {
+		JLabel title = new JLabel("<html><font size=\"6\">Select the options: </font></html>" , JLabel.CENTER);
+		JLabel title2 = new JLabel("<html><font size=\"3\">Time elapsed:</font></html> ");
+		JPanel titleDetails = new JPanel();
+		titleDetails.setLayout(new BoxLayout(titleDetails, BoxLayout.PAGE_AXIS));
+		titleDetails.add(title);
+		titleDetails.add(title2);
+		return titleDetails;
+				
+		
+	}
 	private JPanel createPlayerDetails(Player p) throws RemoteException {
 		JLabel title = new JLabel("<html><font size=\"6\">PLAYER DETAILS: "+
 					PlayerDetailForm.myPlayer.getName()+"</font></html>", JLabel.CENTER);
