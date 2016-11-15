@@ -59,20 +59,22 @@ public class ClientCallbackImpl extends UnicastRemoteObject implements ClientCal
 		if(PlayerDetailForm.myPlayer.getName().equals(p.getName())) {
 			MonopolyOptions.initButtonSettings();
 		} else {
-			MonopolyOptions.disableButtonSettings();
+			MonopolyOptions.disableAll();
 		}
 		
 	}
 	
-	public void showMsg(String currentPlayer, String currentMsg, String otherMessage) throws RemoteException {
+	public void showMsg(String currentPlayer, String otherMessage) throws RemoteException {
 		
-		if(PlayerDetailForm.myPlayer.getName().equals(currentPlayer)) {
-			System.out.println("currentMsg"+currentMsg);
-			MonopolyOptions.displayPopUp(currentMsg);
-		} else {
 			MonopolyOptions.displayPopUp(otherMessage);
 			System.out.println("otherMessage"+otherMessage);
-		}
+		
+	}
+
+	@Override
+	public void auctionProperty(String name) throws RemoteException {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

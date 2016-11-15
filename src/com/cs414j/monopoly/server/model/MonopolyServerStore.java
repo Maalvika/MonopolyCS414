@@ -173,16 +173,27 @@ public class MonopolyServerStore extends
 		}
 	}
 	
-	public static void sendMessageToAll(String myMessage, String otherMessage) throws RemoteException {
+	public void sendMessageToAll(String otherMessage) throws RemoteException {
 		for (ClientCallback c : clientObj) {
-			System.out.println("called");
-			c.showMsg(currentPlayer.getName(), myMessage, otherMessage);
+			if(!c.getName().equals(currentPlayer.getName())) {
+				c.showMsg(currentPlayer.getName(), otherMessage);
+			}
 		}
 	}
 
 	@Override
 	public boolean isOwnedByBank(String name) throws RemoteException {
 		return MonopolyServerStore.getBankInstance().isOwned(name);
+	}
+
+	@Override
+	public void sendPropertyForAuction() throws RemoteException {
+		for (ClientCallback c : clientObj) {
+			if(!c.getName().equals(currentPlayer.getName())) {
+				System.out.println("");
+			}
+		}
+		
 	}
 	
 	

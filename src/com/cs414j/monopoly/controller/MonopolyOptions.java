@@ -140,8 +140,6 @@ public class MonopolyOptions extends JPanel {
 		MonopolyMain.frame.dispose();
 		EndForm f=new EndForm();
 		f.setVisible(true);
-		
-		
 	}
 	
 
@@ -149,12 +147,15 @@ public class MonopolyOptions extends JPanel {
 		String currentProperty = getPropertyName(ClientMain.store.getCurrentPlayer().getToken());
 		int diceValue =MonopolyMain._leftDie.getValue() + MonopolyMain._rightDie.getValue();
 		ClientMain.store.getCurrentPlayer().payRent(currentProperty, diceValue);
+		displayPopUp("You paid rent!!!");
 		disableButtonSettings();
 		
 	}
 	
 	protected void taxActionPerformed(ActionEvent evt) throws RemoteException {
 		ClientMain.store.getCurrentPlayer().payTax();
+		displayPopUp("You paid your tax!!! You new balance is: "+ 
+						ClientMain.store.getCurrentPlayer().getBalance());	
 		disableButtonSettings();
 		
 	}
@@ -179,6 +180,8 @@ public class MonopolyOptions extends JPanel {
 		displayPopUp("Congrats!!!! "+currentProperty+" is yours. \n Your new balance is: $"+ClientMain.store.getCurrentPlayer().getBalance());
 		ButtonValidate.buyPropertyEnabled = false;
 		disableButtonSettings();
+		String otherMessage = "Property: "+ currentProperty+" is sold to Player: "+player.getName();
+		ClientMain.store.sendMessageToAll(otherMessage);
 		
 	}
 
@@ -212,7 +215,7 @@ public class MonopolyOptions extends JPanel {
 	
 	protected void auctionActionPerformed(ActionEvent evt) throws RemoteException {
 		ButtonValidate.buyPropertyEnabled = false;
-		displayAuctionForm();
+		//displayAuctionForm();
 		
 	}
 
@@ -255,8 +258,8 @@ public class MonopolyOptions extends JPanel {
 		}
 	}
 	
-	
-	private void disableAll(){
+	//disable all player
+	public static void disableAll(){
 		buy.setEnabled(false);
 		conti.setEnabled(false);
 		pay.setEnabled(false);
@@ -268,6 +271,7 @@ public class MonopolyOptions extends JPanel {
 		
 	}
 	
+	// enable roll dice and disable all
 	public static void initButtonSettings() {
 		MonopolyOptions.rollDice.setEnabled(true);
 		MonopolyOptions.buy.setEnabled(false);
@@ -281,10 +285,11 @@ public class MonopolyOptions extends JPanel {
 		
 	}
 	
+	// Disable all but enable continue button
    public static void disableButtonSettings() {
 		MonopolyOptions.rollDice.setEnabled(false);
 		MonopolyOptions.buy.setEnabled(false);
-		MonopolyOptions.conti.setEnabled(false);
+		MonopolyOptions.conti.setEnabled(true);
 		MonopolyOptions.pay.setEnabled(false);
 		MonopolyOptions.build.setEnabled(false);
 		MonopolyOptions.tax.setEnabled(false);
@@ -294,6 +299,7 @@ public class MonopolyOptions extends JPanel {
 
 	}
 	
+   // enable auction button
 	private static void auctionButtonSettings() {
 		MonopolyOptions.conti.setEnabled(false);
 		MonopolyOptions.buy.setEnabled(false);
@@ -464,35 +470,35 @@ public class MonopolyOptions extends JPanel {
 		disableButtonSettings();
 	}
 	
-	private static void displayAuctionForm() throws RemoteException {
-		JPanel ac = new AuctionPanel(ClientMain.store.getCurrentPlayer());
-		ac.setVisible(true);
-		//JOptionPane.showMessageDialog(null, ac, "Data Entry", JOptionPane.NO_OPTION);
-		//JOptionPane.showOptionDialog(null, ac,"Data Entry", JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE, null, new Object[]{}, null);
-		Object[] options = {"OK"};
-	    int n = JOptionPane.showOptionDialog(null,
-	                   ac,"Auction Form",
-	                   JOptionPane.PLAIN_MESSAGE,
-	                   JOptionPane.QUESTION_MESSAGE,
-	                   null,
-	                   options,
-	                   options[0]);
-	    if(n==0) {
-	    	int max = 0;
-	    	Player winner = null;
-	        for(int i=0; i<AuctionPanel.tempPlayer.size();i++) {
-	        	if(max<Integer.parseInt(AuctionPanel.bidPrice[i].getText())) {
-	        		max = Integer.parseInt(AuctionPanel.bidPrice[i].getText());
-	        		winner = AuctionPanel.tempPlayer.get(i);
-	        	}
-	        }
-	        Player player = ClientMain.store.getCurrentPlayer();
-			Token currentToken = player.getToken();
-			String currentProperty = MonopolyOptions.getPropertyName(currentToken);
-			System.out.println("current:"+currentProperty);
-	        winner.buyProperty(currentProperty);
-	        MonopolyOptions.displayPopUp(winner.getName()+" bought the property  "+currentProperty+" for $"+max);
-	        MonopolyOptions.disableButtonSettings();
-	    }
-	}
+//	private static void displayAuctionForm() throws RemoteException {
+//		JPanel ac = new AuctionPanel(ClientMain.store.getCurrentPlayer());
+//		ac.setVisible(true);
+//		//JOptionPane.showMessageDialog(null, ac, "Data Entry", JOptionPane.NO_OPTION);
+//		//JOptionPane.showOptionDialog(null, ac,"Data Entry", JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE, null, new Object[]{}, null);
+//		Object[] options = {"OK"};
+//	    int n = JOptionPane.showOptionDialog(null,
+//	                   ac,"Auction Form",
+//	                   JOptionPane.PLAIN_MESSAGE,
+//	                   JOptionPane.QUESTION_MESSAGE,
+//	                   null,
+//	                   options,
+//	                   options[0]);
+//	    if(n==0) {
+//	    	int max = 0;
+//	    	Player winner = null;
+//	        for(int i=0; i<AuctionPanel.tempPlayer.size();i++) {
+//	        	if(max<Integer.parseInt(AuctionPanel.bidPrice[i].getText())) {
+//	        		max = Integer.parseInt(AuctionPanel.bidPrice[i].getText());
+//	        		winner = AuctionPanel.tempPlayer.get(i);
+//	        	}
+//	        }
+//	        Player player = ClientMain.store.getCurrentPlayer();
+//			Token currentToken = player.getToken();
+//			String currentProperty = MonopolyOptions.getPropertyName(currentToken);
+//			System.out.println("current:"+currentProperty);
+//	        winner.buyProperty(currentProperty);
+//	        MonopolyOptions.displayPopUp(winner.getName()+" bought the property  "+currentProperty+" for $"+max);
+//	        MonopolyOptions.disableButtonSettings();
+//	    }
+//	}
 }

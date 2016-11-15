@@ -30,5 +30,9 @@ public interface MonopolyStore extends java.rmi.Remote{
 	public void switchToNextTurn(ClientCallback c) throws RemoteException;
 	
 	public boolean isOwnedByBank(String name) throws RemoteException;
+	
+	public void sendMessageToAll(String otherMessage) throws RemoteException;
+	
+	public void sendPropertyForAuction()throws RemoteException ;
 
 }

@@ -16,6 +16,8 @@ public interface ClientCallback extends java.rmi.Remote{
 	
 	public void changeOtherPlayerDetails(Player p) throws RemoteException;
 	
-	public void showMsg(String currentPlayer, String currentMsg, String otherMessage) throws RemoteException;
+	public void showMsg(String currentPlayer, String otherMessage) throws RemoteException;
+	
+	public void auctionProperty(String name) throws RemoteException;
 	
 }
