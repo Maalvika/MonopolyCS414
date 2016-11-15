@@ -23,6 +23,10 @@ public interface Player extends java.rmi.Remote {
 	public int getBalance()throws RemoteException;
 
 	public void setBalance(int b)throws RemoteException;
+	
+	public int getRent(String name) throws RemoteException;
+	
+	public Player getOwner(String name) throws RemoteException;
 
 	public Set<Properties> getOwnedProperties()throws RemoteException;
 	
@@ -72,6 +76,6 @@ public interface Player extends java.rmi.Remote {
 
 	public void buyHotel(String name)throws RemoteException;
 	
-	public void buyProperty(String name, Bank b, int bid) throws RemoteException;
+	public void buyProperty(String name, int bid) throws RemoteException;
 
 }
