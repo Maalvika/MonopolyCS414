@@ -123,6 +123,26 @@ public class PlayerImpl implements Player {
 	public Set<Properties> getMortgageProperties() {
 		return mortgageProperties;
 	}
+	public int getRent(String name) throws RemoteException{
+		int rent = 0;
+		if (MonopolyServerStore.getBoardInstance().stringProperties.containsKey(name)) {
+			Properties p = getPropertyObject(name);
+			rent = p.rentInitial;
+			return rent;
+		}
+		if (MonopolyServerStore.getBoardInstance().stringUtilities.containsKey(name)){
+			Utilities u = this.getUtilityObject(name);
+			return rent;
+		}
+		if(MonopolyServerStore.getBoardInstance().stringRailRoad.containsKey(name)){
+			RailRoad r = this.getRailRoadObject(name);
+			rent = r.getRentInitial();
+			return rent
+		}
+		
+		return rent;
+	}
+	
 
 	public Set<String> OwnedSquareName() {
 		// Iterates through the three hashSets of owned property/
