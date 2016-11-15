@@ -90,11 +90,11 @@ public class MonopolyOptions extends JPanel {
 	// ID24
 	private JPanel createTitle() throws RemoteException {
 		JLabel title = new JLabel("<html><font size=\"6\">Select the options: </font></html>" , JLabel.CENTER);
-		JLabel title2 = new JLabel("<html><font size=\"3\">Time elapsed:</font></html> ");
+		JLabel timer = new JLabel("<html><font size=\"3\">Time Elapsed:</font></html> ");
 		JPanel titleDetails = new JPanel();
 		titleDetails.setLayout(new BoxLayout(titleDetails, BoxLayout.PAGE_AXIS));
 		titleDetails.add(title);
-		titleDetails.add(title2);
+		titleDetails.add(timer);
 		return titleDetails;
 				
 		
