@@ -221,7 +221,7 @@ public class MonopolyOptions extends JPanel {
 		Token currentToken = player.getToken();
 		String currentProperty = getPropertyName(currentToken);
 		ClientMain.store.sendPropertyForAuction(currentProperty);
-		
+		disableButtonSettings();
 	}
 
 	protected void rollDiceActionPerformed(ActionEvent evt) throws RemoteException {
@@ -454,7 +454,7 @@ public class MonopolyOptions extends JPanel {
 	public static void displayVotePopup(String message, String operation) {
 		Object[] options = { "Pay", "Cancel"};
 		int n = JOptionPane.showOptionDialog(null, message,
-				"Ask User", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options,
+				"Ask User", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options,
 				options[1]);
 		switch(n) {
 		case JOptionPane.OK_OPTION: 

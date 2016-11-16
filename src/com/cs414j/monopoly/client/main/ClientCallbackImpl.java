@@ -5,6 +5,7 @@ import java.rmi.server.UnicastRemoteObject;
 
 import javax.swing.JOptionPane;
 
+import com.cs414j.monopoly.client.view.EndForm;
 import com.cs414j.monopoly.client.view.PlayerDetailForm;
 import com.cs414j.monopoly.common.Player;
 import com.cs414j.monopoly.controller.EndTimerTask;
@@ -46,7 +47,7 @@ public class ClientCallbackImpl extends UnicastRemoteObject implements ClientCal
 	}
 
 	@Override
-	public void showError(String message) throws RemoteException {
+	public void showErrorStartGame(String message) throws RemoteException {
 		ClientMain.detail.setVisible(false);
 		JOptionPane.showMessageDialog(null, "Sorry!!! Unable to start Game due to insuffient Players");
 		
@@ -64,10 +65,8 @@ public class ClientCallbackImpl extends UnicastRemoteObject implements ClientCal
 		
 	}
 	
-	public void showMsg(String currentPlayer, String otherMessage) throws RemoteException {
-		
+	public void showMsg(String otherMessage) throws RemoteException {
 			MonopolyOptions.displayPopUp(otherMessage);
-			System.out.println("otherMessage"+otherMessage);
 		
 	}
 
@@ -81,6 +80,14 @@ public class ClientCallbackImpl extends UnicastRemoteObject implements ClientCal
 	public int getBidValue() throws RemoteException {
 		return MonopolyOptions.getBidValue();
 		
+	}
+
+	@Override
+	public void endGame() throws RemoteException {
+		MonopolyMain.frame.dispose();
+		EndForm f = new EndForm();
+		f.setVisible(true);
+
 	}
 	
 

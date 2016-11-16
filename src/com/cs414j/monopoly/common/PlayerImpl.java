@@ -6,8 +6,6 @@ import java.util.Iterator;
 import java.util.Set;
 
 import com.cs414j.monopoly.client.main.ClientCallback;
-import com.cs414j.monopoly.client.main.ClientMain;
-import com.cs414j.monopoly.controller.MonopolyOptions;
 import com.cs414j.monopoly.server.model.MonopolyServerStore;
 import com.cs414j.monopoly.server.model.Properties;
 import com.cs414j.monopoly.server.model.RailRoad;
@@ -123,48 +121,48 @@ public class PlayerImpl implements Player {
 	public Set<Properties> getMortgageProperties() {
 		return mortgageProperties;
 	}
-	public Player getOwner(String name){
+
+	public Player getOwner(String name) {
 		Player owner = null;
 		if (MonopolyServerStore.getBoardInstance().stringProperties.containsKey(name)) {
 			Properties p = getPropertyObject(name);
 			owner = p.owner;
 			return owner;
 		}
-		if (MonopolyServerStore.getBoardInstance().stringUtilities.containsKey(name)){
+		if (MonopolyServerStore.getBoardInstance().stringUtilities.containsKey(name)) {
 			Utilities u = this.getUtilityObject(name);
 			owner = u.getOwner();
-			return owner;			
+			return owner;
 		}
-		
-		if(MonopolyServerStore.getBoardInstance().stringRailRoad.containsKey(name)){
+
+		if (MonopolyServerStore.getBoardInstance().stringRailRoad.containsKey(name)) {
 			RailRoad r = this.getRailRoadObject(name);
 			owner = r.getOwner();
 			return owner;
 		}
-		return owner;		
+		return owner;
 	}
-	
-	public int getRent(String name) throws RemoteException{
+
+	public int getRent(String name) throws RemoteException {
 		int rent = 0;
 		if (MonopolyServerStore.getBoardInstance().stringProperties.containsKey(name)) {
 			Properties p = getPropertyObject(name);
 			rent = p.rentInitial;
 			return rent;
 		}
-		if (MonopolyServerStore.getBoardInstance().stringUtilities.containsKey(name)){
+		if (MonopolyServerStore.getBoardInstance().stringUtilities.containsKey(name)) {
 			Utilities u = this.getUtilityObject(name);
 			rent = u.getRentFirstUtility();
 			return rent;
 		}
-		if(MonopolyServerStore.getBoardInstance().stringRailRoad.containsKey(name)){
+		if (MonopolyServerStore.getBoardInstance().stringRailRoad.containsKey(name)) {
 			RailRoad r = this.getRailRoadObject(name);
 			rent = r.getRentInitial();
 			return rent;
 		}
-		
+
 		return rent;
 	}
-	
 
 	public Set<String> OwnedSquareName() {
 		// Iterates through the three hashSets of owned property/
@@ -268,7 +266,7 @@ public class PlayerImpl implements Player {
 			}
 		}
 
-		MonopolyOptions.changePlayerDetails(this);
+		MonopolyServerStore.changeAllPlayerDetails();
 	}
 
 	public boolean isPropertyOwned(Properties p) {
@@ -286,8 +284,9 @@ public class PlayerImpl implements Player {
 			int newBalance = getBalance() + 200;
 			this.setBalance(newBalance);
 			String input = "$200 has been added to your balance";
-			MonopolyOptions.displayPopUp(input);
-			MonopolyOptions.changePlayerDetails(this);
+			ClientCallback c = MonopolyServerStore.getClientFromPlayer(this.getName());
+			c.showMsg(input);
+			MonopolyServerStore.changeAllPlayerDetails();
 		}
 	}
 
@@ -303,7 +302,7 @@ public class PlayerImpl implements Player {
 
 	public void paidJailPenalty() throws RemoteException {
 		this.setBalance(balance - 50);
-		MonopolyOptions.changePlayerDetails(this);
+		MonopolyServerStore.changeAllPlayerDetails();
 	}
 
 	public Properties getPropertyObject(String key) {
@@ -340,9 +339,6 @@ public class PlayerImpl implements Player {
 		if (MonopolyServerStore.getBoardInstance().stringProperties.containsKey(name)) {
 			Properties p = getPropertyObject(name);
 
-			System.out.println("my prop name:" + p.getName());
-			System.out.println(
-					"my prop name:" + MonopolyServerStore.getBankInstance().getBankPropertiesSet().contains(p));
 			int cost = p.getCost();
 			if (MonopolyServerStore.getBankInstance().getBankPropertiesSet().contains(p)) {
 				if (balance > cost) {
@@ -352,8 +348,11 @@ public class PlayerImpl implements Player {
 					MonopolyServerStore.getBankInstance().getBankPropertiesSet().remove(p);
 					this.propertyCost = propertyCost + cost;
 				} else {
-					MonopolyOptions
-							.displayPopUp("Your balance is insufficient!!!! " + "You cant purchase the property");
+
+					String input = "Your balance is insufficient!!!! " + "You cant purchase the property";
+					ClientCallback c = MonopolyServerStore.getClientFromPlayer(this.getName());
+					c.showMsg(input);
+
 				}
 			}
 
@@ -371,8 +370,9 @@ public class PlayerImpl implements Player {
 					MonopolyServerStore.getBankInstance().getBankUtilitySet().remove(u);
 					this.propertyCost = propertyCost + cost;
 				} else {
-					MonopolyOptions
-							.displayPopUp("Your balance is insufficient!!!! " + "You cant purchase the property");
+					String input = "Your balance is insufficient!!!! " + "You cant purchase the property";
+					ClientCallback c = MonopolyServerStore.getClientFromPlayer(this.getName());
+					c.showMsg(input);
 				}
 			}
 
@@ -392,18 +392,18 @@ public class PlayerImpl implements Player {
 					MonopolyServerStore.getBankInstance().getBankRailRoad().remove(r);
 					this.propertyCost = propertyCost + cost;
 				} else {
-					MonopolyOptions
-							.displayPopUp("Your balance is insufficient!!!! " + "You cant purchase the property");
+					String input = "Your balance is insufficient!!!! " + "You cant purchase the property";
+					ClientCallback c = MonopolyServerStore.getClientFromPlayer(this.getName());
+					c.showMsg(input);
 				}
 			}
 
 		}
-		
+
 		MonopolyServerStore.changeAllPlayerDetails();
 
-		
 	}
-	
+
 	public void buyProperty(String name, int bid) throws RemoteException {
 		// takes square name from UI and
 		// checks if it is a utility or a property or a rairoad
@@ -425,8 +425,9 @@ public class PlayerImpl implements Player {
 					MonopolyServerStore.getBankInstance().getBankPropertiesSet().remove(p);
 					this.propertyCost = propertyCost + cost;
 				} else {
-					MonopolyOptions
-							.displayPopUp("Your balance is insufficient!!!! " + "You cant purchase the property");
+					String input = "Your balance is insufficient!!!! " + "You cant purchase the property";
+					ClientCallback c = MonopolyServerStore.getClientFromPlayer(this.getName());
+					c.showMsg(input);
 				}
 			}
 
@@ -444,8 +445,10 @@ public class PlayerImpl implements Player {
 					MonopolyServerStore.getBankInstance().getBankUtilitySet().remove(u);
 					this.propertyCost = propertyCost + cost;
 				} else {
-					MonopolyOptions
-							.displayPopUp("Your balance is insufficient!!!! " + "You cant purchase the property");
+
+					String input = "Your balance is insufficient!!!! " + "You cant purchase the property";
+					ClientCallback c = MonopolyServerStore.getClientFromPlayer(this.getName());
+					c.showMsg(input);
 				}
 			}
 
@@ -465,17 +468,16 @@ public class PlayerImpl implements Player {
 					MonopolyServerStore.getBankInstance().getBankRailRoad().remove(r);
 					this.propertyCost = propertyCost + cost;
 				} else {
-					MonopolyOptions
-							.displayPopUp("Your balance is insufficient!!!! " + "You cant purchase the property");
+					String input = "Your balance is insufficient!!!! " + "You cant purchase the property";
+					ClientCallback c = MonopolyServerStore.getClientFromPlayer(this.getName());
+					c.showMsg(input);
 				}
 			}
 
 		}
-		
+
 		MonopolyServerStore.changeAllPlayerDetails();
-		String myMessage = "Congrats!!!! "+name+" is yours. \n Your new balance is: $"+balance;
-		String otherMessage = "Property: "+ name+" is sold to Player: "+this.getName();
-		
+
 	}
 
 	public void payRent(String name, int diceValue) throws RemoteException {
@@ -613,7 +615,7 @@ public class PlayerImpl implements Player {
 		}
 
 		MonopolyServerStore.changeAllPlayerDetails();
-		
+
 	}
 
 }

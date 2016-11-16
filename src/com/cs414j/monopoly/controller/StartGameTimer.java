@@ -33,7 +33,7 @@ public class StartGameTimer {
 					}
 				} else {
 					 MonopolyServerStore.getInstance().getClientObj().get(0).
-					 	showError("Sorry!!! No other Players are available. Unable to start the game");
+					 	showErrorStartGame("Sorry!!! No other Players are available. Unable to start the game");
 						
 				}
 			} catch (RemoteException e) {

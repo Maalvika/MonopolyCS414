@@ -104,8 +104,7 @@ public class ButtonValidate {
 				MonopolyOptions.conti.setEnabled(true);
 				String currentProperty = MonopolyOptions.getPropertyName
 							(ClientMain.store.getCurrentPlayer().getToken());
-				if(!ClientMain.store.isOwnedByBank(currentProperty) && 
-						!ClientMain.store.getCurrentPlayer().OwnedSquareName().contains(currentProperty)) {
+				if(isOtherOwns(currentProperty) == true) {
 					MonopolyOptions.buy.setEnabled(false);
 					MonopolyOptions.pay.setEnabled(true);
 				} else {
@@ -150,8 +149,7 @@ public class ButtonValidate {
 				MonopolyOptions.conti.setEnabled(true);
 				String currentProperty = MonopolyOptions.getPropertyName
 						(ClientMain.store.getCurrentPlayer().getToken());
-				if(!ClientMain.store.isOwnedByBank(currentProperty) && 
-						!ClientMain.store.getCurrentPlayer().OwnedSquareName().contains(currentProperty)) {
+				if(isOtherOwns(currentProperty) == true) {
 					MonopolyOptions.buy.setEnabled(false);
 					MonopolyOptions.pay.setEnabled(true);
 					MonopolyOptions.conti.setEnabled(false);

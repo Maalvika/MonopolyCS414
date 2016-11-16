@@ -176,7 +176,7 @@ public class MonopolyServerStore extends
 	public void sendMessageToAll(String otherMessage) throws RemoteException {
 		for (ClientCallback c : clientObj) {
 			if(!c.getName().equals(currentPlayer.getName())) {
-				c.showMsg(currentPlayer.getName(), otherMessage);
+				c.showMsg(otherMessage);
 			}
 		}
 	}
@@ -217,13 +217,28 @@ public class MonopolyServerStore extends
 	@Override
 	public void sendRentMessageToOwner(String propertyName) throws RemoteException {
 		Player owner = currentPlayer.getOwner(propertyName);
-		for (ClientCallback c : clientObj) {
-			if(c.getName().equals(owner.getName())) {
-				c.showMsg(currentPlayer.getName(), currentPlayer.getName()+" paid you rent");
-			}
-		}
+		getClientFromPlayer(owner.getName()).showMsg(currentPlayer.getName()+" paid you rent");
 	}
 	
+	public static ClientCallback getClientFromPlayer(String pName) throws RemoteException{
+		for (ClientCallback c : clientObj) {
+			if(c.getName().equals(pName)) {
+				return c;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public void endGameIfAnyPlayerQuits(String playerName) throws RemoteException {
+		ClientCallback clientQuitted = getClientFromPlayer(playerName);
+		for(ClientCallback c: clientObj) {
+			if(c!=clientQuitted) {
+				c.endGame();
+			}
+		}
+		
+	}
 	
 	
 	
