@@ -35,6 +35,7 @@ public class MonopolyServerStore extends
 	private static Board board;
 	private static Player currentPlayer;
 	private static List<ClientCallback> clientObj;
+	private static card;
 	
 	private MonopolyServerStore() throws java.rmi.RemoteException {
 		 players = new LinkedList<>();
@@ -97,6 +98,13 @@ public class MonopolyServerStore extends
 			bank = new Bank();
 		}
 		return bank;
+	}
+	
+		public static Cards getCardInstance() {
+		if(card == null) {
+			card = new Cards();
+		}
+		return card;
 	}
 	
 	public static Board getBoardInstance() {
@@ -237,7 +245,16 @@ public class MonopolyServerStore extends
 				c.endGame();
 			}
 		}
+
 		
+	}
+	
+	public void landonChance() throws RemoteException{
+		card.generateRandomChance(currentPlayer);
+	}
+	
+	public void landonChest() throws RemoteException{
+		card.generateRandomChest(currentPlayer);
 	}
 	
 	
