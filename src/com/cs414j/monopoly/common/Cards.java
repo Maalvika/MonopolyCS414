@@ -104,9 +104,9 @@ public class Cards {
 			balance = this.chancePoorTax(p);
 			break;
 
-			//		case 13:
-			//			balance = this.chanceChairman(p);
-			//			break;
+		case 13:
+			balance = this.chanceChairman(p);
+			break;
 
 		case 14:
 			balance = this.chanceLoanMatures(p);
@@ -358,15 +358,6 @@ public class Cards {
 		return balance;
 	}
 
-	//	public int chanceChairman(Player p) throws RemoteException{
-	//		// added to other players subtracted from this player
-	//		int balance = p.getBalance();
-	//		int n = MonopolyServerStore.g
-	//		
-	//		
-	//		return balance;
-	//	}
-
 	public int chanceLoanMatures(Player p) throws RemoteException{
 
 		int balance = p.getBalance();
@@ -410,10 +401,6 @@ public class Cards {
 		return balance;
 	}
 
-	//	public int chestGrandOpera(Player p){
-	//		int balance = p.getBalance();
-	//		
-	//	}
 
 	public int chestHolidayFund(Player p) throws RemoteException{
 
