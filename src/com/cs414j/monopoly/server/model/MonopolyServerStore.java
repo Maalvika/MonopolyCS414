@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.cs414j.monopoly.client.main.ClientCallback;
+import com.cs414j.monopoly.client.main.InitcardDeck;
 import com.cs414j.monopoly.common.Bank;
 import com.cs414j.monopoly.common.Board;
 import com.cs414j.monopoly.common.Cards;
@@ -40,6 +41,7 @@ public class MonopolyServerStore extends
 	private static Player currentPlayer;
 	private static List<ClientCallback> clientObj;
 	private static Cards card;
+	private static InitcardDeck cardDeck;
 	
 	private MonopolyServerStore() throws java.rmi.RemoteException {
 		 players = new LinkedList<>();
@@ -126,6 +128,13 @@ public class MonopolyServerStore extends
 			board = new Board();
 		}
 		return board;
+	}
+	
+	public static InitcardDeck getDeckInstance() {
+		if(cardDeck == null) {
+			cardDeck = new InitcardDeck();
+		}
+		return cardDeck;
 	}
 	
 	public static int getPLAYER_COUNT() {
@@ -271,14 +280,6 @@ public class MonopolyServerStore extends
 		
 	}
 	
-	public void landonChance() throws RemoteException{
-		getCardInstance().generateRandomChance(currentPlayer);
-	}
-	
-	public void landonChest() throws RemoteException{
-		getCardInstance().generateRandomChest(currentPlayer);
-	}
-
 	@Override
 	public void placeBuyPropertyToken() throws RemoteException {
 		ClientCallback currentClient = getClientFromPlayer(currentPlayer.getName());
@@ -290,7 +291,14 @@ public class MonopolyServerStore extends
 		
 	}
 	
+	public void callChanceCards() throws RemoteException{
+		int index = this.getDeckInstance().generateRandomChance();
+		this.getCardInstance().chanceAction(index, currentPlayer);
+	}
 	
-	
+	public void callChestCards() throws RemoteException{
+		int index = this.getDeckInstance().generateRandomChest();
+		this.getCardInstance().chestAction(index, currentPlayer);
+	}
 
 }
