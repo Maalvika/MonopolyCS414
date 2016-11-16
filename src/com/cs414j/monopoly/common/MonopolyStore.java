@@ -38,5 +38,9 @@ public interface MonopolyStore extends java.rmi.Remote{
 	public void sendRentMessageToOwner(String propertyName) throws RemoteException;
 	
 	public void endGameIfAnyPlayerQuits(String playerName) throws RemoteException;
+	
+	public void landonChance() throws RemoteException;
+	
+	public void landonChest() throws RemoteException;
 
 }
