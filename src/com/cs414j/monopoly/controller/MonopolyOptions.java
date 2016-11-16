@@ -3,6 +3,7 @@ package com.cs414j.monopoly.controller;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.HeadlessException;
 import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.rmi.RemoteException;
@@ -29,6 +30,7 @@ import com.cs414j.monopoly.view.ButtonValidate;
 import com.cs414j.monopoly.view.MortgageOptions;
 import com.cs414j.monopoly.view.PropertyUI;
 import com.cs414j.monopoly.client.main.ClientMain;
+import com.cs414j.monopoly.client.view.AllPlayerInfoPanel;
 import com.cs414j.monopoly.client.view.EndForm;
 import com.cs414j.monopoly.client.view.PlayerDetailForm;
 import com.cs414j.monopoly.common.*;
@@ -54,6 +56,8 @@ public class MonopolyOptions extends JPanel {
 	public static JButton conti;
 	public static JButton endGame;
 	public static JButton auction;
+	public static JButton rollFixedNum;
+	public static JButton seeAllDetails;
 	private static int rolledDoubleSix = 0;
 	public static Map<PropertyUI, Integer> properties = new HashMap<>();
 	private static MonopolyStore serverStore = ClientMain.store;
@@ -116,18 +120,22 @@ public class MonopolyOptions extends JPanel {
 		tax = new JButton("Pay Tax");
 		endGame = new JButton("End Game");
 		auction = new JButton("Auction");
+		rollFixedNum = new JButton("Roll Fixed Num");
+		seeAllDetails = new JButton("Show Everyone's Score");
 		// playerDetails.setLayout(new BoxLayout(playerDetails,
 		// BoxLayout.Y_AXIS));
-		gameOptions.setLayout(new GridLayout(5, 2, 10, 100));
+		gameOptions.setLayout(new GridLayout(6, 2, 10, 100));
 		gameOptions.add(rollDice);
+		gameOptions.add(rollFixedNum);
 		gameOptions.add(conti);
 		gameOptions.add(buy);
 		gameOptions.add(pay);
 		gameOptions.add(build);
 		gameOptions.add(mortgage);
 		gameOptions.add(tax);
-		gameOptions.add(endGame);
 		gameOptions.add(auction);
+		gameOptions.add(seeAllDetails);
+		gameOptions.add(endGame);
 		if(PlayerDetailForm.myPlayer.getName().equals(serverStore.getCurrentPlayer().getName())) {
 			initButtonSettings(); 
 		} else {
@@ -141,6 +149,7 @@ public class MonopolyOptions extends JPanel {
 		MonopolyMain.frame.dispose();
 		EndForm f=new EndForm();
 		f.setVisible(true);
+		ClientMain.store.endGameIfAnyPlayerQuits(PlayerDetailForm.myPlayer.getName());
 	}
 	
 
@@ -223,6 +232,13 @@ public class MonopolyOptions extends JPanel {
 		ClientMain.store.sendPropertyForAuction(currentProperty);
 		disableButtonSettings();
 	}
+	
+	protected void showDetailsActionPerformed(ActionEvent evt) throws HeadlessException, RemoteException {
+		Object[] options = { "OK" };
+		JOptionPane.showOptionDialog(null, new AllPlayerInfoPanel(), "Player Information", JOptionPane.INFORMATION_MESSAGE,
+				JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+		
+	}
 
 	protected void rollDiceActionPerformed(ActionEvent evt) throws RemoteException {
 		MonopolyMain._leftDie.roll();
@@ -273,12 +289,14 @@ public class MonopolyOptions extends JPanel {
 		tax.setEnabled(false);
 		auction.setEnabled(false);
 		rollDice.setEnabled(false);
+		rollFixedNum.setEnabled(false);
 		
 	}
 	
 	// enable roll dice and disable all
 	public static void initButtonSettings() {
 		MonopolyOptions.rollDice.setEnabled(true);
+		rollFixedNum.setEnabled(true);
 		MonopolyOptions.buy.setEnabled(false);
 		MonopolyOptions.conti.setEnabled(false);
 		MonopolyOptions.pay.setEnabled(false);
@@ -293,6 +311,7 @@ public class MonopolyOptions extends JPanel {
 	// Disable all but enable continue button
    public static void disableButtonSettings() {
 		MonopolyOptions.rollDice.setEnabled(false);
+		rollFixedNum.setEnabled(false);
 		MonopolyOptions.buy.setEnabled(false);
 		MonopolyOptions.conti.setEnabled(true);
 		MonopolyOptions.pay.setEnabled(false);
@@ -403,6 +422,28 @@ public class MonopolyOptions extends JPanel {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				try {
 					auctionActionPerformed(evt);
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		
+//		rollFixedNum.addActionListener(new java.awt.event.ActionListener() {
+//			public void actionPerformed(java.awt.event.ActionEvent evt) {
+//				try {
+//					auctionActionPerformed(evt);
+//				} catch (RemoteException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+		
+		seeAllDetails.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				try {
+					showDetailsActionPerformed(evt);
 				} catch (RemoteException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

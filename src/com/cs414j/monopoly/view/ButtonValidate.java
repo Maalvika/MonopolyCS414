@@ -47,6 +47,7 @@ public class ButtonValidate {
 		for (Corner c : Corner.values()) {
 			if (x == c.getXpoint() && y == c.getYpoint()) {
 				MonopolyOptions.rollDice.setEnabled(false);
+				MonopolyOptions.rollFixedNum.setEnabled(false);
 				MonopolyOptions.buy.setEnabled(false);
 				MonopolyOptions.conti.setEnabled(true);
 				MonopolyOptions.pay.setEnabled(false);
@@ -65,6 +66,7 @@ public class ButtonValidate {
 		for (Tax t : Tax.values()) {
 			if (x == t.getXpoint() && y == t.getYpoint()) {
 				MonopolyOptions.rollDice.setEnabled(false);
+				MonopolyOptions.rollFixedNum.setEnabled(false);
 				MonopolyOptions.buy.setEnabled(false);
 				MonopolyOptions.conti.setEnabled(false);
 				MonopolyOptions.pay.setEnabled(false);
@@ -82,6 +84,7 @@ public class ButtonValidate {
 		for (CommunityChest c : CommunityChest.values()) {
 			if (x == c.getXpoint() && y == c.getYpoint()) {
 				MonopolyOptions.rollDice.setEnabled(false);
+				MonopolyOptions.rollFixedNum.setEnabled(false);
 				MonopolyOptions.buy.setEnabled(false);
 				MonopolyOptions.conti.setEnabled(true);
 				MonopolyOptions.pay.setEnabled(false);
@@ -101,6 +104,7 @@ public class ButtonValidate {
 		for (RailRoad t : RailRoad.values()) {
 			if (x == t.getXpoint() && y == t.getYpoint()) {
 				MonopolyOptions.rollDice.setEnabled(false);
+				MonopolyOptions.rollFixedNum.setEnabled(false);
 				MonopolyOptions.conti.setEnabled(true);
 				String currentProperty = MonopolyOptions.getPropertyName
 							(ClientMain.store.getCurrentPlayer().getToken());
@@ -127,6 +131,7 @@ public class ButtonValidate {
 		for (Chance c : Chance.values()) {
 			if (x == c.getXpoint() && y == c.getYpoint()) {
 				MonopolyOptions.rollDice.setEnabled(false);
+				MonopolyOptions.rollFixedNum.setEnabled(false);
 				MonopolyOptions.buy.setEnabled(false);
 				MonopolyOptions.conti.setEnabled(true);
 				MonopolyOptions.pay.setEnabled(false);
@@ -146,6 +151,7 @@ public class ButtonValidate {
 		for (Others o : Others.values()) {
 			if (x == o.getXpoint() && y == o.getYpoint()) {
 				MonopolyOptions.rollDice.setEnabled(false);
+				MonopolyOptions.rollFixedNum.setEnabled(false);
 				MonopolyOptions.conti.setEnabled(true);
 				String currentProperty = MonopolyOptions.getPropertyName
 						(ClientMain.store.getCurrentPlayer().getToken());
@@ -171,6 +177,7 @@ public class ButtonValidate {
 	
 	private static void defaultSettings() throws RemoteException {
 		MonopolyOptions.rollDice.setEnabled(false);
+		MonopolyOptions.rollFixedNum.setEnabled(false);
 		MonopolyOptions.conti.setEnabled(true);
 
 		if(MonopolyOptions.properties.containsKey(getCurrentPropertyUI())) {

@@ -16,6 +16,7 @@ import com.cs414j.monopoly.common.Bank;
 import com.cs414j.monopoly.common.Board;
 import com.cs414j.monopoly.common.Player;
 import com.cs414j.monopoly.common.Token;
+import com.cs414j.monopoly.common.view.SpecialBlocks.Corner;
 import com.cs414j.monopoly.view.Die;
 import com.cs414j.monopoly.view.ImagePanel;
 import com.cs414j.monopoly.view.ImageUtility;
@@ -65,6 +66,9 @@ public class MonopolyMain {
 		
 		System.out.println("dice value: "+diceValue);
 		Token t = adjustPosition(ClientMain.store.getCurrentPlayer().getToken(), diceValue);
+		if(checkForGoJail(t) == true) {
+			t = sendToJail(t);
+		}
 		List <Token> temp = ClientMain.store.getSelectedTokens();
 		temp.set(ClientMain.store.getSelectedTokens().indexOf(ClientMain.store.getCurrentPlayer().getToken()), t);
 		ClientMain.store.setSelectedTokens(temp);
@@ -176,5 +180,20 @@ public class MonopolyMain {
 		p.add(new MonopolyOptions(frame, ClientMain.store.getCurrentPlayer()));
 		return p;
 
+	}
+	
+	private static boolean checkForGoJail(Token t){
+		if(t.getxCoordinate() ==  Corner.GO_JAIL.getXpoint() && 
+				t.getyCoordinate() == Corner.GO_JAIL.getYpoint()) {
+			return true;
+		}
+		return false;
+	}
+	
+	private static Token sendToJail(Token t) throws RemoteException{
+		t.setxCoordinate(Corner.JUST_VISITING.getXpoint());
+		t.setyCoordinate(Corner.JUST_VISITING.getYpoint());
+		ClientMain.store.getCurrentPlayer().landedOnGoToJail(30);
+		return t;
 	}
 }
