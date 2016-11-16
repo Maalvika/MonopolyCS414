@@ -189,6 +189,8 @@ public class Cards {
 	public void advanceToGo(Player p) throws RemoteException{
 
 		p.setLocation(0);
+		int balance = p.getBalance();
+		p.setBalance(balance + 200);
 		String s = "Congratulations!!! You landed on GO and receive 200$";
 
 	}
