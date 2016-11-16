@@ -158,8 +158,9 @@ public class MonopolyOptions extends JPanel {
 		String currentProperty = getPropertyName(ClientMain.store.getCurrentPlayer().getToken());
 		int diceValue =MonopolyMain._leftDie.getValue() + MonopolyMain._rightDie.getValue();
 		ClientMain.store.getCurrentPlayer().payRent(currentProperty, diceValue);
-		displayPopUp("You paid rent:"+ClientMain.store.getCurrentPlayer().getRent(currentProperty)+
-		  "to Player: "+ClientMain.store.getCurrentPlayer().getOwner(currentProperty));
+		displayPopUp("You paid rent: $"+ClientMain.store.getCurrentPlayer().getRent(currentProperty)+
+		  " to Player: "+ClientMain.store.getCurrentPlayer().getOwner(currentProperty).getName());
+		ClientMain.store.sendRentMessageToOwner(currentProperty);
 		disableButtonSettings();
 		
 	}

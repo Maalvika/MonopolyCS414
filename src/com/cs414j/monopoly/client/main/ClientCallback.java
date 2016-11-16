@@ -26,6 +26,6 @@ public interface ClientCallback extends java.rmi.Remote{
 	
 	public void moveChance(String propertyName) throws RemoteException;
 	
-	public void buyPropertyAction()throws RemoteException;
+	public void buyPropertyAction(String pName)throws RemoteException;
 	
 }

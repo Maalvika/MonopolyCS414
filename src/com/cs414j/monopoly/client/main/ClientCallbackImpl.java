@@ -126,10 +126,20 @@ public class ClientCallbackImpl extends UnicastRemoteObject implements ClientCal
 	}
 
 	@Override
-	public void buyPropertyAction() throws RemoteException {
+	public void buyPropertyAction(String pName) throws RemoteException {
 		Player currentPlayer = ClientMain.store.getCurrentPlayer();
+		Player auctionPlayer = null;
+		if(!currentPlayer.getName().equals(pName)) {
+			for(Player p: ClientMain.store.getPlayers()) {
+				if(p.getName().equals(pName)) {
+					auctionPlayer = p; 
+				} 
+			}
+		} else {
+			auctionPlayer = currentPlayer;
+		}
 		PropertyUI prop = new PropertyUI(currentPlayer.getToken().getxCoordinate(), currentPlayer.getToken().getyCoordinate(),
-				currentPlayer.getName(), PlayerColor.valueOf(currentPlayer.getColor()));
+				auctionPlayer.getName(), PlayerColor.valueOf(auctionPlayer.getColor()));
 		if(!MonopolyOptions.properties.containsKey(prop)) {
 			MonopolyOptions.properties.put(prop, 0);
 		}

@@ -240,7 +240,9 @@ public class MonopolyServerStore extends
 			}
 
 		}
-		
+		for(ClientCallback c: clientObj) {
+			c.buyPropertyAction(client.getName());
+		}
 		sendMessageToAll(propertyName+" is purchased by Player: "+client.getName());	
 	}
 
@@ -284,7 +286,7 @@ public class MonopolyServerStore extends
 		ClientCallback currentClient = getClientFromPlayer(currentPlayer.getName());
 		for(ClientCallback c: clientObj) {
 			if(c!=currentClient) {
-				c.buyPropertyAction();
+				c.buyPropertyAction(currentPlayer.getName());
 			}
 		}
 		
