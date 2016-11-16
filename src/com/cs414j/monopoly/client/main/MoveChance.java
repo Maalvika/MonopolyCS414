@@ -1,4 +1,4 @@
-package com.cs414j.monopoly.client.view;
+package com.cs414j.monopoly.client.main;
 
 public enum MoveChance {
 	

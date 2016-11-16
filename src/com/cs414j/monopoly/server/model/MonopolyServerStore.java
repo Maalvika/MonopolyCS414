@@ -8,6 +8,7 @@ import java.util.List;
 import com.cs414j.monopoly.client.main.ClientCallback;
 import com.cs414j.monopoly.common.Bank;
 import com.cs414j.monopoly.common.Board;
+import com.cs414j.monopoly.common.Cards;
 import com.cs414j.monopoly.common.MonopolyStore;
 import com.cs414j.monopoly.common.Player;
 import com.cs414j.monopoly.common.PlayerImpl;
@@ -35,7 +36,7 @@ public class MonopolyServerStore extends
 	private static Board board;
 	private static Player currentPlayer;
 	private static List<ClientCallback> clientObj;
-	private static card;
+	private static Cards card;
 	
 	private MonopolyServerStore() throws java.rmi.RemoteException {
 		 players = new LinkedList<>();
@@ -188,6 +189,14 @@ public class MonopolyServerStore extends
 			}
 		}
 	}
+	
+	public void sendMessageToPlayer(String message) throws RemoteException {
+		for (ClientCallback c : clientObj) {
+			if(c.getName().equals(currentPlayer.getName())) {
+				c.showMsg(message);
+			}
+		}
+	}
 
 	@Override
 	public boolean isOwnedByBank(String name) throws RemoteException {
@@ -250,11 +259,11 @@ public class MonopolyServerStore extends
 	}
 	
 	public void landonChance() throws RemoteException{
-		card.generateRandomChance(currentPlayer);
+		getCardInstance().generateRandomChance(currentPlayer);
 	}
 	
 	public void landonChest() throws RemoteException{
-		card.generateRandomChest(currentPlayer);
+		getCardInstance().generateRandomChest(currentPlayer);
 	}
 	
 	

@@ -32,6 +32,7 @@ import com.cs414j.monopoly.view.PropertyUI;
 import com.cs414j.monopoly.client.main.ClientMain;
 import com.cs414j.monopoly.client.view.AllPlayerInfoPanel;
 import com.cs414j.monopoly.client.view.EndForm;
+import com.cs414j.monopoly.client.view.FixedDieValuePanel;
 import com.cs414j.monopoly.client.view.PlayerDetailForm;
 import com.cs414j.monopoly.common.*;
 import com.cs414j.monopoly.common.view.SpecialBlocks.Corner;
@@ -233,6 +234,25 @@ public class MonopolyOptions extends JPanel {
 		disableButtonSettings();
 	}
 	
+	protected void rollFixedNumActionPerformed(ActionEvent evt) {
+		FixedDieValuePanel diePanel = new FixedDieValuePanel();
+		Object[] options = { "OK" };
+		int n = JOptionPane.showOptionDialog(null, diePanel, "Dice Value", JOptionPane.INFORMATION_MESSAGE,
+				JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+		if(n == 0) {
+			diePanel.setDiceValue();
+		}
+		MonopolyMain._leftDie.setValue(diePanel.getLeftDieValue());
+		MonopolyMain._rightDie.setValue(diePanel.getRightDieValue());
+		int diceValue = MonopolyMain._leftDie.getValue()+MonopolyMain._rightDie.getValue();
+		try {
+			diceActionOnRoll(diceValue);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	protected void showDetailsActionPerformed(ActionEvent evt) throws HeadlessException, RemoteException {
 		Object[] options = { "OK" };
 		JOptionPane.showOptionDialog(null, new AllPlayerInfoPanel(), "Player Information", JOptionPane.INFORMATION_MESSAGE,
@@ -244,39 +264,8 @@ public class MonopolyOptions extends JPanel {
 		MonopolyMain._leftDie.roll();
 		MonopolyMain._rightDie.roll();
 		int diceValue = MonopolyMain._leftDie.getValue()+MonopolyMain._rightDie.getValue();
-		if(diceValue == 12) {
-			rolledDoubleSix += diceValue;
-			if(rolledDoubleSix == 36) {
-				rolledDoubleSix = 0;
-				Token t = ClientMain.store.getCurrentPlayer().getToken();
-				int x = Corner.JUST_VISITING.getXpoint();
-				int y = Corner.JUST_VISITING.getYpoint();
-				t.setxCoordinate(x);
-				t.setyCoordinate(y);
-				serverStore.setTokenCoordinates(t.getTokenURL(), x, y);
-				ClientMain.store.getCurrentPlayer().setToken(t);
-				MonopolyMain.panel.changeTokenPosition(serverStore.getSelectedTokens());
-				displayPopUp("Oops!!! You rolled a double six, thrice. You'll have to go to jail");
-				disableButtonSettings();
-			} else {
-				displayPopUp("Oops!!! You rolled a double six. Press Ok to roll again");
-				initButtonSettings();
-			}
-		} else {
-			 if(rolledDoubleSix > 0) {
-				
-				diceValue += rolledDoubleSix ;
-			} 
-			try {
-				MonopolyMain.changeBoardImage(diceValue);
-				serverStore.changeOtherPlayerBoard(PlayerDetailForm.myClient,
-						MonopolyMain._leftDie.getValue(), MonopolyMain._rightDie.getValue());
-			} catch (RemoteException e) {
-				e.printStackTrace();
-			}
-			ButtonValidate.landOnBlock(ClientMain.store.getCurrentPlayer().getToken());
-			ClientMain.store.getCurrentPlayer().moveForward(diceValue);
-		}
+		diceActionOnRoll(diceValue);
+		
 	}
 	
 	//disable all player
@@ -429,16 +418,12 @@ public class MonopolyOptions extends JPanel {
 			}
 		});
 		
-//		rollFixedNum.addActionListener(new java.awt.event.ActionListener() {
-//			public void actionPerformed(java.awt.event.ActionEvent evt) {
-//				try {
-//					auctionActionPerformed(evt);
-//				} catch (RemoteException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//			}
-//		});
+		rollFixedNum.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+					rollFixedNumActionPerformed(evt);
+				
+			}
+		});
 		
 		seeAllDetails.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -452,6 +437,7 @@ public class MonopolyOptions extends JPanel {
 		});
 		
 	}
+
 
 	public static String getPropertyName(Token t) {
 
@@ -529,6 +515,44 @@ public class MonopolyOptions extends JPanel {
 	
 	public static int getBidValue(){
 		return ac.getBidValue();
+	}
+	
+	private static void diceActionOnRoll(int diceValue) throws RemoteException{
+		
+		if(diceValue == 12) {
+			rolledDoubleSix += diceValue;
+			if(rolledDoubleSix == 36) {
+				rolledDoubleSix = 0;
+				Token t = ClientMain.store.getCurrentPlayer().getToken();
+				int x = Corner.JUST_VISITING.getXpoint();
+				int y = Corner.JUST_VISITING.getYpoint();
+				t.setxCoordinate(x);
+				t.setyCoordinate(y);
+				serverStore.setTokenCoordinates(t.getTokenURL(), x, y);
+				ClientMain.store.getCurrentPlayer().setToken(t);
+				MonopolyMain.panel.changeTokenPosition(serverStore.getSelectedTokens());
+				displayPopUp("Oops!!! You rolled a double six, thrice. You'll have to go to jail");
+				disableButtonSettings();
+			} else {
+				displayPopUp("Oops!!! You rolled a double six. Press Ok to roll again");
+				initButtonSettings();
+			}
+		} else {
+			 if(rolledDoubleSix > 0) {
+				
+				diceValue += rolledDoubleSix ;
+			} 
+			try {
+				MonopolyMain.changeBoardImage(diceValue);
+				serverStore.changeOtherPlayerBoard(PlayerDetailForm.myClient,
+						MonopolyMain._leftDie.getValue(), MonopolyMain._rightDie.getValue());
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+			ButtonValidate.landOnBlock(ClientMain.store.getCurrentPlayer().getToken());
+			ClientMain.store.getCurrentPlayer().moveForward(diceValue);
+		}
+		
 	}
 	
 	

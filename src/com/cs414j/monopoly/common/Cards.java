@@ -1,14 +1,18 @@
 package com.cs414j.monopoly.common;
 
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.Random;
 
-import com.cs414j.monopoly.client.main.ClientCallback;
-import com.cs414j.monopoly.controller.MonopolyOptions;
+import com.cs414j.monopoly.controller.MonopolyMain;
 import com.cs414j.monopoly.server.model.MonopolyServerStore;
 import com.cs414j.monopoly.server.model.Utilities;
 
-public class Cards {
+public class Cards implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public String[] chance;
 	public String[] chest;
 	
@@ -152,9 +156,11 @@ public class Cards {
 		String s = chance[index];
 		//MonopolyServerStore.getInstance().getCurrentPlayer().s
 		//Monopoly Store call this method
-		MonopolyServerStore.getClientFromPlayer(p.getName()).showMsg(s);
+		MonopolyServerStore.getInstance().sendMessageToPlayer(s);
 		if(index <= 8){
-			this.chanceMove(index, p);
+			String propertyName = this.chanceMove(index, p);
+			MonopolyServerStore.getClientFromPlayer
+			(MonopolyServerStore.getInstance().getCurrentPlayer().getName()).moveChance(propertyName);
 		}
 		else{
 			this.chanceBalanceUpdate(index,p);
@@ -167,9 +173,12 @@ public class Cards {
 		Random r = new Random();
 		int index = r.nextInt((16-0)+1);
 		String s = chest[index];
-		MonopolyServerStore.getClientFromPlayer(p.getName()).showMsg(s);
+		MonopolyServerStore.getInstance().sendMessageToPlayer(s);
 		if(index <= 1){
-			this.chestMove(index, p);
+			
+			String propertyName = this.chestMove(index, p);
+			MonopolyServerStore.getClientFromPlayer
+			(MonopolyServerStore.getInstance().getCurrentPlayer().getName()).moveChance(propertyName);;
 		}
 		else{
 			this.chestBalanceUpdate(index,p);
