@@ -2,15 +2,19 @@ package com.cs414j.monopoly.client.main;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
 import com.cs414j.monopoly.client.view.EndForm;
+import com.cs414j.monopoly.client.view.MoveChance;
 import com.cs414j.monopoly.client.view.PlayerDetailForm;
 import com.cs414j.monopoly.common.Player;
+import com.cs414j.monopoly.common.Token;
 import com.cs414j.monopoly.controller.EndTimerTask;
 import com.cs414j.monopoly.controller.MonopolyMain;
 import com.cs414j.monopoly.controller.MonopolyOptions;
+import com.cs414j.monopoly.view.ButtonValidate;
 
 public class ClientCallbackImpl extends UnicastRemoteObject implements ClientCallback{
 	
@@ -88,6 +92,35 @@ public class ClientCallbackImpl extends UnicastRemoteObject implements ClientCal
 		EndForm f = new EndForm();
 		f.setVisible(true);
 
+	}
+
+	@Override
+	public void moveChance(String propertyName) throws RemoteException {
+		
+		
+	}
+	
+	private void moveToken(String propertyName) throws RemoteException{
+		MoveChance position = null ;
+		for(MoveChance mv: MoveChance.values()) {
+			if(mv.name().replace("_", " ").equals(propertyName)) {
+				position = mv;
+			}
+		}
+		Token t = ClientMain.store.getCurrentPlayer().getToken();
+		t.setxCoordinate(position.getXpoint());
+		t.setyCoordinate(position.getYpoint());
+		List <Token> temp = ClientMain.store.getSelectedTokens();
+		temp.set(ClientMain.store.getSelectedTokens().indexOf(ClientMain.store.getCurrentPlayer().getToken()), t);
+		ClientMain.store.setSelectedTokens(temp);
+		ClientMain.store.getCurrentPlayer().setToken(t);
+		MonopolyMain.panel.changeTokenPosition(temp);
+		
+		ClientMain.store.changeOtherPlayerBoard(PlayerDetailForm.myClient,
+				MonopolyMain._leftDie.getValue(), MonopolyMain._rightDie.getValue());
+		
+		ButtonValidate.landOnBlock(ClientMain.store.getCurrentPlayer().getToken());
+		
 	}
 	
 

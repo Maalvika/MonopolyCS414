@@ -24,4 +24,6 @@ public interface ClientCallback extends java.rmi.Remote{
 	
 	public void endGame() throws RemoteException;
 	
+	public void moveChance(String propertyName) throws RemoteException;
+	
 }

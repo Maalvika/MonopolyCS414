@@ -91,6 +91,7 @@ public class ButtonValidate {
 				MonopolyOptions.build.setEnabled(false);
 				MonopolyOptions.tax.setEnabled(false);
 				enableMortgageButton();
+				//add server community chest code over here
 				return 1;
 
 			}
@@ -138,6 +139,7 @@ public class ButtonValidate {
 				MonopolyOptions.build.setEnabled(false);
 				MonopolyOptions.tax.setEnabled(false);
 				enableMortgageButton();
+				//add server chance code over here
 				return 1;
 
 			}
