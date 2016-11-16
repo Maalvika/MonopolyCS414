@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 
 import com.cs414j.monopoly.client.main.ClientMain;
 import com.cs414j.monopoly.common.Player;
+import com.cs414j.monopoly.common.PlayerColor;
 import com.cs414j.monopoly.common.Token;
 import com.cs414j.monopoly.controller.MonopolyMain;
 import com.cs414j.monopoly.controller.MonopolyOptions;
@@ -218,7 +219,8 @@ public class ButtonValidate {
 	private static PropertyUI getCurrentPropertyUI() throws RemoteException {
 		Player player = ClientMain.store.getCurrentPlayer();
 		Token currentToken = player.getToken();
-		PropertyUI p = new PropertyUI(currentToken.getxCoordinate(), currentToken.getyCoordinate(), player.getName());
+		PropertyUI p = new PropertyUI(currentToken.getxCoordinate(), currentToken.getyCoordinate(), 
+				player.getName(),PlayerColor.valueOf(player.getColor()));
 		return p;
 	}
 	

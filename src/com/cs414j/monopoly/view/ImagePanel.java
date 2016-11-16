@@ -13,6 +13,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.RepaintManager;
 
+import com.cs414j.monopoly.common.PlayerColor;
 import com.cs414j.monopoly.common.Token;
 
 public class ImagePanel extends JPanel {
@@ -53,7 +54,9 @@ public class ImagePanel extends JPanel {
 				} else if(prop.getValue()==4) {
 					g.drawImage(getTokenImg(TokenUrls.HOTEL), prop.getKey().getxPoint(), 
 												prop.getKey().getyPoint(),40, 40, null);
-				}
+				} 
+				g.drawImage(getPlayerColorImg(prop.getKey().getColor()), prop.getKey().getxPoint(),
+									prop.getKey().getyPoint(), null);
 			}
 		}
 		repaint();
@@ -64,7 +67,7 @@ public class ImagePanel extends JPanel {
 		  repaint();
 	  }
 	  
-	  public void buildHouse(Map<PropertyUI,Integer> properties){
+	  public void addPlayerComponents(Map<PropertyUI,Integer> properties){
 		  this.properties = properties;
 		  repaint();
 	  }
@@ -78,4 +81,10 @@ public class ImagePanel extends JPanel {
 		  
 	  }
 	  
+	  private Image getPlayerColorImg(PlayerColor color) {
+		  final BufferedImage img = new ImageUtility().scaleImage(20, 20, color.getUrl());
+		  Image tokenImg = new ImageIcon(img).getImage();
+		  return tokenImg;
+		  
+	  }
 	}

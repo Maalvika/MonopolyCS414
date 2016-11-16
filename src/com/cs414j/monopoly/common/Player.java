@@ -14,12 +14,17 @@ public interface Player extends java.rmi.Remote {
 	public String getName()throws RemoteException;
 
 	public void setName(String name)throws RemoteException;
-
+	
+	public String getColor() throws RemoteException;
+	
+	public void setColor(String color) throws RemoteException;
+	
 	public Token getToken()throws RemoteException;
 	
 	public int getLocation()throws RemoteException;
 
 	public void setLocation(int l)throws RemoteException;
+	
 	public int getBalance()throws RemoteException;
 
 	public void setBalance(int b)throws RemoteException;

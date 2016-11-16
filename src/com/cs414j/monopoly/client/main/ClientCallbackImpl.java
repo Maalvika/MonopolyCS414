@@ -9,11 +9,13 @@ import javax.swing.JOptionPane;
 import com.cs414j.monopoly.client.view.EndForm;
 import com.cs414j.monopoly.client.view.PlayerDetailForm;
 import com.cs414j.monopoly.common.Player;
+import com.cs414j.monopoly.common.PlayerColor;
 import com.cs414j.monopoly.common.Token;
 import com.cs414j.monopoly.controller.EndTimerTask;
 import com.cs414j.monopoly.controller.MonopolyMain;
 import com.cs414j.monopoly.controller.MonopolyOptions;
 import com.cs414j.monopoly.view.ButtonValidate;
+import com.cs414j.monopoly.view.PropertyUI;
 
 public class ClientCallbackImpl extends UnicastRemoteObject implements ClientCallback {
 
@@ -121,6 +123,18 @@ public class ClientCallbackImpl extends UnicastRemoteObject implements ClientCal
 
 		ButtonValidate.landOnBlock(ClientMain.store.getCurrentPlayer().getToken());
 
+	}
+
+	@Override
+	public void buyPropertyAction() throws RemoteException {
+		Player currentPlayer = ClientMain.store.getCurrentPlayer();
+		PropertyUI prop = new PropertyUI(currentPlayer.getToken().getxCoordinate(), currentPlayer.getToken().getyCoordinate(),
+				currentPlayer.getName(), PlayerColor.valueOf(currentPlayer.getColor()));
+		if(!MonopolyOptions.properties.containsKey(prop)) {
+			MonopolyOptions.properties.put(prop, 0);
+		}
+		MonopolyMain.panel.addPlayerComponents(MonopolyOptions.properties);
+		
 	}
 
 }

@@ -183,16 +183,19 @@ public class MonopolyOptions extends JPanel {
 	protected void buyActionPerformed(ActionEvent evt) throws RemoteException {
 		Player player = ClientMain.store.getCurrentPlayer();
 		Token currentToken = player.getToken();
-		PropertyUI p = new PropertyUI(currentToken.getxCoordinate(), currentToken.getyCoordinate(), player.getName());
+		PropertyUI p = new PropertyUI(currentToken.getxCoordinate(), currentToken.getyCoordinate(), 
+				player.getName(),PlayerColor.valueOf(player.getColor()));
 		if(!properties.containsKey(p)) {
 			properties.put(p, 0);
 		}
+		MonopolyMain.panel.addPlayerComponents(properties);
 		String currentProperty = getPropertyName(currentToken);
 		player.buyProperty(currentProperty);
 		displayPopUp("Congrats!!!! "+currentProperty+" is yours. \n Your new balance is: $"+ClientMain.store.getCurrentPlayer().getBalance());
 		ButtonValidate.buyPropertyEnabled = false;
 		disableButtonSettings();
 		String otherMessage = "Property: "+ currentProperty+" is sold to Player: "+player.getName();
+		ClientMain.store.placeBuyPropertyToken();
 		ClientMain.store.sendMessageToAll(otherMessage);
 		
 	}
@@ -200,13 +203,14 @@ public class MonopolyOptions extends JPanel {
 	protected void buildActionPerformed(ActionEvent evt) throws RemoteException {
 		Player player = ClientMain.store.getCurrentPlayer();
 		Token currentToken = player.getToken();
-		PropertyUI p = new PropertyUI(currentToken.getxCoordinate(), currentToken.getyCoordinate(), player.getName());
+		PropertyUI p = new PropertyUI(currentToken.getxCoordinate(), currentToken.getyCoordinate(), 
+				player.getName(),PlayerColor.valueOf(player.getColor()));
 		if(properties.containsKey(p) && properties.get(p)!=4) {
 			properties.put(p, properties.get(p)+1);
 		} 	else {
 			properties.put(p, 1);
 		}
-		MonopolyMain.panel.buildHouse(properties);
+		MonopolyMain.panel.addPlayerComponents(properties);
 		disableButtonSettings();
 	}
 

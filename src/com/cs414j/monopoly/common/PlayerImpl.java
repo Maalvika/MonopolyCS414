@@ -18,6 +18,7 @@ public class PlayerImpl implements Player {
 	 */
 	private static final long serialVersionUID = 1L;
 	private String name;
+	private String color;
 	private int location;
 	private int balance;
 	private HashSet<Properties> ownedProperty;
@@ -120,6 +121,15 @@ public class PlayerImpl implements Player {
 
 	public Set<Properties> getMortgageProperties() {
 		return mortgageProperties;
+	}
+	
+	
+	public String getColor() throws RemoteException{
+		return color;
+	}
+
+	public void setColor(String color) throws RemoteException{
+		this.color = color;
 	}
 
 	public Player getOwner(String name) {

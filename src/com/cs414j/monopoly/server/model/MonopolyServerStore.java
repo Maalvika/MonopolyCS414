@@ -1,5 +1,6 @@
 package com.cs414j.monopoly.server.model;
 
+import java.awt.Color;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.LinkedList;
@@ -11,6 +12,7 @@ import com.cs414j.monopoly.common.Board;
 import com.cs414j.monopoly.common.Cards;
 import com.cs414j.monopoly.common.MonopolyStore;
 import com.cs414j.monopoly.common.Player;
+import com.cs414j.monopoly.common.PlayerColor;
 import com.cs414j.monopoly.common.PlayerImpl;
 import com.cs414j.monopoly.common.Token;
 import com.cs414j.monopoly.controller.MonopolyMain;
@@ -31,6 +33,7 @@ public class MonopolyServerStore extends
 	public List<Player> players;
 	private static MonopolyServerStore serverStore = null;
 	private static List<Token> alltokens;
+	private static List<String> colors;
 	public List<Token> selectedTokens;
 	private static Bank bank;
 	private static Board board;
@@ -43,7 +46,9 @@ public class MonopolyServerStore extends
 		 alltokens = new LinkedList<>();
 		 selectedTokens = new LinkedList<>();
 		 clientObj = new LinkedList<>();
+		 colors = new LinkedList<>();
 		 prepareTokenList();
+		 prepareColorList();
 	}
 	
 	public static MonopolyServerStore getInstance() throws RemoteException {
@@ -56,6 +61,7 @@ public class MonopolyServerStore extends
 	public Player addNewPlayer(String name) throws RemoteException {
 		Player p = new PlayerImpl(name);
 		p.setToken(alltokens.get(PLAYER_COUNT));
+		p.setColor(colors.get(PLAYER_COUNT));
 		Player stub = (Player) UnicastRemoteObject.exportObject(p, 0);
 		if(PLAYER_COUNT == 0) {
 			new StartGameTimer();
@@ -74,6 +80,13 @@ public class MonopolyServerStore extends
 		alltokens.add(new Token(TokenUrls.SHIP, 70, 870));
 		alltokens.add(new Token(TokenUrls.HORSE, 70, 930));
 		alltokens.add(new Token(TokenUrls.SHOE, 10, 930));
+
+	}
+	
+	private void prepareColorList() {
+		for(PlayerColor c: PlayerColor.values()) {
+			colors.add(c.name());
+		}
 
 	}
 
@@ -264,6 +277,17 @@ public class MonopolyServerStore extends
 	
 	public void landonChest() throws RemoteException{
 		getCardInstance().generateRandomChest(currentPlayer);
+	}
+
+	@Override
+	public void placeBuyPropertyToken() throws RemoteException {
+		ClientCallback currentClient = getClientFromPlayer(currentPlayer.getName());
+		for(ClientCallback c: clientObj) {
+			if(c!=currentClient) {
+				c.buyPropertyAction();
+			}
+		}
+		
 	}
 	
 	
