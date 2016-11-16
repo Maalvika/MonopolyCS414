@@ -187,14 +187,43 @@ public class MonopolyServerStore extends
 	}
 
 	@Override
-	public void sendPropertyForAuction() throws RemoteException {
+	public void sendPropertyForAuction(String propertyName) throws RemoteException {
 		for (ClientCallback c : clientObj) {
 			if(!c.getName().equals(currentPlayer.getName())) {
-				System.out.println("");
+				c.auctionProperty(propertyName);
+			}
+		}
+		int max = 0;
+		ClientCallback client = null;
+		for (ClientCallback c : clientObj) {
+			if(!c.getName().equals(currentPlayer.getName())) {
+				if(max<c.getBidValue()) {
+					max = c.getBidValue();
+					client = c;
+				}
 			}
 		}
 		
+		for (Player p : players) {
+			if (client.getName().equals(p.getName())) {
+				p.buyProperty(propertyName, max);
+			}
+
+		}
+		
+		sendMessageToAll(propertyName+" is purchased by Player: "+client.getName());	
 	}
+
+	@Override
+	public void sendRentMessageToOwner(String propertyName) throws RemoteException {
+		Player owner = currentPlayer.getOwner(propertyName);
+		for (ClientCallback c : clientObj) {
+			if(c.getName().equals(owner.getName())) {
+				c.showMsg(currentPlayer.getName(), currentPlayer.getName()+" paid you rent");
+			}
+		}
+	}
+	
 	
 	
 	

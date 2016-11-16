@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 
 import com.cs414j.monopoly.client.main.ClientMain;
 import com.cs414j.monopoly.controller.MonopolyMain;
+import com.cs414j.monopoly.controller.MonopolyOptions;
 
 public class MortgageOptions {
 
@@ -31,6 +32,7 @@ public class MortgageOptions {
 		switch (result) {
 		case JOptionPane.OK_OPTION:
 			ClientMain.store.getCurrentPlayer().mortgageProperty(comboBox.getSelectedItem().toString());
+			MonopolyOptions.displayPopUp("Your property has been morgaged. Amount is added to your account");
 			break;
 		}
 

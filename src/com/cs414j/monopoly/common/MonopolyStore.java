@@ -33,6 +33,8 @@ public interface MonopolyStore extends java.rmi.Remote{
 	
 	public void sendMessageToAll(String otherMessage) throws RemoteException;
 	
-	public void sendPropertyForAuction()throws RemoteException ;
+	public void sendPropertyForAuction(String propertyName)throws RemoteException ;
+	
+	public void sendRentMessageToOwner(String propertyName) throws RemoteException;
 
 }

@@ -13,7 +13,7 @@ public class Properties extends Squares implements Serializable{
 	private static final long serialVersionUID = 1L;
 	String name;
 	int cost;
-	int rentInitial;
+	public int rentInitial;
 	int rentFirstHouse;
 	int rentSecondHouse;
 	int rentThirdHouse;
@@ -23,7 +23,7 @@ public class Properties extends Squares implements Serializable{
 	int houseCost;
 	int hotelCost;
 	String color;
-	Player owner;
+	public Player owner;
 	public int houses;
 	public boolean hotel;
 	

@@ -54,23 +54,16 @@ public class MonopolyOptions extends JPanel {
 	public static JButton conti;
 	public static JButton endGame;
 	public static JButton auction;
-	public static JButton UnMortgage;
 	private static int rolledDoubleSix = 0;
 	public static Map<PropertyUI, Integer> properties = new HashMap<>();
 	private static MonopolyStore serverStore = ClientMain.store;
+	private static AuctionPanel ac;
 	
 
 	public MonopolyOptions(JFrame frame, Player p) throws RemoteException {
 		super(new BorderLayout());
 		this.frame = frame;
-		JPanel title = createTitle();
-		title.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		title.setBorder(BorderFactory.createEmptyBorder(20, 20, 5, 20));
-		/*JLabel optionLabel = new JLabel("<html><h2> Select the options to choose:  \n"
-				+ "Time elapsed"
-				+ "</h2></html> /n"+
-		"Time Elapsed: "+"3");*/
-		//JLabel optionLabel2 = new JLabel("<html><h2> Select the options to choose: /h2></html>");
+		JLabel optionLabel = new JLabel("<html><h2> Select the options to choose:</h2></html>");
 		JPanel player = createPlayerDetails(p);
 		player.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		player.setBorder(BorderFactory.createEmptyBorder(20, 20, 5, 20));
@@ -80,25 +73,12 @@ public class MonopolyOptions extends JPanel {
 		options.setBorder(BorderFactory.createEmptyBorder(20, 20, 5, 20));
 
 		// Lay out the main panel.
-		add(title, BorderLayout.NORTH);
-		//add(optionLabel2, BorderLayout.NORTH);
+		add(optionLabel, BorderLayout.NORTH);
 		add(options, BorderLayout.CENTER);
 		add(player, BorderLayout.SOUTH);
 
 	}
 
-	// ID24
-	private JPanel createTitle() throws RemoteException {
-		JLabel title = new JLabel("<html><font size=\"6\">Select the options: </font></html>" , JLabel.CENTER);
-		JLabel timer = new JLabel("<html><font size=\"3\">Time Elapsed:</font></html> ");
-		JPanel titleDetails = new JPanel();
-		titleDetails.setLayout(new BoxLayout(titleDetails, BoxLayout.PAGE_AXIS));
-		titleDetails.add(title);
-		titleDetails.add(timer);
-		return titleDetails;
-				
-		
-	}
 	private JPanel createPlayerDetails(Player p) throws RemoteException {
 		JLabel title = new JLabel("<html><font size=\"6\">PLAYER DETAILS: "+
 					PlayerDetailForm.myPlayer.getName()+"</font></html>", JLabel.CENTER);
@@ -133,8 +113,6 @@ public class MonopolyOptions extends JPanel {
 		pay = new JButton("Pay Rent");
 		build = new JButton("Build on Property");
 		mortgage = new JButton("Mortgage Property");
-		//ID24
-		UnMortgage = new JButton("UnMortgage Property");
 		tax = new JButton("Pay Tax");
 		endGame = new JButton("End Game");
 		auction = new JButton("Auction");
@@ -147,8 +125,6 @@ public class MonopolyOptions extends JPanel {
 		gameOptions.add(pay);
 		gameOptions.add(build);
 		gameOptions.add(mortgage);
-		//ID24
-		gameOptions.add(UnMortgage);
 		gameOptions.add(tax);
 		gameOptions.add(endGame);
 		gameOptions.add(auction);
@@ -165,8 +141,6 @@ public class MonopolyOptions extends JPanel {
 		MonopolyMain.frame.dispose();
 		EndForm f=new EndForm();
 		f.setVisible(true);
-		
-		
 	}
 	
 
@@ -174,12 +148,16 @@ public class MonopolyOptions extends JPanel {
 		String currentProperty = getPropertyName(ClientMain.store.getCurrentPlayer().getToken());
 		int diceValue =MonopolyMain._leftDie.getValue() + MonopolyMain._rightDie.getValue();
 		ClientMain.store.getCurrentPlayer().payRent(currentProperty, diceValue);
+		displayPopUp("You paid rent:"+ClientMain.store.getCurrentPlayer().getRent(currentProperty)+
+		  "to Player: "+ClientMain.store.getCurrentPlayer().getOwner(currentProperty));
 		disableButtonSettings();
 		
 	}
 	
 	protected void taxActionPerformed(ActionEvent evt) throws RemoteException {
 		ClientMain.store.getCurrentPlayer().payTax();
+		displayPopUp("You paid your tax!!! You new balance is: "+ 
+						ClientMain.store.getCurrentPlayer().getBalance());	
 		disableButtonSettings();
 		
 	}
@@ -191,15 +169,7 @@ public class MonopolyOptions extends JPanel {
 		disableButtonSettings();
 		
 	}
-	
-	//ID24
-	protected void UnMortgageActionPerformed(ActionEvent evt) throws RemoteException {
-		Set<String> prop = ClientMain.store.getCurrentPlayer().mortgagedSquareName();
-		new MortgageOptions(prop);
-		disableButtonSettings();
-		
-	}
-	
+
 	protected void buyActionPerformed(ActionEvent evt) throws RemoteException {
 		Player player = ClientMain.store.getCurrentPlayer();
 		Token currentToken = player.getToken();
@@ -212,6 +182,8 @@ public class MonopolyOptions extends JPanel {
 		displayPopUp("Congrats!!!! "+currentProperty+" is yours. \n Your new balance is: $"+ClientMain.store.getCurrentPlayer().getBalance());
 		ButtonValidate.buyPropertyEnabled = false;
 		disableButtonSettings();
+		String otherMessage = "Property: "+ currentProperty+" is sold to Player: "+player.getName();
+		ClientMain.store.sendMessageToAll(otherMessage);
 		
 	}
 
@@ -245,7 +217,10 @@ public class MonopolyOptions extends JPanel {
 	
 	protected void auctionActionPerformed(ActionEvent evt) throws RemoteException {
 		ButtonValidate.buyPropertyEnabled = false;
-		displayAuctionForm();
+		Player player = ClientMain.store.getCurrentPlayer();
+		Token currentToken = player.getToken();
+		String currentProperty = getPropertyName(currentToken);
+		ClientMain.store.sendPropertyForAuction(currentProperty);
 		
 	}
 
@@ -288,21 +263,20 @@ public class MonopolyOptions extends JPanel {
 		}
 	}
 	
-	
-	private void disableAll(){
+	//disable all player
+	public static void disableAll(){
 		buy.setEnabled(false);
 		conti.setEnabled(false);
 		pay.setEnabled(false);
 		build.setEnabled(false);
 		mortgage.setEnabled(false);
-		//ID24
-		UnMortgage.setEnabled(false);
 		tax.setEnabled(false);
 		auction.setEnabled(false);
 		rollDice.setEnabled(false);
 		
 	}
 	
+	// enable roll dice and disable all
 	public static void initButtonSettings() {
 		MonopolyOptions.rollDice.setEnabled(true);
 		MonopolyOptions.buy.setEnabled(false);
@@ -312,27 +286,25 @@ public class MonopolyOptions extends JPanel {
 		MonopolyOptions.tax.setEnabled(false);
 		// TODO: check player balance before enabling the button
 		MonopolyOptions.mortgage.setEnabled(false);
-		//ID24
-		MonopolyOptions.UnMortgage.setEnabled(false);
 		MonopolyOptions.auction.setEnabled(false);
 		
 	}
 	
+	// Disable all but enable continue button
    public static void disableButtonSettings() {
 		MonopolyOptions.rollDice.setEnabled(false);
 		MonopolyOptions.buy.setEnabled(false);
-		MonopolyOptions.conti.setEnabled(false);
+		MonopolyOptions.conti.setEnabled(true);
 		MonopolyOptions.pay.setEnabled(false);
 		MonopolyOptions.build.setEnabled(false);
 		MonopolyOptions.tax.setEnabled(false);
 		// TODO: check player balance before enabling the button
 		MonopolyOptions.mortgage.setEnabled(false);
-		//ID24
-		MonopolyOptions.UnMortgage.setEnabled(false);
 		MonopolyOptions.auction.setEnabled(false);
 
 	}
 	
+   // enable auction button
 	private static void auctionButtonSettings() {
 		MonopolyOptions.conti.setEnabled(false);
 		MonopolyOptions.buy.setEnabled(false);
@@ -387,17 +359,6 @@ public class MonopolyOptions extends JPanel {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				try {
 					mortgageActionPerformed(evt);
-				} catch (RemoteException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		});
-		//ID24
-		UnMortgage.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				try {
-					UnMortgageActionPerformed(evt);
 				} catch (RemoteException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -514,35 +475,20 @@ public class MonopolyOptions extends JPanel {
 		disableButtonSettings();
 	}
 	
-	private static void displayAuctionForm() throws RemoteException {
-		JPanel ac = new AuctionPanel(ClientMain.store.getCurrentPlayer());
+	public static void displayAuctionForm(String propertyName) throws RemoteException {
+		ac = new AuctionPanel(propertyName);
 		ac.setVisible(true);
-		//JOptionPane.showMessageDialog(null, ac, "Data Entry", JOptionPane.NO_OPTION);
-		//JOptionPane.showOptionDialog(null, ac,"Data Entry", JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE, null, new Object[]{}, null);
-		Object[] options = {"OK"};
-	    int n = JOptionPane.showOptionDialog(null,
-	                   ac,"Auction Form",
-	                   JOptionPane.PLAIN_MESSAGE,
-	                   JOptionPane.QUESTION_MESSAGE,
-	                   null,
-	                   options,
-	                   options[0]);
-	    if(n==0) {
-	    	int max = 0;
-	    	Player winner = null;
-	        for(int i=0; i<AuctionPanel.tempPlayer.size();i++) {
-	        	if(max<Integer.parseInt(AuctionPanel.bidPrice[i].getText())) {
-	        		max = Integer.parseInt(AuctionPanel.bidPrice[i].getText());
-	        		winner = AuctionPanel.tempPlayer.get(i);
-	        	}
-	        }
-	        Player player = ClientMain.store.getCurrentPlayer();
-			Token currentToken = player.getToken();
-			String currentProperty = MonopolyOptions.getPropertyName(currentToken);
-			System.out.println("current:"+currentProperty);
-	        winner.buyProperty(currentProperty);
-	        MonopolyOptions.displayPopUp(winner.getName()+" bought the property  "+currentProperty+" for $"+max);
-	        MonopolyOptions.disableButtonSettings();
-	    }
+		Object[] options = { "Place Your Bid" };
+		int n = JOptionPane.showOptionDialog(null, ac, "Auction Form", JOptionPane.PLAIN_MESSAGE,
+				JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+		if (n == 0) {
+			ac.setBidValue();
+		}
 	}
+	
+	public static int getBidValue(){
+		return ac.getBidValue();
+	}
+	
+	
 }

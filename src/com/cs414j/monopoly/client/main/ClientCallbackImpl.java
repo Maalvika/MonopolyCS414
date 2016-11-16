@@ -73,8 +73,15 @@ public class ClientCallbackImpl extends UnicastRemoteObject implements ClientCal
 
 	@Override
 	public void auctionProperty(String name) throws RemoteException {
-		// TODO Auto-generated method stub
+		MonopolyOptions.displayAuctionForm(name);
 		
 	}
+	
+	@Override
+	public int getBidValue() throws RemoteException {
+		return MonopolyOptions.getBidValue();
+		
+	}
+	
 
 }

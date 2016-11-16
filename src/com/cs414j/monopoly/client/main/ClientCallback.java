@@ -20,4 +20,6 @@ public interface ClientCallback extends java.rmi.Remote{
 	
 	public void auctionProperty(String name) throws RemoteException;
 	
+	public int getBidValue() throws RemoteException;
+	
 }

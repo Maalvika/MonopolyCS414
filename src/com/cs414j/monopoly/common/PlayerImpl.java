@@ -141,7 +141,7 @@ public class PlayerImpl implements Player {
 			owner = r.getOwner();
 			return owner;
 		}
-		return owner		
+		return owner;		
 	}
 	
 	public int getRent(String name) throws RemoteException{
@@ -159,7 +159,7 @@ public class PlayerImpl implements Player {
 		if(MonopolyServerStore.getBoardInstance().stringRailRoad.containsKey(name)){
 			RailRoad r = this.getRailRoadObject(name);
 			rent = r.getRentInitial();
-			return rent
+			return rent;
 		}
 		
 		return rent;
@@ -400,9 +400,7 @@ public class PlayerImpl implements Player {
 		}
 		
 		MonopolyServerStore.changeAllPlayerDetails();
-		String myMessage = "Congrats!!!! "+name+" is yours. \n Your new balance is: $"+balance;
-		String otherMessage = "Property: "+ name+" is sold to Player: "+this.getName();
-		MonopolyServerStore.sendMessageToAll(myMessage, otherMessage);
+
 		
 	}
 	
@@ -477,7 +475,6 @@ public class PlayerImpl implements Player {
 		MonopolyServerStore.changeAllPlayerDetails();
 		String myMessage = "Congrats!!!! "+name+" is yours. \n Your new balance is: $"+balance;
 		String otherMessage = "Property: "+ name+" is sold to Player: "+this.getName();
-		MonopolyServerStore.sendMessageToAll(myMessage, otherMessage);
 		
 	}
 
@@ -616,6 +613,7 @@ public class PlayerImpl implements Player {
 		}
 
 		MonopolyServerStore.changeAllPlayerDetails();
+		
 	}
 
 }

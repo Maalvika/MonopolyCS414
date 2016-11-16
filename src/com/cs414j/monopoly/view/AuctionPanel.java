@@ -75,11 +75,13 @@ public class AuctionPanel extends javax.swing.JPanel {
     	auctionLabel.setText("Auction for Property: "+propertyName);
 	}
     
-    private int getBidValue() {
-    	
+    public int getBidValue() {
+    	return bidValuePlace; 
     }
-
-
+    
+    public void setBidValue() {
+    	bidValuePlace = Integer.parseInt(bidValue.getText());
+    }
 
 
 	// Variables declaration - do not modify                     
