@@ -21,7 +21,8 @@ import com.cs414j.monopoly.common.view.SpecialBlocks.Tax;
 public class ButtonValidate {
 	
 	public static boolean buyPropertyEnabled=false;
-
+	public static boolean ischance = false;
+	
 	public static void landOnBlock(Token t) throws RemoteException {
 		int xPoint = t.getxCoordinate();
 		int yPoint = t.getyCoordinate();
@@ -85,7 +86,6 @@ public class ButtonValidate {
 	private static int validateCommunityChest(int x, int y) throws RemoteException {
 		for (CommunityChest c : CommunityChest.values()) {
 			if (x == c.getXpoint() && y == c.getYpoint()) {
-				
 				MonopolyOptions.rollDice.setEnabled(false);
 				MonopolyOptions.rollFixedNum.setEnabled(false);
 				MonopolyOptions.buy.setEnabled(false);
@@ -136,7 +136,7 @@ public class ButtonValidate {
 	private static int validateChance(int x, int y) throws RemoteException {
 		for (Chance c : Chance.values()) {
 			if (x == c.getXpoint() && y == c.getYpoint()) {
-				
+				ischance = true;
 				MonopolyOptions.rollDice.setEnabled(false);
 				MonopolyOptions.rollFixedNum.setEnabled(false);
 				MonopolyOptions.buy.setEnabled(false);

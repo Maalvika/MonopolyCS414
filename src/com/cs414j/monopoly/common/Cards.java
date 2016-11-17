@@ -11,13 +11,16 @@ import com.cs414j.monopoly.server.model.Utilities;
 public class Cards {
 
 	public void chanceAction(int index, Player p) throws RemoteException{
+		System.out.println("index:"+index);
 		if(index <= 8){
 			String propertyName = this.chanceMove(index, p);
+			System.out.println("in server property Name:"+propertyName);
 			MonopolyServerStore.getClientFromPlayer
 			(MonopolyServerStore.getInstance().getCurrentPlayer().getName()).moveChance(propertyName);
 		}
 
 		else{
+			System.out.println("a");
 			this.chanceBalanceUpdate(index, p);
 		}
 		MonopolyServerStore.changeAllPlayerDetails(false);
@@ -250,7 +253,7 @@ public class Cards {
 
 	public int payUtilityRent(Player p, int diceValue, String name) throws RemoteException{
 		// if the player lands on a sold utility
-		// the player rollss dice again and pays the amount on dice * 10
+		// the player rolls dice again and pays the amount on dice * 10
 
 		int rent = diceValue * 10;
 		int balance = p.getBalance();
@@ -436,7 +439,7 @@ public class Cards {
 	public int chestConsultFee(Player p) throws RemoteException{
 
 		int balance = p.getBalance();
-		p.setBalance(balance - 25);
+		p.setBalance(balance + 25);
 		return balance;
 	}
 
@@ -451,33 +454,48 @@ public class Cards {
 		int currbalance = p.getBalance();
 		int listsize = MonopolyServerStore.getInstance().players.size();
 		for(int i = 0; i < listsize; i++){
+			Player temp = MonopolyServerStore.getInstance().getPlayers().get(i);
+			if(!temp.getName().equals(MonopolyServerStore.getInstance().getCurrentPlayer().getName())){
 			int balance = MonopolyServerStore.getInstance().players.get(i).getBalance();
 			MonopolyServerStore.getInstance().players.get(i).setBalance(balance + 50);
+			}
 		}
-		currbalance = currbalance - (listsize * 50);
+		currbalance = currbalance - ((listsize - 1) * 50);
+		p.setBalance(currbalance);
 		return currbalance;
+		
 	}
 
 	public int chestBirthday(Player p) throws RemoteException{
 		int currbalance = p.getBalance();
 		int listsize = MonopolyServerStore.getInstance().players.size();
 		for(int i = 0; i < listsize; i++){
-			int balance = MonopolyServerStore.getInstance().players.get(i).getBalance();
-			MonopolyServerStore.getInstance().players.get(i).setBalance(balance - 10);
+			Player temp = MonopolyServerStore.getInstance().getPlayers().get(i);
+			if(!temp.getName().equals(MonopolyServerStore.getInstance().getCurrentPlayer().getName())) {
+				int balance = temp.getBalance();
+				MonopolyServerStore.getInstance().players.get(i).setBalance(balance - 10);
+			}
 		}
-		currbalance = currbalance + (listsize * 10);
+		currbalance = currbalance + ((listsize -1) * 10);
+		p.setBalance(currbalance);
 		return currbalance;
+		
 	}
 
 	public int chestOpera(Player p) throws RemoteException{
 		int currbalance = p.getBalance();
 		int listsize = MonopolyServerStore.getInstance().players.size();
 		for(int i = 0; i < listsize; i++){
-			int balance = MonopolyServerStore.getInstance().players.get(i).getBalance();
-			MonopolyServerStore.getInstance().players.get(i).setBalance(balance - 50);
+			Player temp = MonopolyServerStore.getInstance().getPlayers().get(i);
+			if(!temp.getName().equals(MonopolyServerStore.getInstance().getCurrentPlayer().getName())){
+				int balance = MonopolyServerStore.getInstance().players.get(i).getBalance();
+				MonopolyServerStore.getInstance().players.get(i).setBalance(balance - 50);
+			}
 		}
-		currbalance = currbalance + (listsize * 50);
+		currbalance = currbalance + ((listsize - 1) * 50);
+		p.setBalance(currbalance);
 		return currbalance;
+		
 	}
 
 

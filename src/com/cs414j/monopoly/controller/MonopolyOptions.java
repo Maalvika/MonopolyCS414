@@ -156,13 +156,29 @@ public class MonopolyOptions extends JPanel {
 
 	protected void payRentActionPerformed(ActionEvent evt) throws RemoteException {
 		String currentProperty = getPropertyName(ClientMain.store.getCurrentPlayer().getToken());
-		int diceValue =MonopolyMain._leftDie.getValue() + MonopolyMain._rightDie.getValue();
-		ClientMain.store.getCurrentPlayer().payRent(currentProperty, diceValue);
-		displayPopUp("You paid rent: $"+ClientMain.store.getCurrentPlayer().getRent(currentProperty)+
-		  " to Player: "+ClientMain.store.getCurrentPlayer().getOwner(currentProperty).getName());
-		ClientMain.store.sendRentMessageToOwner(currentProperty);
+		if (ButtonValidate.ischance == false) {
+			int diceValue = MonopolyMain._leftDie.getValue() + MonopolyMain._rightDie.getValue();
+			ClientMain.store.getCurrentPlayer().payRent(currentProperty, diceValue);
+			displayPopUp("You paid rent: $" + ClientMain.store.getCurrentPlayer().getRent(currentProperty)
+					+ " to Player: " + ClientMain.store.getCurrentPlayer().getOwner(currentProperty).getName());
+			ClientMain.store.sendRentMessageToOwner(currentProperty);
+			
+		} else {
+			ButtonValidate.ischance = false;
+			Object[] options = { "OK" };
+			int n = JOptionPane.showOptionDialog(null, "Press OK to roll Dice", "Roll Dice",
+					JOptionPane.INFORMATION_MESSAGE, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+			if (n == 0) {
+				MonopolyMain._leftDie.roll();
+				MonopolyMain._rightDie.roll();
+				int diceValue = MonopolyMain._leftDie.getValue() + MonopolyMain._rightDie.getValue();
+				System.out.println("diceValue: " + diceValue);
+				displayPopUp("You paid rent: $" + diceValue * 10 + " to Player: "
+						+ ClientMain.store.getCurrentPlayer().getOwner(currentProperty).getName());
+				ClientMain.store.callUtilityRent(diceValue, currentProperty);
+			}
+		}
 		disableButtonSettings();
-		
 	}
 	
 	protected void taxActionPerformed(ActionEvent evt) throws RemoteException {

@@ -296,5 +296,10 @@ public class MonopolyServerStore extends java.rmi.server.UnicastRemoteObject imp
 	public void callChestCards(int index) throws RemoteException {
 		MonopolyServerStore.getCardInstance().chestAction(index, currentPlayer);
 	}
+	
+	public void callUtilityRent(int diceValue, String name) throws RemoteException{
+		MonopolyServerStore.getCardInstance().payUtilityRent(currentPlayer, diceValue, name);
+		
+	}
 
 }
