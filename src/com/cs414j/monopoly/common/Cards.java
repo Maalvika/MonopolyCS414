@@ -272,6 +272,7 @@ public class Cards {
 	public String advancetoRailRoad(Player p) throws RemoteException{
 
 		String name = "";
+		System.out.println("loc: "+p.getLocation());
 		if(p.getLocation() <= 5){
 			p.setLocation(5);
 			name = "Reading Railroad";

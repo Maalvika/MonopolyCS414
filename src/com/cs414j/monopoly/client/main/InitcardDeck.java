@@ -59,7 +59,7 @@ public class InitcardDeck {
 	
 	public int generateRandomChance() throws RemoteException{
 		Random r = new Random();
-		int index = r.nextInt((15 - 0)+1);
+		int index = 4;//r.nextInt((15 - 0)+1);
 		String s = chance[index];
 		MonopolyOptions.displayPopUp(s);
 		return index;

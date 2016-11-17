@@ -91,6 +91,7 @@ public class PlayerImpl implements Player {
 	}
 
 	public void moveForward(int diceValue) {
+
 		// would move the player dicevalue squares forward on the board
 		location = (location + diceValue) % 40;
 	}

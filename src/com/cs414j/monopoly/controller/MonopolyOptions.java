@@ -570,8 +570,9 @@ public class MonopolyOptions extends JPanel {
 			} catch (RemoteException e) {
 				e.printStackTrace();
 			}
-			ButtonValidate.landOnBlock(ClientMain.store.getCurrentPlayer().getToken());
 			ClientMain.store.getCurrentPlayer().moveForward(diceValue);
+			ButtonValidate.landOnBlock(ClientMain.store.getCurrentPlayer().getToken());
+			System.out.println("a");
 		}
 		
 	}
