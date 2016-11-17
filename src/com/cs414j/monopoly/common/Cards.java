@@ -236,7 +236,7 @@ public class Cards {
 			name = "Electric Co";
 			return name;
 		}
-		if(p.getLocation() > 12 || p.getLocation() < 28){
+		if(p.getLocation() > 12 && p.getLocation() < 28){
 			p.setLocation(28);
 			name = "Water Works";
 			return name;
@@ -278,18 +278,18 @@ public class Cards {
 			name = "Reading Railroad";
 			return name;
 		}
-		if(p.getLocation() > 5 || p.getLocation() <= 15){
+		if(p.getLocation() > 5 && p.getLocation() < 15){
 			p.setLocation(15);
 			name = "Pennsylvania Railroad";
 			return name;
 		}
-		if(p.getLocation() > 15 || p.getLocation() <= 25){
+		if(p.getLocation() > 15 && p.getLocation() < 25){
 			p.setLocation(25);
 			name = "B O Railroad";
 			return name;
 		}
 
-		if(p.getLocation() > 25 || p.getLocation() <= 35)
+		if(p.getLocation() > 25 && p.getLocation() < 35)
 		{
 			p.setLocation(35);
 			name = "Short Line";
