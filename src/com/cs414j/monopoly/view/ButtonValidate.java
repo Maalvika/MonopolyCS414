@@ -26,6 +26,7 @@ public class ButtonValidate {
 		int xPoint = t.getxCoordinate();
 		int yPoint = t.getyCoordinate();
 		// check for corner
+		System.out.println("x:"+xPoint+" y:"+yPoint);
 		if (validateCorners(xPoint, yPoint) == 1) {
 			return;
 		} else if (validateTax(xPoint, yPoint) == 1) {
@@ -84,6 +85,7 @@ public class ButtonValidate {
 	private static int validateCommunityChest(int x, int y) throws RemoteException {
 		for (CommunityChest c : CommunityChest.values()) {
 			if (x == c.getXpoint() && y == c.getYpoint()) {
+				
 				MonopolyOptions.rollDice.setEnabled(false);
 				MonopolyOptions.rollFixedNum.setEnabled(false);
 				MonopolyOptions.buy.setEnabled(false);
@@ -93,7 +95,8 @@ public class ButtonValidate {
 				MonopolyOptions.tax.setEnabled(false);
 				enableMortgageButton();
 				//add server community chest code over here
-				ClientMain.store.landonChest();
+				int index = MonopolyMain.cards.generateRandomChest();
+				ClientMain.store.callChestCards(index);
 				return 1;
 
 			}
@@ -133,6 +136,7 @@ public class ButtonValidate {
 	private static int validateChance(int x, int y) throws RemoteException {
 		for (Chance c : Chance.values()) {
 			if (x == c.getXpoint() && y == c.getYpoint()) {
+				
 				MonopolyOptions.rollDice.setEnabled(false);
 				MonopolyOptions.rollFixedNum.setEnabled(false);
 				MonopolyOptions.buy.setEnabled(false);
@@ -142,7 +146,8 @@ public class ButtonValidate {
 				MonopolyOptions.tax.setEnabled(false);
 				enableMortgageButton();
 				//add server chance code over here
-				ClientMain.store.landonChest();
+				int index = MonopolyMain.cards.generateRandomChance();
+				ClientMain.store.callChanceCards(index);
 				return 1;
 
 			}
@@ -192,7 +197,7 @@ public class ButtonValidate {
 		}else {
 		
 			String currentProperty = MonopolyOptions.getPropertyName(ClientMain.store.getCurrentPlayer().getToken());
-			
+			System.out.println("currentProperty");
 			if(!ClientMain.store.isOwnedByBank(currentProperty) && 
 					!ClientMain.store.getCurrentPlayer().OwnedSquareName().contains(currentProperty)) {
 				MonopolyOptions.build.setEnabled(false);

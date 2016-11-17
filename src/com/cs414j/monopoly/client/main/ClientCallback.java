@@ -14,7 +14,9 @@ public interface ClientCallback extends java.rmi.Remote{
 	
 	public void changeBoardImage(int leftDie, int rightDie) throws RemoteException;
 	
-	public void changeOtherPlayerDetails(Player p) throws RemoteException;
+	public void changeOtherPlayerDetailsAndControlButton(Player p) throws RemoteException;
+	
+	public void changePlayerDetails() throws RemoteException;
 	
 	public void showMsg(String otherMessage) throws RemoteException;
 	

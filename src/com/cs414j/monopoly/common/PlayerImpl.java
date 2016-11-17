@@ -122,13 +122,12 @@ public class PlayerImpl implements Player {
 	public Set<Properties> getMortgageProperties() {
 		return mortgageProperties;
 	}
-	
-	
-	public String getColor() throws RemoteException{
+
+	public String getColor() throws RemoteException {
 		return color;
 	}
 
-	public void setColor(String color) throws RemoteException{
+	public void setColor(String color) throws RemoteException {
 		this.color = color;
 	}
 
@@ -276,7 +275,7 @@ public class PlayerImpl implements Player {
 			}
 		}
 
-		MonopolyServerStore.changeAllPlayerDetails();
+		MonopolyServerStore.changeAllPlayerDetails(true);
 	}
 
 	public boolean isPropertyOwned(Properties p) {
@@ -296,7 +295,7 @@ public class PlayerImpl implements Player {
 			String input = "$200 has been added to your balance";
 			ClientCallback c = MonopolyServerStore.getClientFromPlayer(this.getName());
 			c.showMsg(input);
-			MonopolyServerStore.changeAllPlayerDetails();
+			MonopolyServerStore.changeAllPlayerDetails(true);
 		}
 	}
 
@@ -312,7 +311,7 @@ public class PlayerImpl implements Player {
 
 	public void paidJailPenalty() throws RemoteException {
 		this.setBalance(balance - 50);
-		MonopolyServerStore.changeAllPlayerDetails();
+		MonopolyServerStore.changeAllPlayerDetails(true);
 	}
 
 	public Properties getPropertyObject(String key) {
@@ -410,7 +409,7 @@ public class PlayerImpl implements Player {
 
 		}
 
-		MonopolyServerStore.changeAllPlayerDetails();
+		MonopolyServerStore.changeAllPlayerDetails(true);
 
 	}
 
@@ -486,7 +485,7 @@ public class PlayerImpl implements Player {
 
 		}
 
-		MonopolyServerStore.changeAllPlayerDetails();
+		MonopolyServerStore.changeAllPlayerDetails(true);
 
 	}
 
@@ -534,7 +533,7 @@ public class PlayerImpl implements Player {
 				receiver.setBalance(receiver.getBalance() + 200);
 			}
 		}
-		MonopolyServerStore.changeAllPlayerDetails();
+		MonopolyServerStore.changeAllPlayerDetails(true);
 	}
 
 	public void payTax() throws RemoteException {
@@ -549,7 +548,7 @@ public class PlayerImpl implements Player {
 			// luxury tax
 			balance = balance - 100;
 		}
-		MonopolyServerStore.changeAllPlayerDetails();
+		MonopolyServerStore.changeAllPlayerDetails(true);
 	}
 
 	public void mortgageProperty(String name) throws RemoteException {
@@ -587,7 +586,7 @@ public class PlayerImpl implements Player {
 			}
 
 		}
-		MonopolyServerStore.changeAllPlayerDetails();
+		MonopolyServerStore.changeAllPlayerDetails(true);
 	}
 
 	public void buyHouse(String name) throws RemoteException {
@@ -604,7 +603,7 @@ public class PlayerImpl implements Player {
 			}
 		}
 
-		MonopolyServerStore.changeAllPlayerDetails();
+		MonopolyServerStore.changeAllPlayerDetails(true);
 	}
 
 	public void buyHotel(String name) throws RemoteException {
@@ -624,7 +623,7 @@ public class PlayerImpl implements Player {
 			}
 		}
 
-		MonopolyServerStore.changeAllPlayerDetails();
+		MonopolyServerStore.changeAllPlayerDetails(true);
 
 	}
 

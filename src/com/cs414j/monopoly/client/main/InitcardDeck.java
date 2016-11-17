@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 import java.util.Random;
 
 import com.cs414j.monopoly.common.Player;
+import com.cs414j.monopoly.controller.MonopolyOptions;
 import com.cs414j.monopoly.server.model.MonopolyServerStore;
 
 public class InitcardDeck {
@@ -60,7 +61,7 @@ public class InitcardDeck {
 		Random r = new Random();
 		int index = r.nextInt((15 - 0)+1);
 		String s = chance[index];
-		MonopolyServerStore.getInstance().sendMessageToPlayer(s);
+		MonopolyOptions.displayPopUp(s);
 		return index;
 
 		}
@@ -69,7 +70,7 @@ public class InitcardDeck {
 			Random r = new Random();
 			int index = r.nextInt((16-0)+1);
 			String s = chest[index];
-			MonopolyServerStore.getInstance().sendMessageToPlayer(s);
+			MonopolyOptions.displayPopUp(s);
 			return index;
 }
 

@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import com.cs414j.monopoly.client.main.ClientMain;
+import com.cs414j.monopoly.client.main.InitcardDeck;
 import com.cs414j.monopoly.common.Bank;
 import com.cs414j.monopoly.common.Board;
 import com.cs414j.monopoly.common.Player;
@@ -31,6 +32,7 @@ public class MonopolyMain {
     public static Die _rightDie;
     public static ImagePanel panel;
 	private static JPanel boardPanel;
+	public static InitcardDeck cards;
 	
 	
     
@@ -38,6 +40,7 @@ public class MonopolyMain {
 	public static void init() throws RemoteException {
 
 		// added Monopoly game board image
+		cards = new InitcardDeck();
 		boardPanel = addBoardImage();
 		frame = new JFrame();
 		contentPane = frame.getContentPane();

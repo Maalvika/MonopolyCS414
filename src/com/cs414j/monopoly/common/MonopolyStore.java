@@ -41,8 +41,8 @@ public interface MonopolyStore extends java.rmi.Remote{
 	
 	public void placeBuyPropertyToken() throws RemoteException;
 	
-	public void callChanceCards() throws RemoteException;
+	public void callChanceCards(int index) throws RemoteException;
 	
-	public void callChestCards() throws RemoteException;
+	public void callChestCards(int index) throws RemoteException;
 
 }

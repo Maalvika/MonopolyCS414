@@ -59,7 +59,7 @@ public class ClientCallbackImpl extends UnicastRemoteObject implements ClientCal
 	}
 
 	@Override
-	public void changeOtherPlayerDetails(Player p) throws RemoteException {
+	public void changeOtherPlayerDetailsAndControlButton(Player p) throws RemoteException {
 		MonopolyOptions.changePlayerDetails(p);
 		System.out.println("current:" + p.getName() + " myPlayer:" + PlayerDetailForm.myPlayer.getName());
 		if (PlayerDetailForm.myPlayer.getName().equals(p.getName())) {
@@ -67,6 +67,12 @@ public class ClientCallbackImpl extends UnicastRemoteObject implements ClientCal
 		} else {
 			MonopolyOptions.disableAll();
 		}
+
+	}
+	
+	@Override
+	public void changePlayerDetails() throws RemoteException {
+		MonopolyOptions.changePlayerDetails(ClientMain.store.getCurrentPlayer());
 
 	}
 
@@ -117,11 +123,13 @@ public class ClientCallbackImpl extends UnicastRemoteObject implements ClientCal
 		ClientMain.store.setSelectedTokens(temp);
 		ClientMain.store.getCurrentPlayer().setToken(t);
 		MonopolyMain.panel.changeTokenPosition(temp);
-
+		if(position == MoveChance.Go) {
+			MonopolyOptions.displayPopUp("Congrats!!! You have landed on Go. $200 has been creditted");
+		}
+		ButtonValidate.landOnBlock(ClientMain.store.getCurrentPlayer().getToken());
 		ClientMain.store.changeOtherPlayerBoard(PlayerDetailForm.myClient, MonopolyMain._leftDie.getValue(),
 				MonopolyMain._rightDie.getValue());
 
-		ButtonValidate.landOnBlock(ClientMain.store.getCurrentPlayer().getToken());
 
 	}
 

@@ -10,7 +10,7 @@ import com.cs414j.monopoly.server.model.Utilities;
 
 public class Cards {
 
-	public void chanceAction(int index, Player p){
+	public void chanceAction(int index, Player p) throws RemoteException{
 		if(index <= 8){
 			String propertyName = this.chanceMove(index, p);
 			MonopolyServerStore.getClientFromPlayer
@@ -20,9 +20,10 @@ public class Cards {
 		else{
 			this.chanceBalanceUpdate(index, p);
 		}
+		MonopolyServerStore.changeAllPlayerDetails(false);
 	}
 
-	public void chestAction(int index, Player p){
+	public void chestAction(int index, Player p) throws RemoteException{
 		if(index <= 1){
 
 			String propertyName = this.chestMove(index, p);
@@ -32,7 +33,7 @@ public class Cards {
 		else{
 			this.chestBalanceUpdate(index,p);
 		}
-
+		MonopolyServerStore.changeAllPlayerDetails(false);
 	}
 
 	public String chanceMove(int index,Player p) throws RemoteException{
@@ -189,6 +190,8 @@ public class Cards {
 	public void advanceToGo(Player p) throws RemoteException{
 
 		p.setLocation(0);
+		int balance = p.getBalance();
+		p.setBalance(balance + 200);
 		String s = "Congratulations!!! You landed on GO and receive 200$";
 
 	}
