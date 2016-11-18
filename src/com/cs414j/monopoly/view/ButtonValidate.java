@@ -242,6 +242,16 @@ public class ButtonValidate {
 		
 	}
 	
+	//ID24
+	private static void enableUnMortgageButton() throws RemoteException {
+		if(ClientMain.store.getCurrentPlayer().mortgagedSquareName().isEmpty()) {
+			MonopolyOptions.UnMortgage.setEnabled(false);
+		}  else {
+			MonopolyOptions.UnMortgage.setEnabled(true);
+		}
+		
+	}
+	
 	private static boolean isOtherOwns(String propertyName) throws RemoteException {
 		for (Player p : ClientMain.store.getPlayers()) {
 			if (!p.getName().equals(ClientMain.store.getCurrentPlayer().getName())) {
