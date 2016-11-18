@@ -49,6 +49,7 @@ public class MonopolyOptions extends JPanel {
 	private static JLabel tokenLabel;
 	private static JLabel nameLabel;
 	private static JLabel scoreLabel;
+	public static JLabel remTime;
 	public static JButton rollDice;
 	public static JButton buy;
 	public static JButton pay;
@@ -96,11 +97,13 @@ public class MonopolyOptions extends JPanel {
 				+ "</b></font></html>");
 		scoreLabel = new JLabel(
 				"<html><font size=\"4\"> Player's Current Balance: <b>" + p.getBalance() + "</b></font></html>");
+		remTime = new JLabel("REMAINING TIME: Started count down");
 		playerDetails.setLayout(new BoxLayout(playerDetails, BoxLayout.PAGE_AXIS));
 		playerDetails.add(title);
 		playerDetails.add(nameLabel);
 		playerDetails.add(tokenLabel);
 		playerDetails.add(scoreLabel);
+		playerDetails.add(remTime);
 		return playerDetails;
 
 	}
@@ -254,7 +257,6 @@ public class MonopolyOptions extends JPanel {
 	}
 
 	protected void contiActionPerformed(ActionEvent evt) throws RemoteException {
-		System.out.println("auction enabled:"+ButtonValidate.buyPropertyEnabled);
 		if (ButtonValidate.buyPropertyEnabled == false) {
 			try {
 				serverStore.switchToNextTurn(PlayerDetailForm.myClient);
