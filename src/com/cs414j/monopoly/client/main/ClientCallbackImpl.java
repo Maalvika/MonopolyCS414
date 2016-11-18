@@ -55,7 +55,7 @@ public class ClientCallbackImpl extends UnicastRemoteObject implements ClientCal
 	@Override
 	public void showErrorStartGame(String message) throws RemoteException {
 		ClientMain.detail.setVisible(false);
-		JOptionPane.showMessageDialog(null, "Sorry!!! Unable to start Game due to insuffient Players");
+		JOptionPane.showMessageDialog(null, message);
 
 	}
 

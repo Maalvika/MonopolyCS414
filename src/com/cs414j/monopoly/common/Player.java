@@ -59,6 +59,11 @@ public interface Player extends java.rmi.Remote {
 
 	public Set<String> OwnedSquareName()throws RemoteException;
 	
+	// ID24
+	
+	public Set<String> mortgagedSquareName()throws RemoteException;
+
+	
 	public void unMortgageProperty(String name)throws RemoteException;
 	
 	public boolean isPropertyOwned(Properties p)throws RemoteException;

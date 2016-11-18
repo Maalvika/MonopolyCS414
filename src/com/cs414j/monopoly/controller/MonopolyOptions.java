@@ -57,6 +57,8 @@ public class MonopolyOptions extends JPanel {
 	public static JButton conti;
 	public static JButton endGame;
 	public static JButton auction;
+	//ID24
+	public static JButton UnMortgage;
 	public static JButton rollFixedNum;
 	public static JButton seeAllDetails;
 	private static int rolledDoubleSix = 0;
@@ -122,6 +124,8 @@ public class MonopolyOptions extends JPanel {
 		tax = new JButton("Pay Tax");
 		endGame = new JButton("End Game");
 		auction = new JButton("Auction");
+		//ID24
+		UnMortgage = new JButton("UnMortgage Property");
 		rollFixedNum = new JButton("Roll Fixed Num");
 		seeAllDetails = new JButton("Show Everyone's Score");
 		// playerDetails.setLayout(new BoxLayout(playerDetails,
@@ -136,6 +140,8 @@ public class MonopolyOptions extends JPanel {
 		gameOptions.add(mortgage);
 		gameOptions.add(tax);
 		gameOptions.add(auction);
+		//ID24
+		gameOptions.add(UnMortgage);
 		gameOptions.add(seeAllDetails);
 		gameOptions.add(endGame);
 		if (PlayerDetailForm.myPlayer.getName().equals(serverStore.getCurrentPlayer().getName())) {
@@ -195,6 +201,15 @@ public class MonopolyOptions extends JPanel {
 		disableButtonSettings();
 
 	}
+	
+	//ID24
+		protected void UnMortgageActionPerformed(ActionEvent evt) throws RemoteException {
+			Set<String> prop = ClientMain.store.getCurrentPlayer().mortgagedSquareName();
+			new MortgageOptions(prop);
+			disableButtonSettings();
+			
+		}
+
 
 	protected void buyActionPerformed(ActionEvent evt) throws RemoteException {
 		Player player = ClientMain.store.getCurrentPlayer();
@@ -296,6 +311,8 @@ public class MonopolyOptions extends JPanel {
 		pay.setEnabled(false);
 		build.setEnabled(false);
 		mortgage.setEnabled(false);
+		//ID24
+		UnMortgage.setEnabled(false);
 		tax.setEnabled(false);
 		auction.setEnabled(false);
 		rollDice.setEnabled(false);
@@ -314,6 +331,8 @@ public class MonopolyOptions extends JPanel {
 		MonopolyOptions.tax.setEnabled(false);
 		// TODO: check player balance before enabling the button
 		MonopolyOptions.mortgage.setEnabled(false);
+		//ID24
+		MonopolyOptions.UnMortgage.setEnabled(false);
 		MonopolyOptions.auction.setEnabled(false);
 
 	}
@@ -329,6 +348,8 @@ public class MonopolyOptions extends JPanel {
 		MonopolyOptions.tax.setEnabled(false);
 		// TODO: check player balance before enabling the button
 		MonopolyOptions.mortgage.setEnabled(false);
+		//ID24
+		MonopolyOptions.UnMortgage.setEnabled(false);
 		MonopolyOptions.auction.setEnabled(false);
 
 	}
@@ -388,6 +409,17 @@ public class MonopolyOptions extends JPanel {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				try {
 					mortgageActionPerformed(evt);
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+
+		UnMortgage.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				try {
+					UnMortgageActionPerformed(evt);
 				} catch (RemoteException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
