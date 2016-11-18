@@ -266,7 +266,7 @@ public class MonopolyServerStore extends java.rmi.server.UnicastRemoteObject imp
 	}
 
 	@Override
-	public void placeBuyPropertyToken() throws RemoteException {
+	public void placePropertyToken() throws RemoteException {
 		ClientCallback currentClient = getClientFromPlayer(currentPlayer.getName());
 		for (ClientCallback c : clientObj) {
 			if (c != currentClient) {

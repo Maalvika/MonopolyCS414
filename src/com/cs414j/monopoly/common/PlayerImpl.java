@@ -32,6 +32,7 @@ public class PlayerImpl implements Player {
 	private HashSet<RailRoad> mortgageRailRoad;
 	private int propertyCost;
 	private boolean hasJailPass;
+	private boolean isLessBalance = false;
 
 	public PlayerImpl(String n) {
 		name = n;
@@ -98,6 +99,15 @@ public class PlayerImpl implements Player {
 
 	public void setHasJailPass(boolean hasJailPass) {
 		this.hasJailPass = hasJailPass;
+	}
+
+	
+	public boolean isLessBalance() {
+		return isLessBalance;
+	}
+
+	public void setLessBalance(boolean isLessBalance) {
+		this.isLessBalance = isLessBalance;
 	}
 
 	public void moveForward(int diceValue) {
@@ -306,9 +316,6 @@ public class PlayerImpl implements Player {
 		if (getLocation() + diceValue >= 40) {
 			int newBalance = getBalance() + 200;
 			this.setBalance(newBalance);
-			String input = "$200 has been added to your balance";
-			ClientCallback c = MonopolyServerStore.getClientFromPlayer(this.getName());
-			c.showMsg(input);
 			MonopolyServerStore.changeAllPlayerDetails(true);
 		}
 	}
@@ -371,7 +378,7 @@ public class PlayerImpl implements Player {
 					MonopolyServerStore.getBankInstance().getBankPropertiesSet().remove(p);
 					this.propertyCost = propertyCost + cost;
 				} else {
-
+					isLessBalance = true;
 					String input = "Your balance is insufficient!!!! " + "You cant purchase the property";
 					ClientCallback c = MonopolyServerStore.getClientFromPlayer(this.getName());
 					c.showMsg(input);
@@ -448,6 +455,7 @@ public class PlayerImpl implements Player {
 					MonopolyServerStore.getBankInstance().getBankPropertiesSet().remove(p);
 					this.propertyCost = propertyCost + cost;
 				} else {
+					isLessBalance = true;
 					String input = "Your balance is insufficient!!!! " + "You cant purchase the property";
 					ClientCallback c = MonopolyServerStore.getClientFromPlayer(this.getName());
 					c.showMsg(input);

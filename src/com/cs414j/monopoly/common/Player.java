@@ -63,6 +63,7 @@ public interface Player extends java.rmi.Remote {
 	
 	public Set<String> mortgagedSquareName()throws RemoteException;
 
+	public boolean isLessBalance() throws RemoteException;
 	
 	public void unMortgageProperty(String name)throws RemoteException;
 	

@@ -150,10 +150,13 @@ public class MonopolyMain {
 				int ypoint = diceValue - xpoint;
 				t.setxCoordinate(10);
 				t.setyCoordinate(y - 80 * ypoint);
+				
 				ClientMain.store.getCurrentPlayer().passGo(diceValue);
+				MonopolyOptions.displayPopUp("$200 received");
 			} else {
 				t.setxCoordinate(10);
 				ClientMain.store.getCurrentPlayer().passGo(diceValue);
+				MonopolyOptions.displayPopUp("$200 received");
 			}
 
 		}

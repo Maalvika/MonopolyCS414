@@ -124,18 +124,15 @@ public class ClientCallbackImpl extends UnicastRemoteObject implements ClientCal
 		}
 		t.setxCoordinate(position.getXpoint());
 		t.setyCoordinate(position.getYpoint());
-		if(MonopolyMain.checkForGoJail(t) == true) {
+		if(t.getxCoordinate() == MoveChance.Visiting_Jail.getXpoint() && 
+				t.getyCoordinate() ==  MoveChance.Visiting_Jail.getYpoint()) {
 			MonopolyMain.fromGoToJail  = true;
-			t = MonopolyMain.sendToJail(t);
 		}
 		List<Token> temp = ClientMain.store.getSelectedTokens();
 		temp.set(ClientMain.store.getSelectedTokens().indexOf(ClientMain.store.getCurrentPlayer().getToken()), t);
 		ClientMain.store.setSelectedTokens(temp);
 		ClientMain.store.getCurrentPlayer().setToken(t);
 		MonopolyMain.panel.changeTokenPosition(temp);
-		if(position == MoveChance.Go) {
-			MonopolyOptions.displayPopUp("Congrats!!! You have landed on Go. $200 has been creditted");
-		}
 		ButtonValidate.landOnBlock(ClientMain.store.getCurrentPlayer().getToken());
 		ClientMain.store.changeOtherPlayerBoard(PlayerDetailForm.myClient, MonopolyMain._leftDie.getValue(),
 				MonopolyMain._rightDie.getValue());
@@ -160,6 +157,10 @@ public class ClientCallbackImpl extends UnicastRemoteObject implements ClientCal
 				auctionPlayer.getName(), PlayerColor.valueOf(auctionPlayer.getColor()));
 		if(!MonopolyOptions.properties.containsKey(prop)) {
 			MonopolyOptions.properties.put(prop, 0);
+		} else {
+			int val = MonopolyOptions.properties.get(prop);
+			val ++;
+			MonopolyOptions.properties.put(prop, val);
 		}
 		MonopolyMain.panel.addPlayerComponents(MonopolyOptions.properties);
 		

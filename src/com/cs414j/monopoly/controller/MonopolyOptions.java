@@ -163,7 +163,9 @@ public class MonopolyOptions extends JPanel {
 
 	protected void payRentActionPerformed(ActionEvent evt) throws RemoteException {
 		String currentProperty = getPropertyName(ClientMain.store.getCurrentPlayer().getToken());
+		System.out.println("currentProp:"+currentProperty);
 		if (ButtonValidate.ischance == false) {
+			System.out.println("is chance false");
 			int diceValue = MonopolyMain._leftDie.getValue() + MonopolyMain._rightDie.getValue();
 			ClientMain.store.getCurrentPlayer().payRent(currentProperty, diceValue);
 			displayPopUp("You paid rent: $" + ClientMain.store.getCurrentPlayer().getRent(currentProperty)
@@ -171,6 +173,7 @@ public class MonopolyOptions extends JPanel {
 			ClientMain.store.sendRentMessageToOwner(currentProperty);
 
 		} else {
+			System.out.println("is chance true");
 			ButtonValidate.ischance = false;
 			Object[] options = { "OK" };
 			int n = JOptionPane.showOptionDialog(null, "Press OK to roll Dice", "Roll Dice",
@@ -198,17 +201,16 @@ public class MonopolyOptions extends JPanel {
 	protected void mortgageActionPerformed(ActionEvent evt) throws RemoteException {
 		Set<String> prop = ClientMain.store.getCurrentPlayer().OwnedSquareName();
 		new MortgageOptions(prop);
-		disableButtonSettings();
+		ButtonValidate.landOnBlock(ClientMain.store.getCurrentPlayer().getToken());
 
 	}
-	
-	//ID24
-		protected void UnMortgageActionPerformed(ActionEvent evt) throws RemoteException {
-			Set<String> prop = ClientMain.store.getCurrentPlayer().mortgagedSquareName();
-			new MortgageOptions(prop);
-			disableButtonSettings();
-			
-		}
+
+	protected void UnMortgageActionPerformed(ActionEvent evt) throws RemoteException {
+		Set<String> prop = ClientMain.store.getCurrentPlayer().mortgagedSquareName();
+		new MortgageOptions(prop);
+		
+
+	}
 
 
 	protected void buyActionPerformed(ActionEvent evt) throws RemoteException {
@@ -222,13 +224,16 @@ public class MonopolyOptions extends JPanel {
 		MonopolyMain.panel.addPlayerComponents(properties);
 		String currentProperty = getPropertyName(currentToken);
 		player.buyProperty(currentProperty);
-		displayPopUp("Congrats!!!! " + currentProperty + " is yours. \n Your new balance is: $"
-				+ ClientMain.store.getCurrentPlayer().getBalance());
 		ButtonValidate.buyPropertyEnabled = false;
+		if (!ClientMain.store.getCurrentPlayer().isLessBalance()) {
+			displayPopUp("Congrats!!!! " + currentProperty + " is yours. \n Your new balance is: $"
+					+ ClientMain.store.getCurrentPlayer().getBalance());
+
+			String otherMessage = "Property: " + currentProperty + " is sold to Player: " + player.getName();
+			ClientMain.store.placePropertyToken();
+			ClientMain.store.sendMessageToAll(otherMessage);
+		}
 		disableButtonSettings();
-		String otherMessage = "Property: " + currentProperty + " is sold to Player: " + player.getName();
-		ClientMain.store.placeBuyPropertyToken();
-		ClientMain.store.sendMessageToAll(otherMessage);
 
 	}
 
@@ -243,10 +248,12 @@ public class MonopolyOptions extends JPanel {
 			properties.put(p, 1);
 		}
 		MonopolyMain.panel.addPlayerComponents(properties);
+		ClientMain.store.placePropertyToken();
 		disableButtonSettings();
 	}
 
 	protected void contiActionPerformed(ActionEvent evt) throws RemoteException {
+		System.out.println("auction enabled:"+ButtonValidate.buyPropertyEnabled);
 		if (ButtonValidate.buyPropertyEnabled == false) {
 			try {
 				serverStore.switchToNextTurn(PlayerDetailForm.myClient);

@@ -61,9 +61,12 @@ public class InitcardDeck {
 
 	public int generateRandomChance() throws RemoteException {
 		Random r = new Random();
-		int index = r.nextInt((15 - 0) + 1);
+		int index = 7;//r.nextInt((15 - 0) + 1);
 		String s = chance[index];
 		MonopolyOptions.displayPopUp(s);
+		if(index == 0) {
+			MonopolyOptions.displayPopUp("$200 received");
+		}
 		if(index == 10) {
 			PlayerDetailForm.myPlayer.setHasJailPass(true);
 		}
@@ -76,6 +79,9 @@ public class InitcardDeck {
 		int index = r.nextInt((16 - 0) + 1);
 		String s = chest[index];
 		MonopolyOptions.displayPopUp(s);
+		if(index == 0) {
+			MonopolyOptions.displayPopUp("$200 received");
+		}
 		if(index == 7) {
 			PlayerDetailForm.myPlayer.setHasJailPass(true);
 		}
