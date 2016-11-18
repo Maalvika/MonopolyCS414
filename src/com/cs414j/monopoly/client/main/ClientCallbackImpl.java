@@ -48,7 +48,7 @@ public class ClientCallbackImpl extends UnicastRemoteObject implements ClientCal
 	public void startMonopolyGame(int END_TIME_MIN) throws RemoteException {
 		ClientMain.detail.setVisible(false);
 		MonopolyMain.init();
-		new EndTimerTask(END_TIME_MIN * 1000 * 60);
+		new EndTimerTask(END_TIME_MIN);
 
 	}
 

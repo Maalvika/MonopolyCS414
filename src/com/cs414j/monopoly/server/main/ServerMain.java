@@ -14,28 +14,17 @@ import com.cs414j.monopoly.server.model.MonopolyServerStore;
 public class ServerMain {
 	
 	private String url;
-	private int endTime;
 	
 	public ServerMain(String url,int endTime) {
 		this.url = url;
-		this.endTime=endTime;
 		try {
 			MonopolyStore store = MonopolyServerStore.getInstance();
+			MonopolyServerStore.setEndTime(endTime);
 			Naming.rebind(url, store);
 			System.out.println("server started....");
 		} catch (Exception e) {
 			System.out.println("Trouble: " + e);
 		}
-	}
-	
-	public int getEndTime()
-	{
-		return endTime;
-	}
-	
-	public void setEndTime(int endTime)
-	{
-		this.endTime=endTime;
 	}
 	
 	public static void main(String args[]) throws NumberFormatException, IOException {

@@ -38,7 +38,7 @@ public class MonopolyServerStore extends java.rmi.server.UnicastRemoteObject imp
 	private static List<ClientCallback> clientObj;
 	private static Cards card;
 	private static InitcardDeck cardDeck;
-        private static int endTime;
+    private static int endTime;
 	
 	
 	private MonopolyServerStore() throws java.rmi.RemoteException {
@@ -80,7 +80,7 @@ public class MonopolyServerStore extends java.rmi.server.UnicastRemoteObject imp
 	
 	public static void setEndTime(int endTime)
 	{ 
-	     endTime=endTime;
+	     MonopolyServerStore.endTime=endTime;
 	}
 	
 	private void prepareTokenList() {

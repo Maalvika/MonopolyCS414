@@ -19,9 +19,6 @@ public class StartGameTimer {
 	}
 
 	class StartGame extends TimerTask {
-		
-
-		private static final int END_TIME_MIN = 10;
 
 
 		public void run() {
@@ -29,7 +26,7 @@ public class StartGameTimer {
 			try {
 				if(MonopolyServerStore.getInstance().getPlayers().size() >1) {
 					for(ClientCallback c: MonopolyServerStore.getInstance().getClientObj()) {
-						c.startMonopolyGame(END_TIME_MIN);
+						c.startMonopolyGame(MonopolyServerStore.getEndTime());
 					}
 				} else {
 					 MonopolyServerStore.getInstance().getClientObj().get(0).
