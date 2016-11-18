@@ -56,6 +56,7 @@ public class ButtonValidate {
 				MonopolyOptions.pay.setEnabled(false);
 				MonopolyOptions.build.setEnabled(false);
 				enableMortgageButton();
+				enableUnMortgageButton();
 				MonopolyOptions.tax.setEnabled(false);
 				return 1;
 			}
@@ -76,6 +77,7 @@ public class ButtonValidate {
 				MonopolyOptions.build.setEnabled(false);
 				MonopolyOptions.tax.setEnabled(true);
 				enableMortgageButton();
+				enableUnMortgageButton();
 				return 1;
 			}
 
@@ -94,9 +96,11 @@ public class ButtonValidate {
 				MonopolyOptions.build.setEnabled(false);
 				MonopolyOptions.tax.setEnabled(false);
 				enableMortgageButton();
+				enableUnMortgageButton();
 				//add server community chest code over here
 				int index = MonopolyMain.cards.generateRandomChest();
 				ClientMain.store.callChestCards(index);
+				MonopolyOptions.mortgage.setEnabled(false);
 				return 1;
 
 			}
@@ -129,6 +133,7 @@ public class ButtonValidate {
 				MonopolyOptions.build.setEnabled(false);
 				MonopolyOptions.tax.setEnabled(false);
 				enableMortgageButton();
+				enableUnMortgageButton();
 				return 1;
 
 			}
@@ -149,9 +154,11 @@ public class ButtonValidate {
 				MonopolyOptions.build.setEnabled(false);
 				MonopolyOptions.tax.setEnabled(false);
 				enableMortgageButton();
+				enableUnMortgageButton();
 				//add server chance code over here
 				int index = MonopolyMain.cards.generateRandomChance();
 				ClientMain.store.callChanceCards(index);
+				MonopolyOptions.mortgage.setEnabled(false);
 				return 1;
 
 			}
@@ -185,6 +192,7 @@ public class ButtonValidate {
 				MonopolyOptions.build.setEnabled(false);
 				MonopolyOptions.tax.setEnabled(false);
 				enableMortgageButton();
+				enableUnMortgageButton();
 				return 1;
 
 			}
@@ -226,6 +234,7 @@ public class ButtonValidate {
 		}
 		MonopolyOptions.tax.setEnabled(false);
 		enableMortgageButton();
+		enableUnMortgageButton();
 
 	}
 	
@@ -247,7 +256,6 @@ public class ButtonValidate {
 		
 	}
 	
-	//ID24
 	private static void enableUnMortgageButton() throws RemoteException {
 		if(ClientMain.store.getCurrentPlayer().mortgagedSquareName().isEmpty()) {
 			MonopolyOptions.UnMortgage.setEnabled(false);

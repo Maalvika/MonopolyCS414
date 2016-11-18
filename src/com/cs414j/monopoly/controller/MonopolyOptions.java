@@ -29,6 +29,7 @@ import com.cs414j.monopoly.view.AuctionPanel;
 import com.cs414j.monopoly.view.ButtonValidate;
 import com.cs414j.monopoly.view.MortgageOptions;
 import com.cs414j.monopoly.view.PropertyUI;
+import com.cs414j.monopoly.view.UnMortgageOptions;
 import com.cs414j.monopoly.client.main.ClientMain;
 import com.cs414j.monopoly.client.view.AllPlayerInfoPanel;
 import com.cs414j.monopoly.client.view.EndForm;
@@ -207,8 +208,8 @@ public class MonopolyOptions extends JPanel {
 
 	protected void UnMortgageActionPerformed(ActionEvent evt) throws RemoteException {
 		Set<String> prop = ClientMain.store.getCurrentPlayer().mortgagedSquareName();
-		new MortgageOptions(prop);
-		
+		new UnMortgageOptions(prop);
+		ButtonValidate.landOnBlock(ClientMain.store.getCurrentPlayer().getToken());
 
 	}
 

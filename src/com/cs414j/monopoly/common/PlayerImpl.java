@@ -3,6 +3,7 @@ package com.cs414j.monopoly.common;
 import java.rmi.RemoteException;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import com.cs414j.monopoly.client.main.ClientCallback;
@@ -365,7 +366,10 @@ public class PlayerImpl implements Player {
 		// checks if it is a utility or a property or a rairoad
 		// and accordingly gets it cost, subtracts the cost from balance,
 		// adds the square into player's ownedproperties/utilities/railroad
-
+		System.out.println("in player:"+name);
+		for(Entry<String, RailRoad> e:MonopolyServerStore.getBoardInstance().stringRailRoad.entrySet()) {
+			System.out.println("boolean:"+e.getKey());
+		}
 		if (MonopolyServerStore.getBoardInstance().stringProperties.containsKey(name)) {
 			Properties p = getPropertyObject(name);
 
@@ -409,14 +413,15 @@ public class PlayerImpl implements Player {
 		}
 
 		if (MonopolyServerStore.getBoardInstance().stringRailRoad.containsKey(name))
-
 		{
-
+			System.out.println("here in railroad");
 			RailRoad r = this.getRailRoadObject(name);
+			System.out.println("name:"+r.getName()+"cost:"+r.getCost());
 			int cost = r.getCost();
 			if (MonopolyServerStore.getBankInstance().getBankRailRoad().contains(r)) {
 				if (balance > cost) {
 					balance = balance - cost;
+					System.out.println("balance:"+balance);
 					ownedRailRoad.add(r);
 					r.setOwner(this);
 					MonopolyServerStore.getBankInstance().getBankRailRoad().remove(r);

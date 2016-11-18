@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 
 import com.cs414j.monopoly.client.main.ClientMain;
 import com.cs414j.monopoly.controller.MonopolyMain;
+import com.cs414j.monopoly.controller.MonopolyOptions;
 
 public class UnMortgageOptions {
 
@@ -32,6 +33,7 @@ public class UnMortgageOptions {
 		switch (result) {
 		case JOptionPane.OK_OPTION:
 			ClientMain.store.getCurrentPlayer().unMortgageProperty(comboBox.getSelectedItem().toString());
+			MonopolyOptions.displayPopUp("Your property has been un-morgaged. Amount is deducted from your account");
 			break;
 		}
 
