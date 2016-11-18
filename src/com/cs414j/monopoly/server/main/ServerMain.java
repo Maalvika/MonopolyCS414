@@ -42,7 +42,7 @@ public class ServerMain {
 		String url = new String("rmi://" + ConnectionDetails.HOSTNAME+ ":" 
 					+ ConnectionDetails.PORT + ConnectionDetails.SERVICE_NAME);
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		System.out.println("Input Time");
+		System.out.println("Input Total Game Duration(in minutes):");
 		int endTime = Integer.parseInt(br.readLine());
 		new ServerMain(url,endTime);
 	}

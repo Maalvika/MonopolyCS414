@@ -102,18 +102,17 @@ public class MonopolyMain {
 				t.setyCoordinate(y - 80 * diceValue);
 			} else if (y==70) {
 				t.setxCoordinate(90);
-			}
-				else {
+			}else {
 				int ypoint = (y - 70) / 80;
 				// since the corner is a bigger block so we need 1 step more to
 				// get the
 				// token at correct position
-				int xpoint = diceValue - ypoint + 1;
+				int xpoint = diceValue - ypoint +1;
 				t.setxCoordinate(x + 80 * xpoint);
 				t.setyCoordinate(70);
 			}
 		} else if (y == 70) {
-			if ((x + 80 * diceValue) < 890) {
+			if ((x + 80 * diceValue) <=890) {
 				t.setxCoordinate(x + 80 * diceValue);
 			} else {
 				int xpoint = (890 - x) / 80;
@@ -127,7 +126,7 @@ public class MonopolyMain {
 			}
 
 		} else if (x == 890) {
-			if ((y + 80 * diceValue) < 870) {
+			if ((y + 80 * diceValue) <= 870) {
 				t.setyCoordinate(y + 80 * diceValue);
 			} else {
 				int ypoint = (870 - y) / 80;

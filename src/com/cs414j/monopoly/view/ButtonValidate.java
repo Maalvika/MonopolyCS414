@@ -118,9 +118,9 @@ public class ButtonValidate {
 					MonopolyOptions.buy.setEnabled(false);
 					MonopolyOptions.pay.setEnabled(true);
 				} else {
-					if(!ClientMain.store.getCurrentPlayer().OwnedSquareName().contains(currentProperty)) {
-					MonopolyOptions.pay.setEnabled(false);
-					MonopolyOptions.buy.setEnabled(true);
+					if (!ClientMain.store.getCurrentPlayer().OwnedSquareName().contains(currentProperty)) {
+						MonopolyOptions.pay.setEnabled(false);
+						MonopolyOptions.buy.setEnabled(true);
 					} else {
 						MonopolyOptions.pay.setEnabled(false);
 						MonopolyOptions.buy.setEnabled(false);
@@ -174,8 +174,13 @@ public class ButtonValidate {
 					MonopolyOptions.pay.setEnabled(true);
 					MonopolyOptions.conti.setEnabled(false);
 				} else {
-					MonopolyOptions.pay.setEnabled(false);
-					MonopolyOptions.buy.setEnabled(true);
+					if (!ClientMain.store.getCurrentPlayer().OwnedSquareName().contains(currentProperty)) {
+						MonopolyOptions.pay.setEnabled(false);
+						MonopolyOptions.buy.setEnabled(true);
+					} else {
+						MonopolyOptions.pay.setEnabled(false);
+						MonopolyOptions.buy.setEnabled(false);
+					}
 				}
 				MonopolyOptions.build.setEnabled(false);
 				MonopolyOptions.tax.setEnabled(false);

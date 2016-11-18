@@ -159,7 +159,8 @@ public class ClientCallbackImpl extends UnicastRemoteObject implements ClientCal
 			MonopolyOptions.properties.put(prop, 0);
 		} else {
 			int val = MonopolyOptions.properties.get(prop);
-			val ++;
+			val  = val+1;
+			System.out.println("val:"+val);
 			MonopolyOptions.properties.put(prop, val);
 		}
 		MonopolyMain.panel.addPlayerComponents(MonopolyOptions.properties);
