@@ -23,8 +23,6 @@ public interface MonopolyStore extends java.rmi.Remote{
 	
 	public void setSelectedTokens(List<Token> selectedTokens) throws RemoteException;
 	
-	public void setTokenCoordinates(TokenUrls t ,int x,int y) throws RemoteException;
-
 	public Player getCurrentPlayer() throws RemoteException;
 	
 	public void switchToNextTurn(ClientCallback c) throws RemoteException;
@@ -46,5 +44,6 @@ public interface MonopolyStore extends java.rmi.Remote{
 	public void callChestCards(int index) throws RemoteException;
 	
 	public void callUtilityRent(int diceValue, String name) throws RemoteException;
+	
 
 }

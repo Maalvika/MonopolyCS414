@@ -3,22 +3,24 @@ package com.cs414j.monopoly.client.main;
 import java.rmi.RemoteException;
 import java.util.Random;
 
+import com.cs414j.monopoly.client.view.PlayerDetailForm;
 import com.cs414j.monopoly.common.Player;
 import com.cs414j.monopoly.controller.MonopolyOptions;
 import com.cs414j.monopoly.server.model.MonopolyServerStore;
 
 public class InitcardDeck {
+
 	public String[] chance;
 	public String[] chest;
-	
-	public InitcardDeck(){
+
+	public InitcardDeck() {
 		chance = new String[16];
 		chest = new String[17];
 		initializeChance();
 		initializeChest();
 	}
-	
-	public void initializeChance(){
+
+	public void initializeChance() {
 		chance[0] = ("Advance to Go");
 		chance[1] = ("Advance to Illinois Avenue");
 		chance[2] = ("Advance to St. Charles Place");
@@ -37,8 +39,8 @@ public class InitcardDeck {
 		chance[15] = ("You have won a Crossword Competition - You get $100");
 	}
 
-	public void initializeChest(){
-		chest[0]=("Advance to Go");
+	public void initializeChest() {
+		chest[0] = ("Advance to Go");
 		chest[1] = ("Go to Jail directly");
 		chest[2] = ("Bank Error in you FAVOUR!! - You get $200");
 		chest[3] = ("Pay $50 Doctor's Fee");
@@ -54,26 +56,30 @@ public class InitcardDeck {
 		chest[13] = ("Receive $25 Consultant Fee");
 		chest[14] = ("Street Repairs- Pay $40 per house");
 		chest[15] = ("You have won SECOND PRIZE $10 in a BEAUTY CONTEST!!");
-		chest[16] = ("You inherit $100");			
+		chest[16] = ("You inherit $100");
 	}
-	
-	public int generateRandomChance() throws RemoteException{
+
+	public int generateRandomChance() throws RemoteException {
 		Random r = new Random();
-		int index = 4;//r.nextInt((15 - 0)+1);
+		int index = r.nextInt((15 - 0) + 1);
 		String s = chance[index];
 		MonopolyOptions.displayPopUp(s);
+		if(index == 10) {
+			PlayerDetailForm.myPlayer.setHasJailPass(true);
+		}
 		return index;
 
+	}
+
+	public int generateRandomChest() throws RemoteException {
+		Random r = new Random();
+		int index = r.nextInt((16 - 0) + 1);
+		String s = chest[index];
+		MonopolyOptions.displayPopUp(s);
+		if(index == 7) {
+			PlayerDetailForm.myPlayer.setHasJailPass(true);
 		}
-		
-		public int generateRandomChest() throws RemoteException{
-			Random r = new Random();
-			int index = r.nextInt((16-0)+1);
-			String s = chest[index];
-			MonopolyOptions.displayPopUp(s);
-			return index;
-}
-
-
+		return index;
+	}
 
 }

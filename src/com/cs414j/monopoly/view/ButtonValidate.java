@@ -136,7 +136,6 @@ public class ButtonValidate {
 	private static int validateChance(int x, int y) throws RemoteException {
 		for (Chance c : Chance.values()) {
 			if (x == c.getXpoint() && y == c.getYpoint()) {
-				ischance = true;
 				MonopolyOptions.rollDice.setEnabled(false);
 				MonopolyOptions.rollFixedNum.setEnabled(false);
 				MonopolyOptions.buy.setEnabled(false);

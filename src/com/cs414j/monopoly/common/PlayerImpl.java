@@ -31,6 +31,7 @@ public class PlayerImpl implements Player {
 	private HashSet<Utilities> mortgageUtilities;
 	private HashSet<RailRoad> mortgageRailRoad;
 	private int propertyCost;
+	private boolean hasJailPass;
 
 	public PlayerImpl(String n) {
 		name = n;
@@ -89,11 +90,23 @@ public class PlayerImpl implements Player {
 	public Set<Utilities> getOwnedUtilities() {
 		return ownedUtilities;
 	}
+	
+
+	public boolean hasJailPass() {
+		return hasJailPass;
+	}
+
+	public void setHasJailPass(boolean hasJailPass) {
+		this.hasJailPass = hasJailPass;
+	}
 
 	public void moveForward(int diceValue) {
 
+		System.out.println("before location:"+ location);
 		// would move the player dicevalue squares forward on the board
 		location = (location + diceValue) % 40;
+		System.out.println("after location:"+ location);
+		
 	}
 
 	public void setToken(Token t) {

@@ -11,10 +11,8 @@ import com.cs414j.monopoly.server.model.Utilities;
 public class Cards {
 
 	public void chanceAction(int index, Player p) throws RemoteException{
-		System.out.println("index:"+index);
 		if(index <= 8){
 			String propertyName = this.chanceMove(index, p);
-			System.out.println("in server property Name:"+propertyName);
 			MonopolyServerStore.getClientFromPlayer
 			(MonopolyServerStore.getInstance().getCurrentPlayer().getName()).moveChance(propertyName);
 		}
@@ -278,18 +276,18 @@ public class Cards {
 			name = "Reading Railroad";
 			return name;
 		}
-		if(p.getLocation() > 5 || p.getLocation() <= 15){
+		if(p.getLocation() > 5 && p.getLocation() <= 15){
 			p.setLocation(15);
 			name = "Pennsylvania Railroad";
 			return name;
 		}
-		if(p.getLocation() > 15 || p.getLocation() <= 25){
+		if(p.getLocation() > 15 && p.getLocation() <= 25){
 			p.setLocation(25);
 			name = "B O Railroad";
 			return name;
 		}
 
-		if(p.getLocation() > 25 || p.getLocation() <= 35)
+		if(p.getLocation() > 25 && p.getLocation() <= 35)
 		{
 			p.setLocation(35);
 			name = "Short Line";

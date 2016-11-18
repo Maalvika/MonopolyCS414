@@ -144,19 +144,6 @@ public class MonopolyServerStore extends java.rmi.server.UnicastRemoteObject imp
 	}
 
 	@Override
-	public void setTokenCoordinates(TokenUrls t, int x, int y) throws RemoteException {
-		for (Token token : selectedTokens) {
-			if (token.getTokenURL() == t) {
-				selectedTokens.remove(token);
-				token.setxCoordinate(x);
-				token.setyCoordinate(y);
-				selectedTokens.add(token);
-			}
-		}
-
-	}
-
-	@Override
 	public void switchToNextTurn(ClientCallback c) throws RemoteException {
 		int currentIndex = players.indexOf(currentPlayer);
 		if (currentIndex == MonopolyServerStore.getPLAYER_COUNT() - 1) {
@@ -290,6 +277,7 @@ public class MonopolyServerStore extends java.rmi.server.UnicastRemoteObject imp
 	}
 
 	public void callChanceCards(int index) throws RemoteException {
+		System.out.println("index:"+index);
 		MonopolyServerStore.getCardInstance().chanceAction(index, currentPlayer);
 	}
 

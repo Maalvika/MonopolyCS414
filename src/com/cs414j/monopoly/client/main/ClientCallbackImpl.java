@@ -11,6 +11,7 @@ import com.cs414j.monopoly.client.view.PlayerDetailForm;
 import com.cs414j.monopoly.common.Player;
 import com.cs414j.monopoly.common.PlayerColor;
 import com.cs414j.monopoly.common.Token;
+import com.cs414j.monopoly.common.view.SpecialBlocks.Others;
 import com.cs414j.monopoly.controller.EndTimerTask;
 import com.cs414j.monopoly.controller.MonopolyMain;
 import com.cs414j.monopoly.controller.MonopolyOptions;
@@ -116,8 +117,17 @@ public class ClientCallbackImpl extends UnicastRemoteObject implements ClientCal
 			}
 		}
 		Token t = ClientMain.store.getCurrentPlayer().getToken();
+		for(Others o: Others.values()) {
+			if(t.getxCoordinate() == o.getXpoint() && t.getyCoordinate() == o.getYpoint()) {
+				ButtonValidate.ischance =  true;
+			}
+		}
 		t.setxCoordinate(position.getXpoint());
 		t.setyCoordinate(position.getYpoint());
+		if(MonopolyMain.checkForGoJail(t) == true) {
+			MonopolyMain.fromGoToJail  = true;
+			t = MonopolyMain.sendToJail(t);
+		}
 		List<Token> temp = ClientMain.store.getSelectedTokens();
 		temp.set(ClientMain.store.getSelectedTokens().indexOf(ClientMain.store.getCurrentPlayer().getToken()), t);
 		ClientMain.store.setSelectedTokens(temp);

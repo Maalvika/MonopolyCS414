@@ -33,6 +33,7 @@ public class MonopolyMain {
     public static ImagePanel panel;
 	private static JPanel boardPanel;
 	public static InitcardDeck cards;
+	public static boolean fromGoToJail = false;
 	
 	
     
@@ -70,6 +71,7 @@ public class MonopolyMain {
 		System.out.println("dice value: "+diceValue);
 		Token t = adjustPosition(ClientMain.store.getCurrentPlayer().getToken(), diceValue);
 		if(checkForGoJail(t) == true) {
+			fromGoToJail  = true;
 			t = sendToJail(t);
 		}
 		List <Token> temp = ClientMain.store.getSelectedTokens();
@@ -185,7 +187,7 @@ public class MonopolyMain {
 
 	}
 	
-	private static boolean checkForGoJail(Token t){
+	public static boolean checkForGoJail(Token t){
 		if(t.getxCoordinate() ==  Corner.GO_JAIL.getXpoint() && 
 				t.getyCoordinate() == Corner.GO_JAIL.getYpoint()) {
 			return true;
@@ -193,7 +195,7 @@ public class MonopolyMain {
 		return false;
 	}
 	
-	private static Token sendToJail(Token t) throws RemoteException{
+	public static Token sendToJail(Token t) throws RemoteException{
 		t.setxCoordinate(Corner.JUST_VISITING.getXpoint());
 		t.setyCoordinate(Corner.JUST_VISITING.getYpoint());
 		ClientMain.store.getCurrentPlayer().landedOnGoToJail(30);

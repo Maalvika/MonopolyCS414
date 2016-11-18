@@ -41,6 +41,10 @@ public interface Player extends java.rmi.Remote {
 
 	public void setToken(Token t)throws RemoteException;
 	
+	public boolean hasJailPass() throws RemoteException;
+
+	public void setHasJailPass(boolean hasJailPass) throws RemoteException;
+	
 	public int getHousesOwned()throws RemoteException;
 
 	public int getHotelsOwned()throws RemoteException;
