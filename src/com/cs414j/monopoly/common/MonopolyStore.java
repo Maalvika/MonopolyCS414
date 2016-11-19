@@ -3,11 +3,11 @@ package com.cs414j.monopoly.common;
 import java.rmi.RemoteException;
 import java.util.List;
 
+import com.cs414j.monopoly.client.controller.MonopolyMain;
 import com.cs414j.monopoly.client.main.ClientCallback;
+import com.cs414j.monopoly.client.view.TokenUrls;
 import com.cs414j.monopoly.common.Player;
-import com.cs414j.monopoly.controller.MonopolyMain;
-import com.cs414j.monopoly.server.model.MonopolyServerStore;
-import com.cs414j.monopoly.view.TokenUrls;
+import com.cs414j.monopoly.server.controller.MonopolyServerStore;
 
 public interface MonopolyStore extends java.rmi.Remote{
 	
@@ -37,7 +37,9 @@ public interface MonopolyStore extends java.rmi.Remote{
 	
 	public void endGameIfAnyPlayerQuits(String playerName) throws RemoteException;
 	
-	public void placePropertyToken() throws RemoteException;
+	public void placeBuyPropertyToken() throws RemoteException;
+	
+	public void placeBuildPropertyToken() throws RemoteException;
 	
 	public void callChanceCards(int index) throws RemoteException;
 	

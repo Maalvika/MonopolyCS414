@@ -2,11 +2,11 @@ package com.cs414j.monopoly.client.view;
 
 import java.rmi.RemoteException;
 
+import com.cs414j.monopoly.client.controller.StartGameTimer;
 import com.cs414j.monopoly.client.main.ClientCallback;
 import com.cs414j.monopoly.client.main.ClientCallbackImpl;
 import com.cs414j.monopoly.client.main.ClientMain;
 import com.cs414j.monopoly.common.Player;
-import com.cs414j.monopoly.controller.StartGameTimer;
 
 /**
  *

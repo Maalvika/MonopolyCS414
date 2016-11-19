@@ -7,7 +7,8 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import com.cs414j.monopoly.client.main.ClientCallback;
-import com.cs414j.monopoly.server.model.MonopolyServerStore;
+import com.cs414j.monopoly.server.controller.MonopolyServerStore;
+import com.cs414j.monopoly.server.model.Board;
 import com.cs414j.monopoly.server.model.Properties;
 import com.cs414j.monopoly.server.model.RailRoad;
 import com.cs414j.monopoly.server.model.Utilities;

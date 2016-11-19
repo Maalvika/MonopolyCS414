@@ -3,44 +3,43 @@ package com.cs414j.monopoly.common;
 import java.rmi.RemoteException;
 import java.util.Random;
 
+import com.cs414j.monopoly.client.controller.MonopolyOptions;
 import com.cs414j.monopoly.client.main.ClientCallback;
-import com.cs414j.monopoly.controller.MonopolyOptions;
-import com.cs414j.monopoly.server.model.MonopolyServerStore;
+import com.cs414j.monopoly.server.controller.MonopolyServerStore;
 import com.cs414j.monopoly.server.model.Utilities;
 
 public class Cards {
 
-	public void chanceAction(int index, Player p) throws RemoteException{
-		if(index <= 8){
+	public void chanceAction(int index, Player p) throws RemoteException {
+		if (index <= 7) {
 			String propertyName = this.chanceMove(index, p);
-			MonopolyServerStore.getClientFromPlayer
-			(MonopolyServerStore.getInstance().getCurrentPlayer().getName()).moveChance(propertyName);
+			MonopolyServerStore.getClientFromPlayer(MonopolyServerStore.getInstance().getCurrentPlayer().getName())
+					.moveChance(propertyName);
 		}
 
-		else{
-			System.out.println("a");
+		else {
 			this.chanceBalanceUpdate(index, p);
 		}
 		MonopolyServerStore.changeAllPlayerDetails(false);
 	}
 
-	public void chestAction(int index, Player p) throws RemoteException{
-		if(index <= 1){
+	public void chestAction(int index, Player p) throws RemoteException {
+		if (index <= 1) {
 
 			String propertyName = this.chestMove(index, p);
-			MonopolyServerStore.getClientFromPlayer
-			(MonopolyServerStore.getInstance().getCurrentPlayer().getName()).moveChance(propertyName);;
-		}
-		else{
-			this.chestBalanceUpdate(index,p);
+			MonopolyServerStore.getClientFromPlayer(MonopolyServerStore.getInstance().getCurrentPlayer().getName())
+					.moveChance(propertyName);
+			;
+		} else {
+			this.chestBalanceUpdate(index, p);
 		}
 		MonopolyServerStore.changeAllPlayerDetails(false);
 	}
 
-	public String chanceMove(int index,Player p) throws RemoteException{
+	public String chanceMove(int index, Player p) throws RemoteException {
 		// the method is called if random index for chance >= 8 for chance
-		String s="";
-		switch(index){
+		String s = "";
+		switch (index) {
 		case 0:
 			this.advanceToGo(p);
 			s = "Go";
@@ -54,7 +53,7 @@ public class Cards {
 
 		case 2:
 			this.advancetoCharles(p);
-			s = "St Charles Place"	;	
+			s = "St Charles Place";
 
 			break;
 
@@ -72,7 +71,7 @@ public class Cards {
 			s = "Boardwalk";
 			break;
 
-		case 6 :
+		case 6:
 			this.advancetoRR(p);
 			s = "Reading Railroad";
 			break;
@@ -82,18 +81,14 @@ public class Cards {
 			s = "Visiting Jail";
 			break;
 
-		case 8:
-			s = this.advanceBack(p);
-
-			break;
 		}
 
 		return s;
 	}
 
-	public int chanceBalanceUpdate(int index,Player p) throws RemoteException{
+	public int chanceBalanceUpdate(int index, Player p) throws RemoteException {
 		int balance = p.getBalance();
-		switch(index){
+		switch (index) {
 		case 9:
 			balance = this.chancedividend(p);
 			break;
@@ -112,19 +107,21 @@ public class Cards {
 
 		case 14:
 			balance = this.chanceLoanMatures(p);
-			break;
 
 		case 15:
 			balance = this.chanceInherit(p);
+			break;
+		case 8:
+			this.chancePoorTax(p);
 			break;
 
 		}
 		return balance;
 	}
 
-	public String chestMove(int index, Player p) throws RemoteException{
+	public String chestMove(int index, Player p) throws RemoteException {
 		String s = "";
-		switch(index){
+		switch (index) {
 		case 0:
 
 			this.advanceToGo(p);
@@ -138,9 +135,9 @@ public class Cards {
 		return s;
 	}
 
-	public int chestBalanceUpdate(int index, Player p) throws RemoteException{
+	public int chestBalanceUpdate(int index, Player p) throws RemoteException {
 		int balance = p.getBalance();
-		switch(index){
+		switch (index) {
 		case 2:
 			balance = this.chestbankError(p);
 			break;
@@ -180,15 +177,14 @@ public class Cards {
 			break;
 		case 16:
 			balance = this.chanceInherit(p);
-			break;			
+			break;
 		}
 
 		return balance;
 
 	}
 
-
-	public void advanceToGo(Player p) throws RemoteException{
+	public void advanceToGo(Player p) throws RemoteException {
 
 		p.setLocation(0);
 		int balance = p.getBalance();
@@ -197,49 +193,47 @@ public class Cards {
 
 	}
 
-	public void advancetoIllinois(Player p) throws RemoteException{
+	public void advancetoIllinois(Player p) throws RemoteException {
 
-		if(p.getLocation() > 24){
+		if (p.getLocation() > 24) {
 			int currBalance = p.getBalance();
 			p.setBalance(currBalance + 200);
 			p.setLocation(24);
 			String s = "You receive $200";
-		}
-		else{
+		} else {
 			p.setLocation(24);
 		}
 	}
 
-	public  void advancetoCharles(Player p) throws RemoteException{
+	public void advancetoCharles(Player p) throws RemoteException {
 		// in case of the card "advance to St Charles"
 
-		if(p.getLocation() > 11){
+		if (p.getLocation() > 11) {
 			int currBalance = p.getBalance();
 			p.setBalance(currBalance + 200);
 			p.setLocation(11);
 			String display = "You receive $200";
 
-		}
-		else{
+		} else {
 			p.setLocation(11);
 
 		}
 	}
 
-	public String advancetoUtility(Player p) throws RemoteException{
+	public String advancetoUtility(Player p) throws RemoteException {
 
 		String name = "";
-		if(p.getLocation() < 12){
+		if (p.getLocation() < 12) {
 			p.setLocation(12);
 			name = "Electric Co";
 			return name;
 		}
-		if(p.getLocation() > 12 && p.getLocation() < 28){
+		if (p.getLocation() > 12 && p.getLocation() < 28) {
 			p.setLocation(28);
 			name = "Water Works";
 			return name;
 		}
-		if(p.getLocation() > 28){
+		if (p.getLocation() > 28) {
 			p.setLocation(12);
 			int currbalance = p.getBalance();
 			p.setBalance(currbalance + 200);
@@ -249,14 +243,14 @@ public class Cards {
 		return null;
 	}
 
-	public int payUtilityRent(Player p, int diceValue, String name) throws RemoteException{
+	public int payUtilityRent(Player p, int diceValue, String name) throws RemoteException {
 		// if the player lands on a sold utility
 		// the player rolls dice again and pays the amount on dice * 10
 
 		int rent = diceValue * 10;
 		int balance = p.getBalance();
 		p.setBalance(balance - rent);
-		if (MonopolyServerStore.getBoardInstance().stringUtilities.containsKey(name)){
+		if (MonopolyServerStore.getBoardInstance().stringUtilities.containsKey(name)) {
 			Utilities u = p.getUtilityObject(name);
 			Player receiver = u.getOwner();
 			int ownerBalance = receiver.getBalance();
@@ -267,36 +261,34 @@ public class Cards {
 		return rent;
 	}
 
-	public String advancetoRailRoad(Player p) throws RemoteException{
+	public String advancetoRailRoad(Player p) throws RemoteException {
 
 		String name = "";
-		System.out.println("loc: "+p.getLocation());
-		if(p.getLocation() <= 5){
+		System.out.println("loc: " + p.getLocation());
+		if (p.getLocation() <= 5) {
 			p.setLocation(5);
 			name = "Reading Railroad";
 			return name;
 		}
 
-		if(p.getLocation() > 5 && p.getLocation() < 15){
+		if (p.getLocation() > 5 && p.getLocation() < 15) {
 			p.setLocation(15);
 			name = "Pennsylvania Railroad";
 			return name;
 		}
 
-		if(p.getLocation() > 15 && p.getLocation() < 25){
+		if (p.getLocation() > 15 && p.getLocation() < 25) {
 			p.setLocation(25);
 			name = "B O Railroad";
 			return name;
 		}
 
-
-		if(p.getLocation() > 25 && p.getLocation() < 35)
-		{
+		if (p.getLocation() > 25 && p.getLocation() < 35) {
 			p.setLocation(35);
 			name = "Short Line";
 			return name;
 		}
-		if(p.getLocation() > 35){
+		if (p.getLocation() > 35) {
 			p.setLocation(5);
 			int currbalance = p.getBalance();
 			p.setBalance(currbalance + 200);
@@ -306,37 +298,37 @@ public class Cards {
 		return null;
 	}
 
-	public void advancetoBoardwalk(Player p) throws RemoteException{
+	public void advancetoBoardwalk(Player p) throws RemoteException {
 
 		p.setLocation(39);
 
 	}
 
-	public void advancetoRR(Player p) throws RemoteException{
+	public void advancetoRR(Player p) throws RemoteException {
 
 		p.setLocation(5);
 	}
 
-	public void advanceToJail(Player p) throws RemoteException{
+	public void advanceToJail(Player p) throws RemoteException {
 
 		p.setLocation(10);
 	}
 
-	public String advanceBack(Player p) throws RemoteException{
+	public String advanceBack(Player p) throws RemoteException {
 
 		String s = "";
-		if(p.getLocation() == 7){
+		if (p.getLocation() == 7) {
 			p.setLocation(4);
 			s = "Income Tax";
 			return s;
 		}
-		if(p.getLocation() == 22){
+		if (p.getLocation() == 22) {
 			p.setLocation(19);
 			s = "New York Avenue";
 			return s;
 		}
 
-		if(p.getLocation() == 36){
+		if (p.getLocation() == 36) {
 			p.setLocation(33);
 			s = "CC";
 			return s;
@@ -344,36 +336,35 @@ public class Cards {
 		return s;
 	}
 
-
-	public int chancedividend(Player p) throws RemoteException{
+	public int chancedividend(Player p) throws RemoteException {
 
 		int balance = p.getBalance() + 50;
 		p.setBalance(balance);
 		return balance;
 	}
 
-	public int chanceRepairs(Player p) throws RemoteException{
+	public int chanceRepairs(Player p) throws RemoteException {
 
 		int x = p.getHousesOwned();
-		int balance = (p.getBalance() - (x*25));
+		int balance = (p.getBalance() - (x * 25));
 		p.setBalance(balance);
 		return balance;
 	}
 
-	public int chancePoorTax(Player p) throws RemoteException{
+	public int chancePoorTax(Player p) throws RemoteException {
 		int balance = p.getBalance() - 15;
 		p.setBalance(balance);
 		return balance;
 	}
 
-	public int chanceLoanMatures(Player p) throws RemoteException{
+	public int chanceLoanMatures(Player p) throws RemoteException {
 
 		int balance = p.getBalance();
 		p.setBalance(balance + 150);
 		return balance;
 	}
 
-	public int chanceBeautyCont(Player p) throws RemoteException{
+	public int chanceBeautyCont(Player p) throws RemoteException {
 
 		int balance = p.getBalance();
 		p.setBalance(balance + 10);
@@ -381,115 +372,114 @@ public class Cards {
 		return balance;
 	}
 
-	public int chanceInherit(Player p) throws RemoteException{
-
-		int balance = p.getBalance();
-		p.setBalance(balance+ 100);
-		return balance;
-	}
-
-	public int chestbankError(Player p) throws RemoteException{
-
-		int balance = p.getBalance();
-		p.setBalance(balance + 200);
-		return balance;
-	}
-
-	public int chestDocFee(Player p) throws RemoteException{
-
-		int balance = p.getBalance();
-		p.setBalance(balance - 50);
-		return balance;
-	}
-
-	public int chestSaleStock(Player p) throws RemoteException{
-
-		int balance = p.getBalance();
-		p.setBalance(balance + 50);
-		return balance;
-	}
-
-
-	public int chestHolidayFund(Player p) throws RemoteException{
-
-		int balance = p.getBalance();
-		p.setBalance(balance + 50);
-		return balance;
-	}
-
-	public int chestIncomeTax(Player p) throws RemoteException{
-
-		int balance = p.getBalance();
-		p.setBalance(balance + 20);
-		return balance;
-	}
-
-	public int chestLifeInsurance(Player p) throws RemoteException{
+	public int chanceInherit(Player p) throws RemoteException {
 
 		int balance = p.getBalance();
 		p.setBalance(balance + 100);
 		return balance;
 	}
 
-	public int chestHospitalFee(Player p) throws RemoteException{
+	public int chestbankError(Player p) throws RemoteException {
+
+		int balance = p.getBalance();
+		p.setBalance(balance + 200);
+		return balance;
+	}
+
+	public int chestDocFee(Player p) throws RemoteException {
+
+		int balance = p.getBalance();
+		p.setBalance(balance - 50);
+		return balance;
+	}
+
+	public int chestSaleStock(Player p) throws RemoteException {
+
+		int balance = p.getBalance();
+		p.setBalance(balance + 50);
+		return balance;
+	}
+
+	public int chestHolidayFund(Player p) throws RemoteException {
+
+		int balance = p.getBalance();
+		p.setBalance(balance + 50);
+		return balance;
+	}
+
+	public int chestIncomeTax(Player p) throws RemoteException {
+
+		int balance = p.getBalance();
+		p.setBalance(balance + 20);
+		return balance;
+	}
+
+	public int chestLifeInsurance(Player p) throws RemoteException {
+
+		int balance = p.getBalance();
+		p.setBalance(balance + 100);
+		return balance;
+	}
+
+	public int chestHospitalFee(Player p) throws RemoteException {
 
 		int balance = p.getBalance();
 		p.setBalance(balance - 100);
 		return balance;
 	}
 
-	public int chestConsultFee(Player p) throws RemoteException{
+	public int chestConsultFee(Player p) throws RemoteException {
 
 		int balance = p.getBalance();
 		p.setBalance(balance + 25);
 		return balance;
 	}
 
-	public int chestSchoolFee(Player p) throws RemoteException{
+	public int chestSchoolFee(Player p) throws RemoteException {
 
 		int balance = p.getBalance();
 		p.setBalance(balance - 150);
 		return balance;
 	}
 
-	public int chanceChairman(Player p) throws RemoteException{
+	public int chanceChairman(Player p) throws RemoteException {
 		int currbalance = p.getBalance();
 		int listsize = MonopolyServerStore.getInstance().players.size();
-		for(int i = 0; i < listsize; i++){
+		for (int i = 0; i < listsize; i++) {
 			Player temp = MonopolyServerStore.getInstance().getPlayers().get(i);
-			if(!temp.getName().equals(MonopolyServerStore.getInstance().getCurrentPlayer().getName())){
-			int balance = MonopolyServerStore.getInstance().players.get(i).getBalance();
-			MonopolyServerStore.getInstance().players.get(i).setBalance(balance + 50);
+			if (!temp.getName().equals(MonopolyServerStore.getInstance().getCurrentPlayer().getName())) {
+				int balance = MonopolyServerStore.getInstance().players.get(i).getBalance();
+				MonopolyServerStore.getInstance().players.get(i).setBalance(balance + 50);
 			}
 		}
 		currbalance = currbalance - ((listsize - 1) * 50);
 		p.setBalance(currbalance);
 		return currbalance;
-		
+
 	}
 
-	public int chestBirthday(Player p) throws RemoteException{
+	public int chestBirthday(Player p) throws RemoteException {
 		int currbalance = p.getBalance();
 		int listsize = MonopolyServerStore.getInstance().players.size();
-		for(int i = 0; i < listsize; i++){
+		for (int i = 0; i < listsize; i++) {
 			Player temp = MonopolyServerStore.getInstance().getPlayers().get(i);
-			if(!temp.getName().equals(MonopolyServerStore.getInstance().getCurrentPlayer().getName())) {
+			if (!temp.getName().equals(MonopolyServerStore.getInstance().getCurrentPlayer().getName())) {
 				int balance = temp.getBalance();
 				MonopolyServerStore.getInstance().players.get(i).setBalance(balance - 10);
 			}
 		}
-		currbalance = currbalance + ((listsize -1) * 10);
+		currbalance = currbalance + ((listsize - 1) * 10);
 		p.setBalance(currbalance);
 		return currbalance;
-		
+
 	}
 
-	public int chestOpera(Player p) throws RemoteException{
+	public int chestOpera(Player p) throws RemoteException {
 		int currbalance = p.getBalance();
 		int listsize = MonopolyServerStore.getInstance().players.size();
-		for(int i = 0; i < listsize; i++){
+		for (int i = 0; i < listsize; i++) {
 			Player temp = MonopolyServerStore.getInstance().getPlayers().get(i);
-			if(!temp.getName().equals(MonopolyServerStore.getInstance().getCurrentPlayer().getName())){
+			if (!temp.getName().equals(MonopolyServerStore.getInstance().getCurrentPlayer().getName())) {
 				int balance = MonopolyServerStore.getInstance().players.get(i).getBalance();
 				MonopolyServerStore.getInstance().players.get(i).setBalance(balance - 50);
 			}
@@ -497,8 +487,7 @@ public class Cards {
 		currbalance = currbalance + ((listsize - 1) * 50);
 		p.setBalance(currbalance);
 		return currbalance;
-		
-	}
 
+	}
 
 }

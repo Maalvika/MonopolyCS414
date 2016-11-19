@@ -6,17 +6,17 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import com.cs414j.monopoly.client.common.view.SpecialBlocks.Others;
+import com.cs414j.monopoly.client.controller.EndTimerTask;
+import com.cs414j.monopoly.client.controller.MonopolyMain;
+import com.cs414j.monopoly.client.controller.MonopolyOptions;
+import com.cs414j.monopoly.client.view.ButtonValidate;
 import com.cs414j.monopoly.client.view.EndForm;
 import com.cs414j.monopoly.client.view.PlayerDetailForm;
+import com.cs414j.monopoly.client.view.PropertyUI;
 import com.cs414j.monopoly.common.Player;
 import com.cs414j.monopoly.common.PlayerColor;
 import com.cs414j.monopoly.common.Token;
-import com.cs414j.monopoly.common.view.SpecialBlocks.Others;
-import com.cs414j.monopoly.controller.EndTimerTask;
-import com.cs414j.monopoly.controller.MonopolyMain;
-import com.cs414j.monopoly.controller.MonopolyOptions;
-import com.cs414j.monopoly.view.ButtonValidate;
-import com.cs414j.monopoly.view.PropertyUI;
 
 public class ClientCallbackImpl extends UnicastRemoteObject implements ClientCallback {
 
@@ -157,6 +157,23 @@ public class ClientCallbackImpl extends UnicastRemoteObject implements ClientCal
 				auctionPlayer.getName(), PlayerColor.valueOf(auctionPlayer.getColor()));
 		if(!MonopolyOptions.properties.containsKey(prop)) {
 			MonopolyOptions.properties.put(prop, 0);
+		} else {
+			int val = MonopolyOptions.properties.get(prop);
+			val  = val+1;
+			System.out.println("val:"+val);
+			MonopolyOptions.properties.put(prop, val);
+		}
+		MonopolyMain.panel.addPlayerComponents(MonopolyOptions.properties);
+		
+	}
+	
+	@Override
+	public void buildPropertyAction() throws RemoteException {
+		Player currentPlayer = ClientMain.store.getCurrentPlayer();
+		PropertyUI prop = new PropertyUI(currentPlayer.getToken().getxCoordinate(), currentPlayer.getToken().getyCoordinate(),
+				currentPlayer.getName(), PlayerColor.valueOf(currentPlayer.getColor()));
+		if(!MonopolyOptions.properties.containsKey(prop)) {
+			MonopolyOptions.properties.put(prop, 1);
 		} else {
 			int val = MonopolyOptions.properties.get(prop);
 			val  = val+1;

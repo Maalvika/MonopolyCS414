@@ -3,10 +3,10 @@ package com.cs414j.monopoly.client.main;
 import java.rmi.RemoteException;
 import java.util.Random;
 
+import com.cs414j.monopoly.client.controller.MonopolyOptions;
 import com.cs414j.monopoly.client.view.PlayerDetailForm;
 import com.cs414j.monopoly.common.Player;
-import com.cs414j.monopoly.controller.MonopolyOptions;
-import com.cs414j.monopoly.server.model.MonopolyServerStore;
+import com.cs414j.monopoly.server.controller.MonopolyServerStore;
 
 public class InitcardDeck {
 
@@ -29,7 +29,7 @@ public class InitcardDeck {
 		chance[5] = ("Take a walk on Boardwalk");
 		chance[6] = ("Take a trip to Reading RailRoad");
 		chance[7] = ("Go to Jail directly");
-		chance[8] = ("Go back 3 spaces");
+		chance[8] = ("Pay Poor Tax - $15");
 		chance[9] = ("Bank pays you dividend of $50");
 		chance[10] = ("Get out of Jail free");
 		chance[11] = ("Make general repairs");

@@ -2,8 +2,6 @@ package com.cs414j.monopoly.server.model;
 
 import java.io.Serializable;
 
-import com.cs414j.monopoly.common.Board;
-
 public class Squares implements Serializable{
 	
 	

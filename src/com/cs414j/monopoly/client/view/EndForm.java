@@ -9,9 +9,9 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 
+import com.cs414j.monopoly.client.controller.MonopolyMain;
 import com.cs414j.monopoly.client.main.ClientMain;
 import com.cs414j.monopoly.common.Player;
-import com.cs414j.monopoly.controller.MonopolyMain;
 
 
 /*

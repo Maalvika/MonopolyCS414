@@ -2,7 +2,7 @@ package com.cs414j.monopoly.common;
 
 import java.io.Serializable;
 
-import com.cs414j.monopoly.view.TokenUrls;
+import com.cs414j.monopoly.client.view.TokenUrls;
 
 public class Token implements Serializable{
 	

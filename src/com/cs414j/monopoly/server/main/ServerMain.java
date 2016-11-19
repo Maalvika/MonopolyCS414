@@ -8,7 +8,7 @@ import java.rmi.server.RemoteServer;
 
 import com.cs414j.monopoly.common.ConnectionDetails;
 import com.cs414j.monopoly.common.MonopolyStore;
-import com.cs414j.monopoly.server.model.MonopolyServerStore;
+import com.cs414j.monopoly.server.controller.MonopolyServerStore;
 
 
 public class ServerMain {
